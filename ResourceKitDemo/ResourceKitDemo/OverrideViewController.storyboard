@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TZ9-z3-pOi">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Demo-->
+        <scene sceneID="VgB-o8-8Bx">
+            <objects>
+                <viewController title="Demo" id="TZ9-z3-pOi" customClass="OverrideViewController" customModule="ResourceKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wcD-Pn-5kD"/>
+                        <viewControllerLayoutGuide type="bottom" id="4JJ-go-MdW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3YX-Hf-LdM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKI-85-nMl">
+                                <rect key="frame" x="190" y="470" width="221" height="30"/>
+                                <state key="normal" title="SecondCollectionViewController"/>
+                                <connections>
+                                    <action selector="tappedSecondCollectionView" destination="TZ9-z3-pOi" eventType="touchUpInside" id="JJd-qW-jxH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcW-bY-9kI">
+                                <rect key="frame" x="206" y="420" width="189" height="30"/>
+                                <state key="normal" title="SecondTableViewController"/>
+                                <connections>
+                                    <segue destination="xXW-6J-t1O" kind="show" identifier="ShowSecondTable" id="2EB-7P-GRv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TKI-85-nMl" firstAttribute="top" secondItem="bcW-bY-9kI" secondAttribute="bottom" constant="20" id="1NZ-Rb-ub4"/>
+                            <constraint firstItem="4JJ-go-MdW" firstAttribute="top" secondItem="TKI-85-nMl" secondAttribute="bottom" constant="100" id="3bf-Ap-VZ4"/>
+                            <constraint firstItem="bcW-bY-9kI" firstAttribute="centerX" secondItem="3YX-Hf-LdM" secondAttribute="centerX" id="6nW-Y0-AUf"/>
+                            <constraint firstItem="TKI-85-nMl" firstAttribute="centerX" secondItem="3YX-Hf-LdM" secondAttribute="centerX" id="HXp-dR-V1J"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mt8-Q1-7nv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="619" y="95"/>
+        </scene>
+        <!--SecondTableViewController-->
+        <scene sceneID="SC3-We-Nkm">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SecondTableViewController" id="xXW-6J-t1O" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1iS-ek-X5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1117" y="95"/>
+        </scene>
+    </scenes>
+</document>

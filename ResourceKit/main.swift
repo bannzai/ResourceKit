@@ -25,6 +25,10 @@ func imports() -> [String] {
     let regex = try! NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators)
     let results = regex.matchesInString(content, options: [], range: NSMakeRange(0, content.characters.count))
     
+    if results.isEmpty {
+        return ["import UIKit"]
+    }
+    
     return results.flatMap { (result) -> String? in
         if result.range.location != NSNotFound {
             let matchingString = (content as NSString).substringWithRange(result.range) as String
@@ -33,7 +37,6 @@ func imports() -> [String] {
         return nil
     }
 }
-
 
 let parser = ProjectResourceParser()
 
@@ -47,7 +50,7 @@ parser.paths
     .filter { $0.pathExtension! == "xib" }
     .forEach { let _ = XibPerser(url: $0) }
 
-let importsContent = imports().joinWithSeparator(newLine) + newLine
+let importsContent = imports().joinWithSeparator(newLine)
 
 let xibProtocolContent = Protocol(
     name: "XibProtocol",
@@ -133,8 +136,8 @@ let xibContent = ProjectResource.sharedInstance.xibs
     .joinWithSeparator(newLine)
 
 let content = (
-    Header
-        + importsContent
+    Header + newLine + newLine
+        + importsContent + newLine
         + xibProtocolContent
         + tableViewExtensionContent
         + collectionViewExtensionContent
