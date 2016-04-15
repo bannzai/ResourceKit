@@ -1,0 +1,3 @@
+[submodule "Xcode.swift"]
+	path = Xcode.swift
+	url = git@github.com:tomlokhorst/Xcode.swift.git
