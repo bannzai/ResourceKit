@@ -134,7 +134,8 @@ final class StoryboardParser: NSObject, Parsable {
         
         
         _name = name
-        if _name.containsString("~") { // TODO: chech ipad storyboard
+        // Don't create ipad resources
+        if _name.containsString("~") { 
             return
         }
         
@@ -244,7 +245,8 @@ final class XibPerser: NSObject, Parsable {
         }
         
         _name = name
-        if _name.containsString("~") { // TODO: chech ipad storyboard??
+        // Don't create ipad resources
+        if _name.containsString("~") {
             return
         }
         

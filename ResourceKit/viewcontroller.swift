@@ -213,7 +213,7 @@ extension ViewController {
                 arguments: [],
                 returnType: name,
                 body: Body ([
-                    "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", //TODO: Bundle
+                    "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
                     "let viewController = storyboard.instantiateViewControllerWithIdentifier(\"\(storyboard.storyboardIdentifier)\") as! \(name)",
                     "return viewController",
                     ])
@@ -226,7 +226,7 @@ extension ViewController {
             arguments: [],
             returnType: name,
             body: Body([
-                "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", //TODO: Bundle
+                "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
                 "let viewController = storyboard.instantiateViewControllerWithIdentifier(\"\(storyboard.storyboardIdentifier)\") as! \(name)",
                 "return viewController",
             ])
@@ -241,7 +241,7 @@ extension ViewController {
                 arguments: [],
                 returnType: name,
                 body: Body([
-                    "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", //TODO: Bundle
+                    "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
                     "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
                     "return viewController",
                     ])
@@ -253,7 +253,7 @@ extension ViewController {
             arguments: [],
             returnType: name,
             body: Body([
-                "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", //TODO: Bundle
+                "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
                 "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
                 "return viewController",
             ])
