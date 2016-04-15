@@ -33,6 +33,7 @@ func imports() -> [String] {
         if result.range.location != NSNotFound {
             let matchingString = (content as NSString).substringWithRange(result.range) as String
             return matchingString
+                .stringByReplacingOccurrencesOfString("\n", withString: "")
         }
         return nil
     }
@@ -136,7 +137,7 @@ let xibContent = ProjectResource.sharedInstance.xibs
     .joinWithSeparator(newLine)
 
 let content = (
-    Header + newLine + newLine
+    Header
         + importsContent + newLine
         + xibProtocolContent
         + tableViewExtensionContent
@@ -145,6 +146,7 @@ let content = (
         + tableViewCellContent
         + collectionViewCellContent
         + xibContent
+    
 )
 
 func write(code: String, fileURL: NSURL) {
