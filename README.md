@@ -43,10 +43,10 @@ After installing ResourceKit into your project, and build it.
 ResourceKit will correct any missing/changed/added resources.
 
 ResouceKit supports resource types.
- - Storyboards
- - Segues
- - Nibs
- - Reusables
+ - [Storyboards](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md#viewcontroller-from-storyboard)
+ - [Segues](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md#use-segue-any-uiviewcontroller-sub-class)
+ - [Nibs](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md#nib)
+ - [Reusables](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md#reusalbes)
 
  #### TODO:
  - Images
