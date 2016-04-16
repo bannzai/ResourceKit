@@ -22,6 +22,7 @@ performSegueWithIdentifier("Open", sender: sender)
 let nib = UINib(nibName: "TableViewCell", bundle: nil)
 let cell nib.instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
 ```
+Please see `ResouceKitDemo` for more information.
 
 ##### Use ResourceKit.
 ```swift
@@ -42,7 +43,6 @@ After installing ResourceKit into your project, and build it.
 ResourceKit will correct any missing/changed/added resources.
 
 ResouceKit supports resource types.
-
  - Storyboards
  - Segues
  - Nibs
@@ -53,20 +53,33 @@ ResouceKit supports resource types.
  - LocalizedStrings
 
 ## Installation
+CocoaPods is the recommended way of installation, as this avoids including any binary files into your project.
+
+### Cocoapods
+1. Add `pod 'ResourceKit'` to your Podfile and run pod install.
+2. In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left.
+3. Drag the new Run Script phase above the Compile Sources phase and below Check Pods Manifest.lock, expand it and paste the following script: ``"$PODS_ROOT/ResourceKit/ResourceKit"``
+4. Build your project, in Finder you will now see a ResourceKit.generated.swift in the $SRCROOT-folder, drag the ResourceKit.generated.swift files into your project and uncheck Copy items if needed
 
 ### Manual
-
 1. Download a [ResourceKit](https://github.com/bannzai/ResourceKit/releases/) , unzip it and put it your source root directory.
 2. In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left
-3. Drag the new Run Script phase above the Compile Sources phase, expand it and paste the following script: "$SRCROOT/ResourceKit" "$SRCROOT"
+3. Drag the new Run Script phase above the Compile Sources phase, expand it and paste the following script: "$SRCROOT/ResourceKit"
 4. Build your project, in Finder you will now see a `ResourceKit.generated.swift` in the $SRCROOT-folder, drag the `ResourceKit.generated.swift` files into your project and uncheck Copy items if needed.
 
 ## TODO:
- - [ ] Cocoapods support.  
+ - [x] Cocoapods support.  
  - [ ] Images support.  
  - [ ] LocaliazedString Support.  
+ - [ ] Adjust indent.
  - [ ] User Chose Generate Resource Support.  
 
-## License
+## Help:
+##### Q.When want to use a Third party UI Library, how should it be done  
+A. You can write `import CustomView` to `ResourceKit.generated.swift`.  
+And build again, but It's left `import CustomView` logic!
 
+
+
+## License
 [ResourceKit](https://github.com/bannzai/ResourceKit) is released under the MIT license. See LICENSE.txt for details.
