@@ -1,6 +1,6 @@
 # ResourceKit
 
-Enable autocomplete use resources like in swift project.
+Enable autocomplete use resources in swift project.
 
 ## How does ResourceKit work?
 ResouceKit makes your code that uses write for resources:
