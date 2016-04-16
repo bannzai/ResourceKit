@@ -1,4 +1,7 @@
 # ResourceKit
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+![platform](https://cocoapod-badges.herokuapp.com/p/ResourceKit/badge.png)
+
 
 Enable autocomplete use resources in swift project.
 
