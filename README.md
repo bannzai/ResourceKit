@@ -20,7 +20,7 @@ performSegueWithIdentifier("Open", sender: sender)
 
 // Nib
 let nib = UINib(nibName: "TableViewCell", bundle: nil)
-let cell nib.instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
+let cell = nib.instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
 ```
 Please see `ResouceKitDemo` for more information.
 
@@ -33,7 +33,7 @@ let viewController = ViewController.instanceFromStoryboard() // <- viewControlle
 performSegueOpen() // <- performSegue become instance method.
 
 // Nib
-let cell = TableViewCell.fromNib() // <- Get easy instance.
+let cell = TableViewCell.Xib().fromNib() // <- Get easy instance.
 ```
 
 
