@@ -56,7 +56,7 @@ ResouceKit supports resource types.
 
 ### Manual
 
-1. Download a [ResourceKit](https://github.com/bannzai/ResourceKit) , unzip it and put it your source root directory.
+1. Download a [ResourceKit](https://github.com/bannzai/ResourceKit/releases/) , unzip it and put it your source root directory.
 2. In Xcode: Click on your project in the file list, choose your target under TARGETS, click the Build Phases tab and add a New Run Script Phase by clicking the little plus icon in the top left
 3. Drag the new Run Script phase above the Compile Sources phase, expand it and paste the following script: "$SRCROOT/ResourceKit" "$SRCROOT"
 4. Build your project, in Finder you will now see a `ResourceKit.generated.swift` in the $SRCROOT-folder, drag the `ResourceKit.generated.swift` files into your project and uncheck Copy items if needed.
