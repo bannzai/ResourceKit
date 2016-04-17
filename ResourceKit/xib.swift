@@ -78,7 +78,7 @@ final class XibForView {
         }
         return [
             nib(),
-            fromNib()
+            view()
         ]
     }
     
@@ -106,10 +106,10 @@ final class XibForView {
         )
     }
     
-    func fromNib() -> Function {
+    func view() -> Function {
         return Function(
             head: "internal",
-            name: "fromNib",
+            name: "view",
             arguments: [],
             returnType: className,
             body: Body(

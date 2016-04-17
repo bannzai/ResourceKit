@@ -161,7 +161,7 @@ extension TableViewCell {
 		internal func nib() -> UINib {
 		return UINib(nibName: "TableViewCell", bundle: nil) 
 	}
-		internal func fromNib() -> TableViewCell {
+		internal func view() -> TableViewCell {
 		return nib().instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
 	}
 	} 
@@ -175,7 +175,7 @@ extension CollectionViewCell {
 		internal func nib() -> UINib {
 		return UINib(nibName: "CollectionViewCell", bundle: nil) 
 	}
-		internal func fromNib() -> CollectionViewCell {
+		internal func view() -> CollectionViewCell {
 		return nib().instantiateWithOwner(nil, options: nil)[0] as! CollectionViewCell
 	}
 	} 
@@ -189,7 +189,7 @@ extension CustomView {
 		internal func nib() -> UINib {
 		return UINib(nibName: "CustomView", bundle: nil) 
 	}
-		internal func fromNib() -> CustomView {
+		internal func view() -> CustomView {
 		return nib().instantiateWithOwner(nil, options: nil)[0] as! CustomView
 	}
 	} 
