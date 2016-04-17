@@ -25,7 +25,7 @@ performSegueWithIdentifier("Open", sender: sender)
 let nib = UINib(nibName: "TableViewCell", bundle: nil)
 let cell = nib.instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
 ```
-Please see `ResouceKitDemo` for more information.
+Please see `ResouceKitDemo` for more information, or [Examples.md](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md)
 
 ##### Use ResourceKit.
 ```swift
@@ -33,10 +33,10 @@ Please see `ResouceKitDemo` for more information.
 let viewController = ViewController.instanceFromStoryboard() // <- viewController is ViewController class.
 
 // PerformSegue
-performSegueOpen() // <- performSegue become instance method.
+performSegueOpen() // <- can write to use autocomplete.
 
 // Nib
-let cell = TableViewCell.Xib().fromNib() // <- Get easy instance.
+let cell = TableViewCell.Xib().fromNib() // <- easy get instance.
 ```
 
 
@@ -80,7 +80,7 @@ CocoaPods is the recommended way of installation, as this avoids including any b
 ## Help:
 ##### Q.When want to use a Third party UI Library, how should it be done  
 A. You can write `import CustomView` to `ResourceKit.generated.swift`.  
-And build again, but It's left `import CustomView` logic!
+And build again, but It's left `import CustomView`!
 
 
 
