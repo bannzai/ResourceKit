@@ -78,7 +78,7 @@ let cell nib.instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
 
 _Use ResourceKit_
 ```swift
-let customView = CustomView.Xib().fromNib()
+let customView = CustomView.Xib().view()
 ```
 #### for tableview or collectionview
 _standard_
