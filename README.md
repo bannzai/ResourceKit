@@ -5,6 +5,8 @@
 
 Enable autocomplete use resources in swift project.
 
+[まだハードコードで消耗してるの？ ResourceKitで安全コーディング！](http://qiita.com/bannzai/items/e9bf5904940fb1ed5082)
+
 ## How does ResourceKit work?
 ResouceKit makes your code that uses write for resources:
  - `Becomes clear`, nessary to cast and guessing easy what a method will return.
