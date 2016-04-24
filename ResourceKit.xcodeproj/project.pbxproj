@@ -76,7 +76,6 @@
 		9C56AE6C1CC11CA800A38BCE /* xib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = xib.swift; sourceTree = "<group>"; };
 		9C56AE761CC11F9500A38BCE /* resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = resource.swift; sourceTree = "<group>"; };
 		9C91FD7E1CC126870028B9DD /* Resource.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.generated.swift; sourceTree = "<group>"; };
-		9C91FD7F1CC126870028B9DD /* ResourceKit */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ResourceKit; sourceTree = "<group>"; };
 		9C91FD811CC126870028B9DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C91FD821CC126870028B9DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C91FD841CC126870028B9DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -104,6 +103,8 @@
 		9C91FD9D1CC126870028B9DD /* ResourceKitDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceKitDemoTests.swift; sourceTree = "<group>"; };
 		9C91FD9F1CC126870028B9DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C91FDA01CC126870028B9DD /* ResourceKitDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceKitDemoUITests.swift; sourceTree = "<group>"; };
+		9CE69DE61CCC5E650098C12A /* ResourceKit */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ResourceKit; sourceTree = "<group>"; };
+		9CE69DE71CCC63280098C12A /* InstanceFromOverride.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InstanceFromOverride.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +169,7 @@
 			children = (
 				9C91FD981CC126870028B9DD /* ResourceKitDemo.xcodeproj */,
 				9C91FD7E1CC126870028B9DD /* Resource.generated.swift */,
-				9C91FD7F1CC126870028B9DD /* ResourceKit */,
+				9CE69DE61CCC5E650098C12A /* ResourceKit */,
 				9C91FD801CC126870028B9DD /* ResourceKitDemo */,
 				9C91FD9B1CC126870028B9DD /* ResourceKitDemoTests */,
 				9C91FD9E1CC126870028B9DD /* ResourceKitDemoUITests */,
@@ -201,6 +202,7 @@
 				9C91FD951CC126870028B9DD /* TableViewController.swift */,
 				9C91FD961CC126870028B9DD /* ViewController.storyboard */,
 				9C91FD971CC126870028B9DD /* ViewController.swift */,
+				9CE69DE71CCC63280098C12A /* InstanceFromOverride.storyboard */,
 			);
 			path = ResourceKitDemo;
 			sourceTree = "<group>";

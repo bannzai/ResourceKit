@@ -73,46 +73,65 @@ class ViewController {
     
     var _seguesForGenerateStruct: [String] = []
     
-    func needOverride(storyboard: ViewControllerInfoOfStoryboard) -> Bool {
+    private lazy var hasSupeClass: Bool = {
+        return self.superClass != nil
+    }()
+    private lazy var superClass: ViewController? =
+        ProjectResource.sharedInstance.viewControllers
+        .filter ({ $0.className == self.superClassName })
+        .first
+    
+    func needOverrideForStoryboard(storyboard: ViewControllerInfoOfStoryboard) -> Bool {
+        if !hasSupeClass {
+            return false
+        }
         
-        // Check has superClass
-        guard let superClass = ProjectResource.sharedInstance.viewControllers
-            .filter ({ $0.className == superClassName })
-            .first
-            else {
-                return false
+        guard let superClass = superClass else {
+            return false
         }
         
         // For initialViewController()
-        let storyboardsForIsNotInitial = superClass.storyboardInfos.filter({ !$0.isInitial })
-        let superClassHasInitial = storyboardsForIsNotInitial.count != superClass.storyboardInfos.count
-        let needOverrideForInitial = superClassHasInitial && storyboard.isInitial
+        let hasInitialOfSuperClass = superClass.storyboardInfos.filter({ $0.isInitial }).count > 0
+        let needOverrideForInitial = hasInitialOfSuperClass && storyboard.isInitial
         if needOverrideForInitial {
             return true
         }
         
-        // For not initialViewController()
         if storyboard.storyboardIdentifier.isEmpty {
             return false
         }
         
-        guard let superClassStoryboardIdentifier = storyboardsForIsNotInitial
-            .filter({ $0.storyboardName == storyboard.storyboardName })
-            .flatMap ({ $0.storyboardIdentifier })
-            .first
-            else {
+        // For not initialViewController()
+        let storyboardsForIsNotInitial = superClass.storyboardInfos.filter({ !$0.isInitial })
+        return storyboardsForIsNotInitial.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1
+    }
+    
+    func needOverrideForSegue(storyboard: ViewControllerInfoOfStoryboard) -> Bool {
+        if !hasSupeClass {
             return false
         }
         
-        return superClassStoryboardIdentifier == storyboard.storyboardIdentifier
-    }
-    
-    func classFunctionHead(storyboard: ViewControllerInfoOfStoryboard) -> String {
-        return needOverride(storyboard) ? "class override" : "class"
+        guard let superClass = superClass else {
+            return false
+        }
+        
+        let superClassSegues = superClass.storyboardInfos.flatMap { $0.segues }
+        let segues = storyboardInfos.flatMap { $0.segues }
+        
+        return superClassSegues.contains { superClassSegue in
+            segues.contains { segue in
+                segue == superClassSegue
+            }
+        }
     }
 
-    func instanceFunctionHead(storyboard: ViewControllerInfoOfStoryboard) -> String {
-        return needOverride(storyboard) ? "override" : "internal"
+    
+    func classFunctionHeadForViewControllerInstance(storyboard: ViewControllerInfoOfStoryboard) -> String {
+        return needOverrideForStoryboard(storyboard) ? "class override" : "class"
+    }
+
+    func instanceFunctionHeadForSegue(storyboard: ViewControllerInfoOfStoryboard) -> String {
+        return needOverrideForSegue(storyboard) ? "override" : "internal"
     }
     
     var name: String {
@@ -187,7 +206,7 @@ extension ViewController {
     
     private func performSegue(storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> Function {
         return Function (
-            head: instanceFunctionHead(storyboard),
+            head: instanceFunctionHeadForSegue(storyboard),
             name: "perFormSegue\(segueIdentifier)",
             arguments: [Argument(name: "sender", type: "AnyObject?", defaultValue: "nil")],
             returnType: "Void",
@@ -208,7 +227,7 @@ extension ViewController {
         
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return Function (
-                head: classFunctionHead(storyboard),
+                head: classFunctionHeadForViewControllerInstance(storyboard),
                 name: "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)",
                 arguments: [],
                 returnType: name,
@@ -221,7 +240,7 @@ extension ViewController {
         }
         
         return Function (
-            head: classFunctionHead(storyboard),
+            head: classFunctionHeadForViewControllerInstance(storyboard),
             name: "instanceFrom\(storyboard.storyboardName)",
             arguments: [],
             returnType: name,
@@ -236,7 +255,7 @@ extension ViewController {
     private func fromStoryboardForInitial(storyboard: ViewControllerInfoOfStoryboard) -> Function {
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return Function (
-                head: classFunctionHead(storyboard),
+                head: classFunctionHeadForViewControllerInstance(storyboard),
                 name: "initialFrom\(storyboard.storyboardName)",
                 arguments: [],
                 returnType: name,
@@ -248,7 +267,7 @@ extension ViewController {
             )
         }
         return Function (
-            head: classFunctionHead(storyboard),
+            head: classFunctionHeadForViewControllerInstance(storyboard),
             name: "initialViewController",
             arguments: [],
             returnType: name,

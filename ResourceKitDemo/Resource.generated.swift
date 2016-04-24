@@ -27,6 +27,11 @@ extension UICollectionView {
 } 
 
 extension ViewController { 
+	class func instanceFromInstanceFromOverride() -> ViewController {
+		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
+		let viewController = storyboard.instantiateViewControllerWithIdentifier("BaseInstance") as! ViewController
+		return viewController
+	}
 	class func initialViewController() -> ViewController {
 		let storyboard = UIStoryboard(name: "ViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ViewController
@@ -59,6 +64,16 @@ extension TableViewController {
 } 
 
 extension OverrideViewController { 
+	class func instanceFromInstanceFromOverrideOtherIdentifier() -> OverrideViewController {
+		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
+		let viewController = storyboard.instantiateViewControllerWithIdentifier("OtherIdentifier") as! OverrideViewController
+		return viewController
+	}
+	class func instanceFromInstanceFromOverrideOverrideInstance() -> OverrideViewController {
+		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
+		let viewController = storyboard.instantiateViewControllerWithIdentifier("OverrideInstance") as! OverrideViewController
+		return viewController
+	}
 	class override func initialViewController() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "OverrideViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! OverrideViewController
