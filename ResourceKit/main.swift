@@ -136,7 +136,7 @@ let xibContent = ProjectResource.sharedInstance.xibs
     .flatMap { $0.declaration }
     .joinWithSeparator(newLine)
 
-let content = (
+private let content = (
     Header
         + importsContent + newLine
         + xibProtocolContent
