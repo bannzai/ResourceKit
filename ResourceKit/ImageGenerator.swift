@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol Generatortable {
+protocol Generattable {
     associatedtype GenerateType
     init(urls: [NSURL])
     func generate() -> GenerateType
 }
 
-struct Image: Generatortable {
+struct Image: Generattable {
     let assets: Assets
     let resources: Resources
     
@@ -39,7 +39,7 @@ struct Image: Generatortable {
 }
 
 extension Image {
-    struct Assets: Generatortable {
+    struct Assets: Generattable {
         let imageNames: [String]
         
         init(urls: [NSURL]) {
@@ -80,7 +80,7 @@ extension Image {
 }
 
 extension Image {
-    struct Resources: Generatortable {
+    struct Resources: Generattable {
         static let supportExtensions: Set<String> = [ "png", "jpg", "gif" ]
         let imageNames: [String]
         
