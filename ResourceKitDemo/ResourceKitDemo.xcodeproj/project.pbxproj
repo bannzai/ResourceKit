@@ -15,6 +15,8 @@
 		9C8D694F1CBA98DA006F7A40 /* ResourceKitDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8D694E1CBA98DA006F7A40 /* ResourceKitDemoUITests.swift */; };
 		9C8EB90F1CD8422A00E63A84 /* StoryboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB90E1CD8422A00E63A84 /* StoryboardTests.swift */; };
 		9C8EB9111CD8457E00E63A84 /* XibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB9101CD8457E00E63A84 /* XibTests.swift */; };
+		9C8EB9251CD8636B00E63A84 /* swift_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8EB9231CD8636B00E63A84 /* swift_logo.png */; };
+		9C8EB9261CD8636B00E63A84 /* swift_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8EB9241CD8636B00E63A84 /* swift_logo@2x.png */; };
 		9CA1FED21CBAA7490032C568 /* Resource.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA1FED11CBAA7490032C568 /* Resource.generated.swift */; };
 		9CA1FED41CBAAB110032C568 /* ViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CA1FED31CBAAB110032C568 /* ViewController.storyboard */; };
 		9CA1FED61CBB0A190032C568 /* TabBarController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CA1FED51CBB0A190032C568 /* TabBarController.storyboard */; };
@@ -68,6 +70,8 @@
 		9C8D69501CBA98DA006F7A40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C8EB90E1CD8422A00E63A84 /* StoryboardTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardTests.swift; sourceTree = "<group>"; };
 		9C8EB9101CD8457E00E63A84 /* XibTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibTests.swift; sourceTree = "<group>"; };
+		9C8EB9231CD8636B00E63A84 /* swift_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swift_logo.png; sourceTree = "<group>"; };
+		9C8EB9241CD8636B00E63A84 /* swift_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swift_logo@2x.png"; sourceTree = "<group>"; };
 		9CA1FED11CBAA7490032C568 /* Resource.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.generated.swift; sourceTree = SOURCE_ROOT; };
 		9CA1FED31CBAAB110032C568 /* ViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ViewController.storyboard; sourceTree = "<group>"; };
 		9CA1FED51CBB0A190032C568 /* TabBarController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TabBarController.storyboard; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				9CA1FED11CBAA7490032C568 /* Resource.generated.swift */,
+				9C8EB9221CD8636B00E63A84 /* Resources */,
 				9CA1FEE41CBBAD580032C568 /* Controller */,
 				9CA1FEE31CBBAD4D0032C568 /* Xib */,
 				9C8D692E1CBA98DA006F7A40 /* AppDelegate.swift */,
@@ -166,6 +171,15 @@
 				9C8D69501CBA98DA006F7A40 /* Info.plist */,
 			);
 			path = ResourceKitDemoUITests;
+			sourceTree = "<group>";
+		};
+		9C8EB9221CD8636B00E63A84 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9C8EB9231CD8636B00E63A84 /* swift_logo.png */,
+				9C8EB9241CD8636B00E63A84 /* swift_logo@2x.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		9CA1FEE31CBBAD4D0032C568 /* Xib */ = {
@@ -309,11 +323,13 @@
 				9C8D69391CBA98DA006F7A40 /* LaunchScreen.storyboard in Resources */,
 				9CE69DE91CCC64410098C12A /* InstanceFromOverride.storyboard in Resources */,
 				9CA1FEE21CBBAD460032C568 /* TableViewCell.xib in Resources */,
+				9C8EB9261CD8636B00E63A84 /* swift_logo@2x.png in Resources */,
 				9CA1FF061CBD27780032C568 /* OverrideViewController.storyboard in Resources */,
 				9CA1FEE81CBBAD880032C568 /* CollectionViewCell.xib in Resources */,
 				9C8D69361CBA98DA006F7A40 /* Assets.xcassets in Resources */,
 				9CA1FED61CBB0A190032C568 /* TabBarController.storyboard in Resources */,
 				9CA1FED41CBAAB110032C568 /* ViewController.storyboard in Resources */,
+				9C8EB9251CD8636B00E63A84 /* swift_logo.png in Resources */,
 				9CA1FEF21CBBF2240032C568 /* SecondTableViewController.storyboard in Resources */,
 				9CA1FEEC1CBBEA260032C568 /* CustomView.xib in Resources */,
 			);

@@ -12,6 +12,7 @@ import Foundation
 struct ProjectResourceParser {
     private var projectFile: XCProjectFile
     var paths: [NSURL] = []
+    var resourcePaths: [NSURL] = []
     
     init() {
         self.init(xcodeURL: Environment.PROJECT_FILE_PATH.path, target: Environment.TARGET_NAME.element)
@@ -28,8 +29,27 @@ struct ProjectResourceParser {
         
         self.projectFile = projectFile
         self.paths = generateFileRefPaths(target).flatMap(Environment.pathFrom)
+        self.resourcePaths = resourcePathsForTarget(target).flatMap(Environment.pathFrom)
         
         setupSuffixViewControllers()
+    }
+    
+    func resourcePathsForTarget(target: PBXNativeTarget) -> [Path] {
+        let resourcesFileRefs = target.buildPhases
+            .flatMap { $0 as? PBXResourcesBuildPhase }
+            .flatMap { $0.files }
+            .map { $0.fileRef }
+        
+        let fileRefPaths = resourcesFileRefs
+            .flatMap { $0 as? PBXFileReference }
+            .map { $0.fullPath }
+        
+        let variantGroupPaths = resourcesFileRefs
+            .flatMap { $0 as? PBXVariantGroup }
+            .flatMap { $0.fileRefs }
+            .map { $0.fullPath }
+        
+        return fileRefPaths + variantGroupPaths
     }
     
     private func generateFileRefPaths(target: PBXNativeTarget) -> [Path] {
