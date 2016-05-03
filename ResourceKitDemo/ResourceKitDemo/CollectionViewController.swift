@@ -10,24 +10,24 @@ import UIKit
 
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    class var baseShoyus: [String] {
+    class var baseShoyus: [UIImage] {
         return [
-            "curry",
-            "ebi",
-            "inaka",
-            "kake",
-            "kaki",
-            "kikkoman",
-            "koori",
-            "koumi",
-            "marudaizu",
-            "ninniku",
-            "siro",
-            "ususio"
+            UIImage.Asset.curry,
+            UIImage.Asset.ebi,
+            UIImage.Asset.inaka,
+            UIImage.Asset.kake,
+            UIImage.Asset.kaki,
+            UIImage.Asset.kikkoman,
+            UIImage.Asset.koori,
+            UIImage.Asset.koumi,
+            UIImage.Asset.marudaizu,
+            UIImage.Asset.ninniku,
+            UIImage.Asset.siro,
+            UIImage.Asset.ususio
         ]
     }
     
-    var shoyus: [String] = Array(count: 10, repeatedValue: CollectionViewController.baseShoyus).flatMap { $0 }
+    var shoyus: [UIImage] = Array(count: 10, repeatedValue: CollectionViewController.baseShoyus).flatMap { $0 }
 
     override func viewDidLoad() {
         super.viewDidLoad()
