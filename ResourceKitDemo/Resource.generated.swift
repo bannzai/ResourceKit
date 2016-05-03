@@ -42,7 +42,6 @@ extension ViewController {
 	}
 	struct Segue {
 		static let showSecondTable: String = "ShowSecondTable"
-
 	
 	} 
 } 
@@ -58,7 +57,6 @@ extension TableViewController {
 	}
 	struct Segue {
 		static let showViewController: String = "ShowViewController"
-
 	
 	} 
 } 
@@ -84,7 +82,6 @@ extension OverrideViewController {
 	}
 	struct Segue {
 		static let showSecondTable: String = "ShowSecondTable"
-
 	
 	} 
 } 
@@ -100,7 +97,6 @@ extension SecondTableViewController {
 	}
 	struct Segue {
 		static let showOverride: String = "ShowOverride"
-
 	
 	} 
 } 
@@ -116,7 +112,6 @@ extension CollectionViewController {
 	}
 	struct Segue {
 		static let showViewController: String = "ShowViewController"
-
 	
 	} 
 } 
@@ -156,7 +151,6 @@ extension SecondTableViewCell {
 	
 	struct Reusable {
 		static let ReuseIdentifier: String = "ReuseIdentifier"
-
 	
 	} 
 } 
@@ -164,7 +158,6 @@ extension SecondCollectionViewCell {
 	
 	struct Reusable {
 		static let ReuseIdentifier: String = "ReuseIdentifier"
-
 	
 	} 
 } 
@@ -172,7 +165,6 @@ extension TableViewCell {
 	
 	struct Xib: XibProtocol {
 		let name: String = "TableViewCell"
-
 		internal func nib() -> UINib {
 		return UINib(nibName: "TableViewCell", bundle: nil) 
 	}
@@ -186,7 +178,6 @@ extension CollectionViewCell {
 	
 	struct Xib: XibProtocol {
 		let name: String = "CollectionViewCell"
-
 		internal func nib() -> UINib {
 		return UINib(nibName: "CollectionViewCell", bundle: nil) 
 	}
@@ -200,7 +191,6 @@ extension CustomView {
 	
 	struct Xib: XibProtocol {
 		let name: String = "CustomView"
-
 		internal func nib() -> UINib {
 		return UINib(nibName: "CustomView", bundle: nil) 
 	}
@@ -209,3 +199,26 @@ extension CustomView {
 	}
 	} 
 } 
+extension UIImage { 
+	
+	struct Asset {
+		static let curry: UIImage = UIImage(named: "curry")!
+		static let ebi: UIImage = UIImage(named: "ebi")!
+		static let inaka: UIImage = UIImage(named: "inaka")!
+		static let kake: UIImage = UIImage(named: "kake")!
+		static let kaki: UIImage = UIImage(named: "kaki")!
+		static let kikkoman: UIImage = UIImage(named: "kikkoman")!
+		static let koori: UIImage = UIImage(named: "koori")!
+		static let koumi: UIImage = UIImage(named: "koumi")!
+		static let marudaizu: UIImage = UIImage(named: "marudaizu")!
+		static let ninniku: UIImage = UIImage(named: "ninniku")!
+		static let siro: UIImage = UIImage(named: "siro")!
+		static let ususio: UIImage = UIImage(named: "ususio")!
+	
+	}
+	struct Resource {
+		static let swift_logo: UIImage = UIImage(named: "swift_logo")!
+	
+	} 
+} 
+

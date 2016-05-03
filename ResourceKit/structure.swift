@@ -172,7 +172,7 @@ struct Struct: Structure {
     var declaration: String {
         return [
             "struct \(name)\(generateProtocol()) {",
-            lets.flatMap { indent + $0.declaration }.joinWithSeparator(lineAndIndent) + newLine,
+            lets.flatMap { indent + $0.declaration }.joinWithSeparator(lineAndIndent),
             functions.flatMap { indent + $0.declaration }.joinWithSeparator(lineAndIndent),
             "}"
         ].joinWithSeparator(lineAndIndent)
@@ -205,7 +205,12 @@ struct Let: Structure {
     }
     
     var declaration: String {
-        return "\(letType) \(name): \(type) = \"\(value)\""
+        switch type {
+        case "String":
+            return "\(letType) \(name): \(type) = \"\(value)\""
+        default:
+            return "\(letType) \(name): \(type) = \(value)"
+        }
     }
 }
 

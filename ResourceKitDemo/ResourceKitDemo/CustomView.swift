@@ -9,13 +9,11 @@
 import UIKit
 
 class CustomView: UIView {
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+ 
+    @IBOutlet weak var imageView: UIImageView!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        imageView.image = UIImage.Resource.swift_logo
+        imageView.sizeToFit()
     }
-    */
-
 }

@@ -41,7 +41,7 @@ class ResourceKitDemoUITests: XCTestCase {
         let app = XCUIApplication()
         app.tables.childrenMatchingType(.Cell).elementBoundByIndex(12).staticTexts["Demo"].tap()
         app.buttons["SecondTableViewController"].tap()
-        app.tables.childrenMatchingType(.Cell).elementBoundByIndex(0).staticTexts["Second"].tap()
+        app.tables.childrenMatchingType(.Cell).elementBoundByIndex(1).staticTexts["Second"].tap()
         app.buttons["SecondTableViewController"].tap()
     }
     

@@ -11,11 +11,16 @@ private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let outputPath = NSProcessInfo.processInfo().environment["SRCROOT"]!
 private let outputUrl = NSURL(fileURLWithPath: outputPath)
 
+// DEBUG
+private var debug = ""
+private var debugURL = outputUrl.URLByAppendingPathComponent("ResourceKit.log.swift", isDirectory: false)
+
 private var resourceValue: AnyObject?
 try! outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
 
 private let writeUrl: NSURL
 writeUrl = outputUrl.URLByAppendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
+
 
 func imports() -> [String] {
     guard let content = try? String(contentsOfURL: writeUrl) else {
@@ -39,21 +44,22 @@ func imports() -> [String] {
     }
 }
 
-let parser = ProjectResourceParser()
+private let parser = ProjectResourceParser()
+private let paths = parser.paths.filter { $0.pathExtension != nil }
 
-parser.paths
-    .filter { $0.pathExtension != nil }
+paths
     .filter { $0.pathExtension! == "storyboard" }
     .forEach { let _ = StoryboardParser(url: $0) }
 
-parser.paths
+paths
     .filter { $0.pathExtension != nil }
     .filter { $0.pathExtension! == "xib" }
     .forEach { let _ = XibPerser(url: $0) }
 
-let importsContent = imports().joinWithSeparator(newLine)
 
-let xibProtocolContent = Protocol(
+private let importsContent = imports().joinWithSeparator(newLine)
+
+private let xibProtocolContent = Protocol(
     name: "XibProtocol",
     getters: [
         Var(name: "name", type: "String")
@@ -68,7 +74,7 @@ let xibProtocolContent = Protocol(
     ]
 ).declaration + newLine
 
-let tableViewExtensionContent = Extension(
+private let tableViewExtensionContent = Extension(
     type: "UITableView",
     functions: [
         Function(
@@ -91,7 +97,7 @@ let tableViewExtensionContent = Extension(
     ]
 ).declaration + newLine
 
-let collectionViewExtensionContent = Extension(
+private let collectionViewExtensionContent = Extension(
     type: "UICollectionView",
     functions: [
         Function(
@@ -115,28 +121,29 @@ let collectionViewExtensionContent = Extension(
 ).declaration + newLine
 
 
-
-let viewControllerContent = ProjectResource.sharedInstance.viewControllers
+private let viewControllerContent = ProjectResource.sharedInstance.viewControllers
     .flatMap { $0.generateExtensionIfNeeded() }
     .flatMap { $0.declaration }
     .joinWithSeparator(newLine)
 
-let tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
+private let tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
     .flatMap { $0.generateExtension() }
     .flatMap { $0.declaration }
     .joinWithSeparator(newLine)
 
-let collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
+private let collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
     .flatMap { $0.generateExtension() }
     .flatMap { $0.declaration }
     .joinWithSeparator(newLine)
 
-let xibContent = ProjectResource.sharedInstance.xibs
+private let xibContent = ProjectResource.sharedInstance.xibs
     .flatMap { $0.generateExtension() }
     .flatMap { $0.declaration }
     .joinWithSeparator(newLine)
 
-let content = (
+private let images = Image(urls: paths).generate().declaration + newLine
+
+private let content = (
     Header
         + importsContent + newLine
         + xibProtocolContent
@@ -146,7 +153,7 @@ let content = (
         + tableViewCellContent
         + collectionViewCellContent
         + xibContent
-    
+        + images
 )
 
 func write(code: String, fileURL: NSURL) {
@@ -158,3 +165,5 @@ func write(code: String, fileURL: NSURL) {
 }
 
 write(content, fileURL: writeUrl)
+write(debug, fileURL: debugURL)
+
