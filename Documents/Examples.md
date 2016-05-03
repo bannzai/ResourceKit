@@ -109,3 +109,14 @@ _Use ResourceKit_
 
 let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CollectionViewCell.Reusable.ReuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
 ```
+
+## UIImage
+_Use Asset Catalog_
+```swift
+let image = UIImage.Asset.image_name
+```
+
+_Not use Asset Catalog_
+```swift
+let image = UIImage.Resource.image_name
+```
