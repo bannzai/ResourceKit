@@ -1,15 +1,15 @@
 //
-//  ResourceKitDemoTests.swift
-//  ResourceKitDemoTests
+//  XibTests.swift
+//  ResourceKitDemo
 //
-//  Created by kingkong999yhirose on 2016/04/10.
+//  Created by kingkong999yhirose on 2016/05/03.
 //  Copyright © 2016年 kingkong999yhirose. All rights reserved.
 //
 
 import XCTest
 @testable import ResourceKitDemo
 
-class ResourceKitDemoTests: XCTestCase {
+class XibTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -19,15 +19,17 @@ class ResourceKitDemoTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        
-    }
     
     func testPerformanceExample() {
-        // This is an example of a performance test case.
         self.measureBlock {
-            // Put the code you want to measure the time of here.
         }
     }
     
+    func testName() {
+        XCTAssertTrue(CustomView.Xib().name == "CustomView")
+    }
+    
+    func testView() {
+        XCTAssertTrue(CustomView.Xib().view().isMemberOfClass(CustomView))
+    }
 }

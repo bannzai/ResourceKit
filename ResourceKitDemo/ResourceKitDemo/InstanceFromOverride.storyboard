@@ -8,7 +8,7 @@
         <!--View Controller-->
         <scene sceneID="mtq-9f-gh4">
             <objects>
-                <viewController storyboardIdentifier="BaseInstance" id="bH9-2s-pzC" customClass="ViewController" customModule="ResourceKit" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BaseInstance" id="bH9-2s-pzC" customClass="ViewController" customModule="ResourceKitDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SrX-RI-pOC"/>
                         <viewControllerLayoutGuide type="bottom" id="SGB-3G-xJ4"/>
