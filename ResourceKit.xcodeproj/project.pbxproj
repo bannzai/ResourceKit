@@ -21,6 +21,9 @@
 		9C56AE741CC11CA800A38BCE /* viewcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE6B1CC11CA800A38BCE /* viewcontroller.swift */; };
 		9C56AE751CC11CA800A38BCE /* xib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE6C1CC11CA800A38BCE /* xib.swift */; };
 		9C56AE771CC11F9500A38BCE /* resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE761CC11F9500A38BCE /* resource.swift */; };
+		9C8EB9161CD84BBA00E63A84 /* ProjectParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB9151CD84BBA00E63A84 /* ProjectParser.swift */; };
+		9C8EB91B1CD84BD100E63A84 /* StoryboardParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */; };
+		9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,9 @@
 		9C56AE6B1CC11CA800A38BCE /* viewcontroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewcontroller.swift; sourceTree = "<group>"; };
 		9C56AE6C1CC11CA800A38BCE /* xib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = xib.swift; sourceTree = "<group>"; };
 		9C56AE761CC11F9500A38BCE /* resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = resource.swift; sourceTree = "<group>"; };
+		9C8EB9151CD84BBA00E63A84 /* ProjectParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectParser.swift; sourceTree = "<group>"; };
+		9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardParser.swift; sourceTree = "<group>"; };
+		9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibParser.swift; sourceTree = "<group>"; };
 		9C91FD7E1CC126870028B9DD /* Resource.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.generated.swift; sourceTree = "<group>"; };
 		9C91FD811CC126870028B9DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C91FD821CC126870028B9DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -139,11 +145,11 @@
 		9C56AE531CC11A9600A38BCE /* ResourceKit */ = {
 			isa = PBXGroup;
 			children = (
+				9C8EB91E1CD84BE900E63A84 /* parser */,
 				9C56AE541CC11A9600A38BCE /* main.swift */,
 				9C56AE641CC11CA800A38BCE /* cell.swift */,
 				9C56AE651CC11CA800A38BCE /* component.swift */,
 				9C56AE661CC11CA800A38BCE /* Helper.swift */,
-				9C56AE681CC11CA800A38BCE /* parser.swift */,
 				9C56AE691CC11CA800A38BCE /* project.swift */,
 				9C56AE6A1CC11CA800A38BCE /* structure.swift */,
 				9C56AE6B1CC11CA800A38BCE /* viewcontroller.swift */,
@@ -162,6 +168,17 @@
 				9C56AE5F1CC11C8000A38BCE /* XCProjectFile.swift */,
 			);
 			name = Xcode;
+			sourceTree = "<group>";
+		};
+		9C8EB91E1CD84BE900E63A84 /* parser */ = {
+			isa = PBXGroup;
+			children = (
+				9C56AE681CC11CA800A38BCE /* parser.swift */,
+				9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */,
+				9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */,
+				9C8EB9151CD84BBA00E63A84 /* ProjectParser.swift */,
+			);
+			name = parser;
 			sourceTree = "<group>";
 		};
 		9C91FD7D1CC126870028B9DD /* ResourceKitDemo */ = {
@@ -327,14 +344,17 @@
 				9C56AE6E1CC11CA800A38BCE /* component.swift in Sources */,
 				9C56AE621CC11C8000A38BCE /* Serialization.swift in Sources */,
 				9C56AE6D1CC11CA800A38BCE /* cell.swift in Sources */,
+				9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */,
 				9C56AE611CC11C8000A38BCE /* PBXObject.swift in Sources */,
 				9C56AE631CC11C8000A38BCE /* XCProjectFile.swift in Sources */,
 				9C56AE751CC11CA800A38BCE /* xib.swift in Sources */,
+				9C8EB91B1CD84BD100E63A84 /* StoryboardParser.swift in Sources */,
 				9C56AE771CC11F9500A38BCE /* resource.swift in Sources */,
 				9C56AE551CC11A9600A38BCE /* main.swift in Sources */,
 				9C56AE601CC11C8000A38BCE /* Extensions.swift in Sources */,
 				9C56AE711CC11CA800A38BCE /* parser.swift in Sources */,
 				9C56AE721CC11CA800A38BCE /* project.swift in Sources */,
+				9C8EB9161CD84BBA00E63A84 /* ProjectParser.swift in Sources */,
 				9C56AE6F1CC11CA800A38BCE /* Helper.swift in Sources */,
 				9C56AE731CC11CA800A38BCE /* structure.swift in Sources */,
 			);
