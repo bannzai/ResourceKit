@@ -180,10 +180,11 @@ extension ViewController {
             name: "Segue",
             lets: segueIdentifiers.flatMap {
                 Let (
-                isStatic: true,
+                    isStatic: true,
                     name: $0.lowerFirst,
                     type: "String",
-                    value: $0
+                    value: $0,
+                    isConvertStringValue: true
                 )
             }
         )

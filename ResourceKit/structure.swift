@@ -199,18 +199,25 @@ struct Let: Structure {
     let name: String
     let type: String
     let value: String
+    let isConvertStringValue: Bool
+    
+    init(isStatic: Bool = false, name: String, type: String, value: String, isConvertStringValue: Bool = false) {
+        self.isStatic = isStatic
+        self.name = name
+        self.type = type
+        self.value = value
+        self.isConvertStringValue = isConvertStringValue
+    }
     
     var letType: String {
         return isStatic ? "static let" : "let"
     }
     
     var declaration: String {
-        switch type {
-        case "String":
+        if isConvertStringValue {
             return "\(letType) \(name): \(type) = \"\(value)\""
-        default:
-            return "\(letType) \(name): \(type) = \(value)"
         }
+        return "\(letType) \(name): \(type) = \(value)"
     }
 }
 
