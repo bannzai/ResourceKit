@@ -5,9 +5,9 @@
 	<key>Segue</key>
 	<dict>
 		<key>Standard</key>
-		<false/>
-		<key>Addition</key>
 		<true/>
+		<key>Addition</key>
+		<false/>
 	</dict>
 	<key>Image</key>
 	<dict>
