@@ -168,7 +168,7 @@ extension ViewController {
     }
     
     private func structs() -> [Struct] {
-        if !config.needGenerateSegue {
+        if !config.segue.standard {
             return []
         }
         if _seguesForGenerateStruct.isEmpty {
