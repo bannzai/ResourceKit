@@ -19,7 +19,7 @@ class TableViewController: UITableViewController {
         String.Localized.hello_world_06,
         String.Localized.hello_world_1,
         String.Localized.hello_world_05,
-        String.Localized.hello_world,
+        String.Localized.helloworld,
         String.Localized.hello_world_3
     ]
 

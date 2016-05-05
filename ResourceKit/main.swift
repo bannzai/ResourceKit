@@ -17,6 +17,7 @@ try! outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
 private let writeUrl: NSURL
 writeUrl = outputUrl.URLByAppendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
 
+
 func imports() -> [String] {
     guard let content = try? String(contentsOfURL: writeUrl) else {
         return ["import UIKit"]

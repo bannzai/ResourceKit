@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Segue</key>
+	<dict>
+		<key>Identifier</key>
+		<true/>
+		<key>Perform</key>
+		<true/>
+		<key>Addition</key>
+		<false/>
+	</dict>
+	<key>Image</key>
+	<dict>
+		<key>AssetCatalog</key>
+		<true/>
+		<key>ProjectResource</key>
+		<true/>
+	</dict>
+	<key>String</key>
+	<dict>
+		<key>Localized</key>
+		<true/>
+	</dict>
+	<key>ViewController</key>
+	<dict>
+		<key>InstantiateStoryboard</key>
+		<true/>
+	</dict>
+	<key>Nib</key>
+	<dict>
+		<key>Xib</key>
+		<true/>
+	</dict>
+	<key>Reusable</key>
+	<dict>
+		<key>Identifier</key>
+		<true/>
+	</dict>
+</dict>
+</plist>

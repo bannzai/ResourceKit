@@ -22,6 +22,7 @@
 		9C56AE751CC11CA800A38BCE /* xib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE6C1CC11CA800A38BCE /* xib.swift */; };
 		9C56AE771CC11F9500A38BCE /* resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE761CC11F9500A38BCE /* resource.swift */; };
 		9C5990CA1CD89073008884DA /* LocalizedStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5990C91CD89073008884DA /* LocalizedStringGenerator.swift */; };
+		9C5990EB1CDB5145008884DA /* ConfigParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5990EA1CDB5145008884DA /* ConfigParser.swift */; };
 		9C8EB9161CD84BBA00E63A84 /* ProjectParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB9151CD84BBA00E63A84 /* ProjectParser.swift */; };
 		9C8EB91B1CD84BD100E63A84 /* StoryboardParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */; };
 		9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */; };
@@ -81,6 +82,7 @@
 		9C56AE6C1CC11CA800A38BCE /* xib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = xib.swift; sourceTree = "<group>"; };
 		9C56AE761CC11F9500A38BCE /* resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = resource.swift; sourceTree = "<group>"; };
 		9C5990C91CD89073008884DA /* LocalizedStringGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringGenerator.swift; sourceTree = "<group>"; };
+		9C5990EA1CDB5145008884DA /* ConfigParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigParser.swift; sourceTree = "<group>"; };
 		9C8EB9151CD84BBA00E63A84 /* ProjectParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectParser.swift; sourceTree = "<group>"; };
 		9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardParser.swift; sourceTree = "<group>"; };
 		9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibParser.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */,
 				9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */,
 				9C8EB9151CD84BBA00E63A84 /* ProjectParser.swift */,
+				9C5990EA1CDB5145008884DA /* ConfigParser.swift */,
 			);
 			name = Parsers;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				9C8EB9211CD8553800E63A84 /* ImageGenerator.swift in Sources */,
 				9C56AE6E1CC11CA800A38BCE /* component.swift in Sources */,
 				9C56AE621CC11C8000A38BCE /* Serialization.swift in Sources */,
+				9C5990EB1CDB5145008884DA /* ConfigParser.swift in Sources */,
 				9C56AE6D1CC11CA800A38BCE /* cell.swift in Sources */,
 				9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */,
 				9C56AE611CC11C8000A38BCE /* PBXObject.swift in Sources */,
