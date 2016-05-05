@@ -168,7 +168,7 @@ extension ViewController {
     }
     
     private func structs() -> [Struct] {
-        if !config.segue.standard {
+        if !config.needGenerateSegue {
             return []
         }
         if _seguesForGenerateStruct.isEmpty {
@@ -194,7 +194,7 @@ extension ViewController {
     
     private func generateFunctions(storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
         if !config.viewController.instantiateStoryboard &&
-            !config.segue.standard {
+            !config.needGenerateSegue {
             return []
         }
         
@@ -202,7 +202,7 @@ extension ViewController {
             return performSegues(storyboard)
         }
         
-        if !config.segue.standard {
+        if !config.needGenerateSegue {
             return [generateFromStoryboard(storyboard)]
         }
         
@@ -210,7 +210,7 @@ extension ViewController {
     }
     
     private func performSegues(storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
-        if !config.segue.standard {
+        if !config.needGenerateSegue {
             return []
         }
         
@@ -225,6 +225,18 @@ extension ViewController {
     }
     
     private func performSegue(storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> Function {
+        if config.segue.addition {
+            return Function (
+                head: instanceFunctionHeadForSegue(storyboard),
+                name: "perFormSegue\(segueIdentifier)",
+                arguments: [Argument(name: "closure", type: "(UIStoryboardSegue -> Void)?", defaultValue: "nil")],
+                returnType: "Void",
+                body: Body([
+                    "performSegue(\"\(segueIdentifier)\", closure: closure)"
+                    ]
+                )
+            )
+        }
         return Function (
             head: instanceFunctionHeadForSegue(storyboard),
             name: "perFormSegue\(segueIdentifier)",
@@ -232,7 +244,7 @@ extension ViewController {
             returnType: "Void",
             body: Body(
                 "performSegueWithIdentifier(\"\(segueIdentifier)\", sender: sender)"
-                )
+            )
         )
     }
     

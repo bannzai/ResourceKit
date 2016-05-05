@@ -16,6 +16,10 @@ struct Config {
     var nib: ConfigParser.Nib = ConfigParser.Nib()
     var reusable: ConfigParser.Reusable = ConfigParser.Reusable()
     
+    var needGenerateSegue: Bool {
+        return segue.addition || segue.standard
+    }
+    
     init() {
         if let configuPath = NSBundle.mainBundle().pathForResource("ResourceKitConfig", ofType: "plist"),
             dictionary = NSDictionary(contentsOfFile: configuPath) as? [String: AnyObject] {

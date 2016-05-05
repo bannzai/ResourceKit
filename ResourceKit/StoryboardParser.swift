@@ -63,7 +63,7 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        if !config.segue.standard {
+        if !config.needGenerateSegue {
             return
         }
         
