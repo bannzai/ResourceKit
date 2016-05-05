@@ -37,11 +37,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier != CollectionViewController.Segue.showViewController {
-            fatalError("\(#file) + \(#function) + \(#line)")
-        }
-        
-        segue.destinationViewController.title = sender as? String
+        fatalError()
     }
 
     // MARK: UICollectionViewDataSource
@@ -65,7 +61,9 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        perFormSegueShowViewController("Title")
+        perFormSegueShowViewController() { segue in
+            segue.destinationViewController.title = "Title"
+        }
     }
 
 
