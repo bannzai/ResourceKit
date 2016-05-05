@@ -226,16 +226,16 @@ extension String {
 	
 	struct Localized {
 		static let hello_world_4: String = NSLocalizedString("hello world 4", comment: "")
-		static let hello_world_07: String = NSLocalizedString("hello?world 07", comment: "")
 		static let hello_world_2: String = NSLocalizedString("hello world 2", comment: "")
 		static let hello_world_10: String = NSLocalizedString("hello}world 10", comment: "")
 		static let hello_world_09: String = NSLocalizedString("hello(world 09", comment: "")
+		static let helloworld: String = NSLocalizedString("helloworld", comment: "")
 		static let hello_world_08: String = NSLocalizedString("hello,world 08", comment: "")
 		static let hello_world_06: String = NSLocalizedString("hello!world 06", comment: "")
 		static let hello_world_1: String = NSLocalizedString("hello world 1", comment: "")
 		static let hello_world_05: String = NSLocalizedString("hello.world 05", comment: "")
-		static let hello_world: String = NSLocalizedString("hello world", comment: "")
 		static let hello_world_3: String = NSLocalizedString("hello world 3", comment: "")
+		static let hello_world_07: String = NSLocalizedString("hello?world 07", comment: "")
 	
 	} 
 } 

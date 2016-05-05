@@ -24,7 +24,6 @@ final class StoryboardParser: NSObject, Parsable {
             fatalError("\(#file) + \(#function) + \(#line)")
         }
         
-        
         _name = name
         // Don't create ipad resources
         if _name.containsString("~") { 
@@ -63,11 +62,20 @@ final class StoryboardParser: NSObject, Parsable {
         guard let segueIdentifier = attributes["identifier"] else {
             return
         }
+        
+        if !config.segue.standard {
+            return
+        }
+        
         _currentViewControllerInfo?.segues.append(segueIdentifier)
     }
     
     private func generateViewControllerResource(attributes: [String: String], elementName: String) {
         guard let viewControllerId = attributes["id"] else {
+            return
+        }
+        
+        if !config.viewController.instantiateStoryboard {
             return
         }
         
@@ -95,6 +103,10 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
+        if !config.reusable.identifier {
+            return
+        }
+        
         let className = ResourceType(reusable: attributes["customClass"] ?? elementName).name
         ProjectResource
             .sharedInstance
@@ -108,6 +120,11 @@ final class StoryboardParser: NSObject, Parsable {
         guard let reusableIdentifier = attributes["reuseIdentifier"] else {
             return
         }
+        
+        if !config.reusable.identifier {
+            return
+        }
+        
         
         let className = ResourceType(reusable: attributes["customClass"] ?? elementName).name
         ProjectResource

@@ -28,6 +28,24 @@ struct Image: Generattable {
     }
     
     func generate() -> Extension {
+        if !config.image.assetCatalog && !config.image.projectResource {
+            return Extension(type: "UIImage")
+        }
+        
+        if !config.image.assetCatalog {
+            return Extension(
+                type: "UIImage",
+                structs: [resources.generate()]
+            )
+        }
+        
+        if !config.image.projectResource {
+            return Extension(
+                type: "UIImage",
+                structs: [assets.generate()]
+            )
+        }
+        
         return Extension(
             type: "UIImage",
             structs: [

@@ -124,7 +124,6 @@ class ViewController {
             }
         }
     }
-
     
     func classFunctionHeadForViewControllerInstance(storyboard: ViewControllerInfoOfStoryboard) -> String {
         return needOverrideForStoryboard(storyboard) ? "class override" : "class"
@@ -169,6 +168,9 @@ extension ViewController {
     }
     
     private func structs() -> [Struct] {
+        if !config.segue.standard {
+            return []
+        }
         if _seguesForGenerateStruct.isEmpty {
             return []
         }
@@ -191,10 +193,27 @@ extension ViewController {
     }
     
     private func generateFunctions(storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
+        if !config.viewController.instantiateStoryboard &&
+            !config.segue.standard {
+            return []
+        }
+        
+        if !config.viewController.instantiateStoryboard {
+            return performSegues(storyboard)
+        }
+        
+        if !config.segue.standard {
+            return [generateFromStoryboard(storyboard)]
+        }
+        
         return [generateFromStoryboard(storyboard)] + performSegues(storyboard)
     }
     
     private func performSegues(storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
+        if !config.segue.standard {
+            return []
+        }
+        
         return storyboard.segues.flatMap {
             performSegueAndTemporarySave(storyboard, segueIdentifier: $0)
         }
