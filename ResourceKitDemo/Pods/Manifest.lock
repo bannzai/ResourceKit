@@ -1,0 +1,10 @@
+PODS:
+  - SegueAddition (1.0.0)
+
+DEPENDENCIES:
+  - SegueAddition
+
+SPEC CHECKSUMS:
+  SegueAddition: 3118093a089c44a57f75e28f1dd2e7bce1e45449
+
+COCOAPODS: 0.39.0
