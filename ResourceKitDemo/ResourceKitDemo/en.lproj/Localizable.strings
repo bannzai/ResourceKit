@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  ResourceKitDemo
+
+  Created by kingkong999yhirose on 2016/05/03.
+  Copyright © 2016年 kingkong999yhirose. All rights reserved.
+*/
+
+
+"hello world 1" = "hello world 1";
+"hello world 2" = "hello world 2";
+"hello world 3" = "hello world 3";
+"hello world 4" = "hello world 4";
+
+"hello.world 05" = "hello.world 05" ;
+"hello!world 06" = "hello!world 06";
+"hello?world 07" = "hello?world 07";
+"hello,world 08" = "hello,world 08";
+"hello(world 09" = "hello(world 09";
+"hello}world 10" = "hello}world 10";

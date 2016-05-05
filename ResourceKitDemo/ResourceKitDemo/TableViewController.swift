@@ -9,6 +9,19 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    let localized = [
+        String.Localizable.hello_world_4,
+        String.Localizable.hello_world_07,
+        String.Localizable.hello_world_2,
+        String.Localizable.hello_world_10,
+        String.Localizable.hello_world_09,
+        String.Localizable.hello_world_08,
+        String.Localizable.hello_world_06,
+        String.Localizable.hello_world_1,
+        String.Localizable.hello_world_05,
+        String.Localizable.hello_world,
+        String.Localizable.hello_world_3
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +38,12 @@ class TableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 20
+        return localized.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCell.Xib().name, forIndexPath: indexPath) // TODO: Support Generics Type
-        cell.textLabel?.text = "Demo"
+        cell.textLabel?.text = localized[indexPath.row]
         return cell
     }
     

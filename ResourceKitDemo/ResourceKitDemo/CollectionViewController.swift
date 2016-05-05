@@ -38,7 +38,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier != CollectionViewController.Segue.showViewController {
-            fatalError()
+            fatalError("\(#file) + \(#function) + \(#line)")
         }
         
         segue.destinationViewController.title = sender as? String
