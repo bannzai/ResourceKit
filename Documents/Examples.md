@@ -120,3 +120,9 @@ _Not use Asset Catalog_
 ```swift
 let image = UIImage.Resource.image_name
 ```
+
+## LocalizedString
+```swift
+let string = String.Localized.hello_world
+// == NSLocalizedString("hello world", comment: "")
+```

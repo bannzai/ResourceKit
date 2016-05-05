@@ -75,7 +75,7 @@ CocoaPods is the recommended way of installation, as this avoids including any b
 ## TODO:
  - [x] Cocoapods support.  
  - [x] Images support.  
- - [ ] LocaliazedString Support.  
+ - [x] LocaliazedString Support.  
  - [ ] Adjust indent.
  - [ ] Collaboration [SegueAddition](https://github.com/bannzai/SegueAddition).
  - [ ] User Chose Generate Resource Support.  
