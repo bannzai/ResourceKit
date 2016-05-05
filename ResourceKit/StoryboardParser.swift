@@ -63,11 +63,20 @@ final class StoryboardParser: NSObject, Parsable {
         guard let segueIdentifier = attributes["identifier"] else {
             return
         }
+        
+        if !config.segue.identifier && !config.segue.perform {
+            return
+        }
+        
         _currentViewControllerInfo?.segues.append(segueIdentifier)
     }
     
     private func generateViewControllerResource(attributes: [String: String], elementName: String) {
         guard let viewControllerId = attributes["id"] else {
+            return
+        }
+        
+        if !config.viewController.instantiateViewController {
             return
         }
         
@@ -95,6 +104,10 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
+        if !config.reusable.identifier {
+            return
+        }
+        
         let className = ResourceType(reusable: attributes["customClass"] ?? elementName).name
         ProjectResource
             .sharedInstance
@@ -108,6 +121,11 @@ final class StoryboardParser: NSObject, Parsable {
         guard let reusableIdentifier = attributes["reuseIdentifier"] else {
             return
         }
+        
+        if !config.reusable.identifier {
+            return
+        }
+        
         
         let className = ResourceType(reusable: attributes["customClass"] ?? elementName).name
         ProjectResource

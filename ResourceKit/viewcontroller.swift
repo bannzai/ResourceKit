@@ -169,6 +169,9 @@ extension ViewController {
     }
     
     private func structs() -> [Struct] {
+        if !config.segue.identifier {
+            return []
+        }
         if _seguesForGenerateStruct.isEmpty {
             return []
         }
@@ -191,6 +194,19 @@ extension ViewController {
     }
     
     private func generateFunctions(storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
+        if !config.viewController.instantiateViewController &&
+            !config.segue.perform {
+            return []
+        }
+        
+        if !config.viewController.instantiateViewController {
+            return performSegues(storyboard)
+        }
+        
+        if !config.segue.perform {
+            return [generateFromStoryboard(storyboard)]
+        }
+        
         return [generateFromStoryboard(storyboard)] + performSegues(storyboard)
     }
     

@@ -17,6 +17,7 @@ try! outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
 private let writeUrl: NSURL
 writeUrl = outputUrl.URLByAppendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
 
+let config = Config()
 
 func imports() -> [String] {
     guard let content = try? String(contentsOfURL: writeUrl) else {
@@ -52,7 +53,6 @@ paths
     .filter { $0.pathExtension! == "xib" }
     .forEach { let _ = XibPerser(url: $0) }
 
-
 private let importsContent = imports().joinWithSeparator(newLine)
 
 private let xibProtocolContent = Protocol(
@@ -68,7 +68,7 @@ private let xibProtocolContent = Protocol(
             returnType: "UINib"
         )
     ]
-).declaration + newLine
+    ).declaration + newLine
 
 private let tableViewExtensionContent = Extension(
     type: "UITableView",
@@ -122,23 +122,43 @@ private let viewControllerContent = ProjectResource.sharedInstance.viewControlle
     .flatMap { $0.declaration }
     .joinWithSeparator(newLine)
 
-private let tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
-    .flatMap { $0.generateExtension() }
-    .flatMap { $0.declaration }
-    .joinWithSeparator(newLine)
+private let tableViewCellContent: String
+private let collectionViewCellContent: String
 
-private let collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
-    .flatMap { $0.generateExtension() }
-    .flatMap { $0.declaration }
-    .joinWithSeparator(newLine)
+if config.reusable.identifier {
+    tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
+        .flatMap { $0.generateExtension() }
+        .flatMap { $0.declaration }
+        .joinWithSeparator(newLine)
+    
+    collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
+        .flatMap { $0.generateExtension() }
+        .flatMap { $0.declaration }
+        .joinWithSeparator(newLine)
+    
+} else {
+    tableViewCellContent = ""
+    collectionViewCellContent = ""
+}
 
-private let xibContent = ProjectResource.sharedInstance.xibs
-    .flatMap { $0.generateExtension() }
-    .flatMap { $0.declaration }
-    .joinWithSeparator(newLine)
+private let xibContent: String
+if config.nib.xib {
+    xibContent = ProjectResource.sharedInstance.xibs
+        .flatMap { $0.generateExtension() }
+        .flatMap { $0.declaration }
+        .joinWithSeparator(newLine)
+} else {
+    xibContent = ""
+}
 
-private let images = Image(urls: paths).generate().declaration + newLine
-private let strings = LocalizedString(urls: parser.localizablePaths).generate().declaration + newLine
+private let imageContent = Image(urls: paths).generate().declaration + newLine
+
+private let stringContent: String
+if config.string.localized {
+ stringContent = LocalizedString(urls: parser.localizablePaths).generate().declaration + newLine
+} else {
+    stringContent = ""
+}
 
 private let content = (
     Header
@@ -150,8 +170,8 @@ private let content = (
         + tableViewCellContent
         + collectionViewCellContent
         + xibContent
-        + images
-        + strings
+        + imageContent
+        + stringContent
 )
 
 func write(code: String, fileURL: NSURL) {
