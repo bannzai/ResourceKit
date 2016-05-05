@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier != ViewController.Segue.showSecondTable {
-            fatalError()
+            fatalError("\(#file) + \(#function) + \(#line)")
         }
     }
     @IBAction func tappedSecondCollectionView() {
