@@ -143,6 +143,7 @@ private let xibContent = ProjectResource.sharedInstance.xibs
     .joinWithSeparator(newLine)
 
 private let images = Image(urls: paths).generate().declaration + newLine
+private let strings = LocalizedString(urls: parser.localizablePaths).generate().declaration + newLine
 
 private let content = (
     Header
@@ -155,6 +156,7 @@ private let content = (
         + collectionViewCellContent
         + xibContent
         + images
+        + strings
 )
 
 func write(code: String, fileURL: NSURL) {
