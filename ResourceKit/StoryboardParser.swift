@@ -24,7 +24,6 @@ final class StoryboardParser: NSObject, Parsable {
             fatalError("\(#file) + \(#function) + \(#line)")
         }
         
-        
         _name = name
         // Don't create ipad resources
         if _name.containsString("~") { 
@@ -64,7 +63,7 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        if !config.segue.identifier && !config.segue.perform {
+        if !config.segue.standard {
             return
         }
         

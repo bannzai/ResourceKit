@@ -50,18 +50,15 @@ struct ConfigParser {
     }
     
     struct Segue {
-        let identifier: Bool
-        let perform: Bool
+        let standard: Bool
         let addition: Bool
         
         init() {
-            identifier = true
-            perform = true
-            addition = true
+            standard = true
+            addition = false
         }
         init(_ dictionary: [Swift.String: Bool]) {
-            identifier = dictionary["Identifier"] ?? false
-            perform = dictionary["Perform"] ?? false
+            standard = dictionary["Standard"] ?? false
             addition = dictionary["Addition"] ?? false
         }
     }

@@ -4,9 +4,7 @@
 <dict>
 	<key>Segue</key>
 	<dict>
-		<key>Identifier</key>
-		<true/>
-		<key>Perform</key>
+		<key>Standard</key>
 		<true/>
 		<key>Addition</key>
 		<false/>
