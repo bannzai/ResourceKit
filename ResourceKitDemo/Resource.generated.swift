@@ -224,7 +224,7 @@ extension UIImage {
 
 extension String { 
 	
-	struct Localizable {
+	struct Localized {
 		static let hello_world_4: String = NSLocalizedString("hello world 4", comment: "")
 		static let hello_world_07: String = NSLocalizedString("hello?world 07", comment: "")
 		static let hello_world_2: String = NSLocalizedString("hello world 2", comment: "")

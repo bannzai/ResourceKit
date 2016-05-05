@@ -17,8 +17,8 @@ class LocalizedStringTest: XCTestCase {
     }
     
     func testLocalizedString() {
-        XCTAssertTrue(NSLocalizedString("hello world 4", comment: "") == "hello world 4")
-        XCTAssertTrue(NSLocalizedString("hello.world 05", comment: "") == "hello.world 05")
+        XCTAssertTrue(NSLocalizedString("hello world 4", comment: "") == String.Localized.hello_world_4)
+        XCTAssertTrue(NSLocalizedString("hello.world 05", comment: "") == String.Localized.hello_world_05)
     }
 
 }

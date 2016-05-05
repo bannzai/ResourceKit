@@ -10,17 +10,17 @@ import UIKit
 
 class TableViewController: UITableViewController {
     let localized = [
-        String.Localizable.hello_world_4,
-        String.Localizable.hello_world_07,
-        String.Localizable.hello_world_2,
-        String.Localizable.hello_world_10,
-        String.Localizable.hello_world_09,
-        String.Localizable.hello_world_08,
-        String.Localizable.hello_world_06,
-        String.Localizable.hello_world_1,
-        String.Localizable.hello_world_05,
-        String.Localizable.hello_world,
-        String.Localizable.hello_world_3
+        String.Localized.hello_world_4,
+        String.Localized.hello_world_07,
+        String.Localized.hello_world_2,
+        String.Localized.hello_world_10,
+        String.Localized.hello_world_09,
+        String.Localized.hello_world_08,
+        String.Localized.hello_world_06,
+        String.Localized.hello_world_1,
+        String.Localized.hello_world_05,
+        String.Localized.hello_world,
+        String.Localized.hello_world_3
     ]
 
     override func viewDidLoad() {

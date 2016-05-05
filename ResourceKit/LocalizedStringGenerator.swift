@@ -30,7 +30,7 @@ struct LocalizedString: Generattable {
             type: "String",
             structs: [
                 Struct(
-                    name: "Localizable",
+                    name: "Localized",
                     lets: generateLocalizableConstants()
                 )
             ]
