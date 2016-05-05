@@ -18,10 +18,10 @@ final class StoryboardParser: NSObject, Parsable {
         super.init()
         
         guard let ex = url.pathExtension where ex == "storyboard" else {
-            fatalError()
+            fatalError("\(#file) + \(#function) + \(#line)")
         }
         guard let name = url.URLByDeletingPathExtension?.lastPathComponent else {
-            fatalError()
+            fatalError("\(#file) + \(#function) + \(#line)")
         }
         
         

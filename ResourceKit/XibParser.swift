@@ -19,10 +19,10 @@ final class XibPerser: NSObject, Parsable {
         super.init()
         
         guard let ex = url.pathExtension where ex == "xib" else {
-            fatalError()
+            fatalError("\(#file) + \(#function) + \(#line)")
         }
         guard let name = url.URLByDeletingPathExtension?.lastPathComponent else {
-            fatalError()
+            fatalError("\(#file) + \(#function) + \(#line)")
         }
         
         _name = name

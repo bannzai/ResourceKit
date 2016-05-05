@@ -39,7 +39,7 @@ class ResourceKitDemoUITests: XCTestCase {
     
     func testTable_Custom_SecondTable_SecondCustom_SecondTable() {
         let app = XCUIApplication()
-        app.tables.childrenMatchingType(.Cell).elementBoundByIndex(12).staticTexts["Demo"].tap()
+        app.tables.childrenMatchingType(.Cell).elementBoundByIndex(0).staticTexts["hello world 4"].tap()
         app.buttons["SecondTableViewController"].tap()
         app.tables.childrenMatchingType(.Cell).elementBoundByIndex(1).staticTexts["Second"].tap()
         app.buttons["SecondTableViewController"].tap()

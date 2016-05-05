@@ -11,11 +11,17 @@ private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let outputPath = NSProcessInfo.processInfo().environment["SRCROOT"]!
 private let outputUrl = NSURL(fileURLWithPath: outputPath)
 
+// DEBUG
+private var debug = ""
+private var debugURL = outputUrl.URLByAppendingPathComponent("ResourceKit.log.swift", isDirectory: false)
+
 private var resourceValue: AnyObject?
 try! outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
 
 private let writeUrl: NSURL
 writeUrl = outputUrl.URLByAppendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
+
+
 
 func imports() -> [String] {
     guard let content = try? String(contentsOfURL: writeUrl) else {
@@ -137,6 +143,7 @@ private let xibContent = ProjectResource.sharedInstance.xibs
     .joinWithSeparator(newLine)
 
 private let images = Image(urls: paths).generate().declaration + newLine
+private let strings = LocalizedString(urls: parser.localizablePaths).generate().declaration + newLine
 
 private let content = (
     Header
@@ -149,6 +156,7 @@ private let content = (
         + collectionViewCellContent
         + xibContent
         + images
+        + strings
 )
 
 func write(code: String, fileURL: NSURL) {
@@ -160,3 +168,4 @@ func write(code: String, fileURL: NSURL) {
 }
 
 write(content, fileURL: writeUrl)
+write(debug, fileURL: debugURL)

@@ -52,7 +52,8 @@ final class XibForView {
             isStatic: false,
             name: "name",
             type: "String",
-            value: className
+            value: className,
+            isConvertStringValue: true
         )
     }
     

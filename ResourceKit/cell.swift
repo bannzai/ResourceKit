@@ -45,7 +45,8 @@ extension TableViewCell {
                     isStatic: true,
                     name: $0,
                     type: "String",
-                    value: $0
+                    value: $0,
+                    isConvertStringValue: true
                 )
             }
         )
@@ -69,7 +70,8 @@ extension CollectionViewCell {
                     isStatic: true,
                     name: $0,
                     type: "String",
-                    value: $0
+                    value: $0,
+                    isConvertStringValue: true
                 )
             }
         )
