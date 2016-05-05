@@ -76,7 +76,7 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        if !config.viewController.instantiateViewController {
+        if !config.viewController.instantiateStoryboard {
             return
         }
         

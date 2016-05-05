@@ -194,12 +194,12 @@ extension ViewController {
     }
     
     private func generateFunctions(storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
-        if !config.viewController.instantiateViewController &&
+        if !config.viewController.instantiateStoryboard &&
             !config.segue.perform {
             return []
         }
         
-        if !config.viewController.instantiateViewController {
+        if !config.viewController.instantiateStoryboard {
             return performSegues(storyboard)
         }
         

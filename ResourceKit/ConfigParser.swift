@@ -92,13 +92,13 @@ struct ConfigParser {
     }
     
     struct ViewController {
-        let instantiateViewController: Bool
+        let instantiateStoryboard: Bool
         
         init() {
-            instantiateViewController = true
+            instantiateStoryboard = true
         }
         init(_ dictionary: [Swift.String: Bool]) {
-            instantiateViewController = dictionary["InstantiateViewController"] ?? false
+            instantiateStoryboard = dictionary["InstantiateStoryboard"] ?? false
         }
     }
     
