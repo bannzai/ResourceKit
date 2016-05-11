@@ -11,10 +11,6 @@ private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let outputPath = NSProcessInfo.processInfo().environment["SRCROOT"]!
 private let outputUrl = NSURL(fileURLWithPath: outputPath)
 
-// DEBUG
-private var debug = ""
-private var debugURL = outputUrl.URLByAppendingPathComponent("ResourceKit.log.swift", isDirectory: false)
-
 private var resourceValue: AnyObject?
 try! outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
 
@@ -187,4 +183,3 @@ func write(code: String, fileURL: NSURL) {
 }
 
 write(content, fileURL: writeUrl)
-write(debug, fileURL: debugURL)
