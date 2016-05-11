@@ -19,3 +19,6 @@
 "hello,world 08" = "hello,world 08";
 "hello(world 09" = "hello(world 09";
 "hello}world 10" = "hello}world 10";
+
+"hello}world 11 %@" = "hello}world 11 %@";
+"hello}world 12 %@" = "hello}world 12 %@";
