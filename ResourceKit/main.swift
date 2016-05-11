@@ -21,14 +21,14 @@ let config = Config()
 
 func imports() -> [String] {
     guard let content = try? String(contentsOfURL: writeUrl) else {
-        return ["import UIKit"]
+        return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
     }
     let pattern = "\\s*import\\s+.+"
     let regex = try! NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators)
     let results = regex.matchesInString(content, options: [], range: NSMakeRange(0, content.characters.count))
     
     if results.isEmpty {
-        return ["import UIKit"]
+        return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
     }
     
     return results.flatMap { (result) -> String? in
