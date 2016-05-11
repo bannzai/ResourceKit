@@ -93,13 +93,20 @@ struct ConfigParser {
     }
     
     struct ViewController {
-        let instantiateStoryboard: Bool
+        let instantiateStoryboardForSwift: Bool
+        let instantiateStoryboardForObjC: Bool
+        
+        var instantiateStoryboardAny: Bool {
+            return instantiateStoryboardForSwift || instantiateStoryboardForObjC
+        }
         
         init() {
-            instantiateStoryboard = true
+            instantiateStoryboardForSwift = true
+            instantiateStoryboardForObjC = true
         }
         init(_ dictionary: [Swift.String: Bool]) {
-            instantiateStoryboard = dictionary["InstantiateStoryboard"] ?? false
+            instantiateStoryboardForSwift = dictionary["InstantiateStoryboardForSwift"] ?? false
+            instantiateStoryboardForObjC = dictionary["InstantiateStoryboardForObjC"] ?? false
         }
     }
     

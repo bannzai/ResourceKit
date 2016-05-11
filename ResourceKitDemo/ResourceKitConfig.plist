@@ -23,7 +23,9 @@
 	</dict>
 	<key>ViewController</key>
 	<dict>
-		<key>InstantiateStoryboard</key>
+		<key>InstantiateStoryboardForSwift</key>
+		<true/>
+		<key>InstantiateStoryboardForObjC</key>
 		<true/>
 	</dict>
 	<key>Nib</key>
