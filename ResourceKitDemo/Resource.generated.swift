@@ -125,6 +125,24 @@ extension SecondCollectionViewController {
 	 
 } 
 
+extension ObjCOveerrideViewController { 
+	class override func initialViewController() -> ObjCOveerrideViewController {
+		let storyboard = UIStoryboard(name: "ObjCOverrideViewController", bundle: nil) 
+		let viewController = storyboard.instantiateInitialViewController() as! ObjCOveerrideViewController
+		return viewController
+	}
+	 
+} 
+
+extension ObjCViewController { 
+	class func initialViewController() -> ObjCViewController {
+		let storyboard = UIStoryboard(name: "ObjCViewController", bundle: nil) 
+		let viewController = storyboard.instantiateInitialViewController() as! ObjCViewController
+		return viewController
+	}
+	 
+} 
+
 extension UITabBarController { 
 	class func initialViewController() -> UITabBarController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 

@@ -57,29 +57,39 @@ struct ProjectResourceParser {
     }
     
     private mutating func setupSuffixViewControllers() {
-        let swiftViewControllerFiles = filterPaths(withExtension: "swift", suffixs: "ViewController")
-        let ObjCViewControllerFiles = filterPaths(withExtension: "h", suffixs: "ViewController")
+        func append(viewControllers: [ViewController]) {
+            ProjectResource
+                .sharedInstance
+                .viewControllers
+                .appendContentsOf(
+                    viewControllers
+            )
+        }
+        if config.viewController.instantiateStoryboardForSwift {
+            append(
+                viewControllerInfoWith(
+                    filterPaths(withExtension: "swift", suffixs: "ViewController"),
+                    suffix: "ViewController",
+                    pattern: ".*class\\s+.*ViewController\\s*:\\s*.*ViewController"
+                )
+            )
+        }
+        if config.viewController.instantiateStoryboardForObjC {
+            append(
+                viewControllerInfoWith(
+                    filterPaths(withExtension: "h", suffixs: "ViewController"),
+                    suffix: "ViewController",
+                    pattern: "\\s*@interface\\s+.*ViewController\\s*:\\s*.*ViewController"
+                )
+            )
+            
+        }
+        if config.viewController.instantiateStoryboardAny {
+            append(
+                ViewControllerResource.standards().flatMap { ViewController(className: $0.rawValue) }
+            )
+        }
         
-        let viewControllerFromSwiftFile = viewControllerInfoWith(
-            swiftViewControllerFiles,
-            suffix: "ViewController",
-            pattern: ".*class\\s+.*ViewController\\s*:\\s*.*ViewController"
-        )
-        let viewControllerFromObjcFile = viewControllerInfoWith(
-            ObjCViewControllerFiles,
-            suffix: "ViewController",
-            pattern: "\\s*@interface\\s+.*ViewController\\s*:\\s*.*ViewController"
-        )
-        
-        let standards = ViewControllerResource.standards().flatMap { ViewController(className: $0.rawValue) }
-        
-        ProjectResource
-            .sharedInstance
-            .viewControllers
-            .appendContentsOf(
-                viewControllerFromSwiftFile + viewControllerFromObjcFile + standards
-        )
-    
     }
     
     private func viewControllerInfoWith(path: NSURL, suffix: String, pattern: String) -> ViewController? {
@@ -100,6 +110,7 @@ struct ProjectResourceParser {
                     .componentsSeparatedByString(" ")
                     .filter { $0.hasSuffix(suffix) }
                 
+                
                 return ViewController (className: classes[0], superClassName: classes[1])
             }
             return nil }.first
@@ -111,7 +122,7 @@ struct ProjectResourceParser {
         }
     }
     
-    private mutating func filterPaths(withExtension ex: String, suffixs: String...) -> [NSURL] {
+    private func filterPaths(withExtension ex: String, suffixs: String...) -> [NSURL] {
         return paths.filter { url in
             guard let pathExtension = url.pathExtension
                 where pathExtension == ex
@@ -119,10 +130,9 @@ struct ProjectResourceParser {
                     return false
             }
             guard let fileName = url.URLByDeletingPathExtension?.lastPathComponent
-            where suffixs.contains({fileName.hasSuffix($0)})  else {
+                where suffixs.contains({fileName.hasSuffix($0)})  else {
                     return false
             }
-            
             return true
         }
     }

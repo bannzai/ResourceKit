@@ -23,7 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.hidden = false // Why wndow is hidden = true ???
         
+        runtimeValidationViewControllerFromStoryboard()
+        
         return true
+    }
+    
+    private func runtimeValidationViewControllerFromStoryboard() {
+        ObjCViewController.initialViewController()
+        ObjCOveerrideViewController.initialViewController()
     }
 
     func applicationWillResignActive(application: UIApplication) {
