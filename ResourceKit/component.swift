@@ -27,6 +27,7 @@ enum Environment: String {
     case DEVELOPER_DIR
     case SDKROOT
     case SOURCE_ROOT
+    case SRCROOT
     
     var environment: [String: String] {
         return NSProcessInfo.processInfo().environment
