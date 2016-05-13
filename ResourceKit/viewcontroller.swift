@@ -228,7 +228,7 @@ extension ViewController {
         if config.segue.addition {
             return Function (
                 head: instanceFunctionHeadForSegue(storyboard),
-                name: "perFormSegue\(segueIdentifier)",
+                name: "performSegue\(segueIdentifier)",
                 arguments: [Argument(name: "closure", type: "(UIStoryboardSegue -> Void)?", defaultValue: "nil")],
                 returnType: "Void",
                 body: Body([
@@ -239,7 +239,7 @@ extension ViewController {
         }
         return Function (
             head: instanceFunctionHeadForSegue(storyboard),
-            name: "perFormSegue\(segueIdentifier)",
+            name: "performSegue\(segueIdentifier)",
             arguments: [Argument(name: "sender", type: "AnyObject?", defaultValue: "nil")],
             returnType: "Void",
             body: Body(
