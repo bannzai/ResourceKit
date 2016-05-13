@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "ResourceKit"
-  spec.version      = "0.1.10"
+  spec.version      = "0.1.11"
   spec.license      = "MIT"
 
   spec.summary      = "Enable autocomplete use resources like in swift project"
