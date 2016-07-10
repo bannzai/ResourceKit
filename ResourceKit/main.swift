@@ -21,10 +21,6 @@ private func extractGenerateDir() -> String? {
 let outputPath = extractGenerateDir() ?? Environment.SRCROOT.element
 private let outputUrl = NSURL(fileURLWithPath: outputPath)
 
-// DEBUG
-private var debug = ""
-private var debugURL = outputUrl.URLByAppendingPathComponent("ResourceKit.log.swift", isDirectory: false)
-
 private var resourceValue: AnyObject?
 try! outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
 
@@ -197,4 +193,3 @@ func write(code: String, fileURL: NSURL) {
 }
 
 write(content, fileURL: writeUrl)
-write(debug, fileURL: debugURL)
