@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C0CC5A01D3237A700683AC6 /* error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0CC59F1D3237A700683AC6 /* error.swift */; };
 		9C56AE551CC11A9600A38BCE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE541CC11A9600A38BCE /* main.swift */; };
 		9C56AE601CC11C8000A38BCE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE5C1CC11C8000A38BCE /* Extensions.swift */; };
 		9C56AE611CC11C8000A38BCE /* PBXObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE5D1CC11C8000A38BCE /* PBXObject.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9C0CC59F1D3237A700683AC6 /* error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = error.swift; sourceTree = "<group>"; };
 		9C56AE511CC11A9600A38BCE /* ResourceKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ResourceKit; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C56AE541CC11A9600A38BCE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9C56AE5C1CC11C8000A38BCE /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Xcode.swift/Xcode/Xcode/Extensions.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				9C8EB91E1CD84BE900E63A84 /* Parsers */,
 				9C56AE541CC11A9600A38BCE /* main.swift */,
 				9C56AE641CC11CA800A38BCE /* cell.swift */,
+				9C0CC59F1D3237A700683AC6 /* error.swift */,
 				9C56AE651CC11CA800A38BCE /* component.swift */,
 				9C56AE661CC11CA800A38BCE /* Helper.swift */,
 				9C56AE691CC11CA800A38BCE /* project.swift */,
@@ -202,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C56AE741CC11CA800A38BCE /* viewcontroller.swift in Sources */,
+				9C0CC5A01D3237A700683AC6 /* error.swift in Sources */,
 				9C8EB9211CD8553800E63A84 /* ImageGenerator.swift in Sources */,
 				9C56AE6E1CC11CA800A38BCE /* component.swift in Sources */,
 				9C56AE621CC11C8000A38BCE /* Serialization.swift in Sources */,

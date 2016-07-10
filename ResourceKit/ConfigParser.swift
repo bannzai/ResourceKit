@@ -23,7 +23,10 @@ struct Config {
     init() {
         if let dictionary = NSDictionary(contentsOfFile: outputPath + "/ResourceKitConfig.plist") as? [String: AnyObject] {
             dictionary.forEach { (key: String , value: AnyObject) in
-                switch ConfigParser.Item(rawValue: key)! {
+                guard let item = ConfigParser.Item(rawValue: key) else {
+                    return
+                }
+                switch item {
                 case .Segue:
                     segue = ConfigParser.Segue(value as? [String: Bool] ?? [:])
                 case .Image:

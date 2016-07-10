@@ -108,8 +108,8 @@ extension Image {
                 .flatMap { $0.URLByDeletingPathExtension?.lastPathComponent }
                 .flatMap { name -> String? in
                     let pattern = "@[0-9]x"
-                    let regex = try! NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators)
-                    let result = regex.matchesInString(name, options: [], range: NSMakeRange(0, name.characters.count)).first
+                    let regex = try? NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators)
+                    let result = regex?.matchesInString(name, options: [], range: NSMakeRange(0, name.characters.count)).first
                     
                     if result != nil {
                         return nil

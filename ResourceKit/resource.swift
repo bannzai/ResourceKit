@@ -47,18 +47,24 @@ enum ResourceType: Equatable {
         return false
     }
     
-    init(reusable: String) {
+    init(reusable: String) throws {
         if ResourceType.isReusableStandardType(reusable) {
-            self = Standard(ReusableResource(name: reusable)!.rawValue)
+            guard let resource = ReusableResource(name: reusable) else {
+                throw ResourceKitErrorType.resourceParseError(name: reusable, errorInfo: ResourceKitErrorType.createErrorInfo())
+            }
+            self = Standard(resource.rawValue)
             return
         }
         
         self = Custom(reusable)
     }
     
-    init(viewController: String) {
+    init(viewController: String) throws {
         if ResourceType.isViewControllerStandardType(viewController) {
-            self = Standard(ViewControllerResource(name: viewController)!.rawValue)
+            guard let resource = ViewControllerResource(name: viewController) else {
+                throw ResourceKitErrorType.resourceParseError(name: viewController, errorInfo: ResourceKitErrorType.createErrorInfo())
+            }
+            self = Standard(resource.rawValue)
             return
         }
         

@@ -18,178 +18,194 @@ private func extractGenerateDir() -> String? {
         .last
 }
 
+do {
+    try Environment.verifyUseEnvironment()
+} catch {
+    exit(1)
+}
+
 let outputPath = extractGenerateDir() ?? Environment.SRCROOT.element
-private let outputUrl = NSURL(fileURLWithPath: outputPath)
+let config: Config = Config()
 
-private var resourceValue: AnyObject?
-try! outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
-
-private let writeUrl: NSURL
-writeUrl = outputUrl.URLByAppendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
-
-let config = Config()
-
-func imports() -> [String] {
-    guard let content = try? String(contentsOfURL: writeUrl) else {
-        return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
-    }
-    let pattern = "\\s*import\\s+.+"
-    let regex = try! NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators)
-    let results = regex.matchesInString(content, options: [], range: NSMakeRange(0, content.characters.count))
+do {
+    try Environment.verifyUseEnvironment()
     
-    if results.isEmpty {
-        return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
-    }
+    let outputUrl = NSURL(fileURLWithPath: outputPath)
+    var resourceValue: AnyObject?
+    try outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
     
-    return results.flatMap { (result) -> String? in
-        if result.range.location != NSNotFound {
-            let matchingString = (content as NSString).substringWithRange(result.range) as String
-            return matchingString
-                .stringByReplacingOccurrencesOfString("\n", withString: "")
+    let writeUrl: NSURL
+    writeUrl = outputUrl.URLByAppendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
+    
+    func imports() -> [String] {
+        guard let content = try? String(contentsOfURL: writeUrl) else {
+            return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
         }
-        return nil
+        let pattern = "\\s*import\\s+.+"
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators) else {
+            return ["import UIKit"]
+        }
+        let results = regex.matchesInString(content, options: [], range: NSMakeRange(0, content.characters.count))
+        
+        if results.isEmpty {
+            return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
+        }
+        
+        return results.flatMap { (result) -> String? in
+            if result.range.location != NSNotFound {
+                let matchingString = (content as NSString).substringWithRange(result.range) as String
+                return matchingString
+                    .stringByReplacingOccurrencesOfString("\n", withString: "")
+            }
+            return nil
+        }
     }
-}
-
-private let parser = ProjectResourceParser()
-private let paths = parser.paths.filter { $0.pathExtension != nil }
-
-paths
-    .filter { $0.pathExtension! == "storyboard" }
-    .forEach { let _ = StoryboardParser(url: $0) }
-
-paths
-    .filter { $0.pathExtension != nil }
-    .filter { $0.pathExtension! == "xib" }
-    .forEach { let _ = XibPerser(url: $0) }
-
-private let importsContent = imports().joinWithSeparator(newLine)
-
-private let xibProtocolContent = Protocol(
-    name: "XibProtocol",
-    getters: [
-        Var(name: "name", type: "String")
-    ],
-    functions: [
-        FunctionForProtocol(
-            head: "",
-            name: "nib",
-            arguments: [],
-            returnType: "UINib"
-        )
-    ]
-    ).declaration + newLine
-
-private let tableViewExtensionContent = Extension(
-    type: "UITableView",
-    functions: [
-        Function(
-            name: "registerNib",
-            arguments: [
-                Argument(name: "nib", type: "XibProtocol")
-            ],
-            returnType: "Void",
-            body: Body("registerNib(nib.nib(), forCellReuseIdentifier: nib.name)")
-        )
-     ,
-        Function(
-            name: "registerNibs",
-            arguments: [
-                Argument(name: "nibs", type: "[XibProtocol]")
-            ],
-            returnType: "Void",
-            body: Body("nibs.forEach(registerNib)")
-        )
-    ]
-).declaration + newLine
-
-private let collectionViewExtensionContent = Extension(
-    type: "UICollectionView",
-    functions: [
-        Function(
-            name: "registerNib",
-            arguments: [
-                Argument(name: "nib", type: "XibProtocol")
-            ],
-            returnType: "Void",
-            body: Body("registerNib(nib.nib(), forCellWithReuseIdentifier: nib.name)")
-        )
-      ,
-        Function(
-            name: "registerNibs",
-            arguments: [
-                Argument(name: "nibs", type: "[XibProtocol]")
-            ],
-            returnType: "Void",
-            body: Body("nibs.forEach(registerNib)")
-        )
-    ]
-).declaration + newLine
-
-
-private let viewControllerContent = ProjectResource.sharedInstance.viewControllers
-    .flatMap { $0.generateExtensionIfNeeded() }
-    .flatMap { $0.declaration }
-    .joinWithSeparator(newLine)
-
-private let tableViewCellContent: String
-private let collectionViewCellContent: String
-
-if config.reusable.identifier {
-    tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
-        .flatMap { $0.generateExtension() }
+    
+    let parser = try ProjectResourceParser()
+    let paths = parser.paths.filter { $0.pathExtension != nil }
+    
+    paths
+        .filter { $0.pathExtension! == "storyboard" }
+        .forEach { let _ = try? StoryboardParser(url: $0) }
+    
+    paths
+        .filter { $0.pathExtension != nil }
+        .filter { $0.pathExtension! == "xib" }
+        .forEach { let _ = try? XibPerser(url: $0) }
+    
+    let importsContent = imports().joinWithSeparator(newLine)
+    
+    let xibProtocolContent = Protocol(
+        name: "XibProtocol",
+        getters: [
+            Var(name: "name", type: "String")
+        ],
+        functions: [
+            FunctionForProtocol(
+                head: "",
+                name: "nib",
+                arguments: [],
+                returnType: "UINib"
+            )
+        ]
+        ).declaration + newLine
+    
+    let tableViewExtensionContent = Extension(
+        type: "UITableView",
+        functions: [
+            Function(
+                name: "registerNib",
+                arguments: [
+                    Argument(name: "nib", type: "XibProtocol")
+                ],
+                returnType: "Void",
+                body: Body("registerNib(nib.nib(), forCellReuseIdentifier: nib.name)")
+            )
+            ,
+            Function(
+                name: "registerNibs",
+                arguments: [
+                    Argument(name: "nibs", type: "[XibProtocol]")
+                ],
+                returnType: "Void",
+                body: Body("nibs.forEach(registerNib)")
+            )
+        ]
+        ).declaration + newLine
+    
+    let collectionViewExtensionContent = Extension(
+        type: "UICollectionView",
+        functions: [
+            Function(
+                name: "registerNib",
+                arguments: [
+                    Argument(name: "nib", type: "XibProtocol")
+                ],
+                returnType: "Void",
+                body: Body("registerNib(nib.nib(), forCellWithReuseIdentifier: nib.name)")
+            )
+            ,
+            Function(
+                name: "registerNibs",
+                arguments: [
+                    Argument(name: "nibs", type: "[XibProtocol]")
+                ],
+                returnType: "Void",
+                body: Body("nibs.forEach(registerNib)")
+            )
+        ]
+        ).declaration + newLine
+    
+    
+    let viewControllerContent = ProjectResource.sharedInstance.viewControllers
+        .flatMap { $0.generateExtensionIfNeeded() }
         .flatMap { $0.declaration }
         .joinWithSeparator(newLine)
     
-    collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
-        .flatMap { $0.generateExtension() }
-        .flatMap { $0.declaration }
-        .joinWithSeparator(newLine)
+    let tableViewCellContent: String
+    let collectionViewCellContent: String
     
-} else {
-    tableViewCellContent = ""
-    collectionViewCellContent = ""
-}
-
-private let xibContent: String
-if config.nib.xib {
-    xibContent = ProjectResource.sharedInstance.xibs
-        .flatMap { $0.generateExtension() }
-        .flatMap { $0.declaration }
-        .joinWithSeparator(newLine)
-} else {
-    xibContent = ""
-}
-
-private let imageContent = Image(urls: paths).generate().declaration + newLine
-
-private let stringContent: String
-if config.string.localized {
- stringContent = LocalizedString(urls: parser.localizablePaths).generate().declaration + newLine
-} else {
-    stringContent = ""
-}
-
-private let content = (
-    Header
-        + importsContent + newLine
-        + xibProtocolContent
-        + tableViewExtensionContent
-        + collectionViewExtensionContent
-        + viewControllerContent
-        + tableViewCellContent
-        + collectionViewCellContent
-        + xibContent
-        + imageContent
-        + stringContent
-)
-
-func write(code: String, fileURL: NSURL) {
-    do {
+    if config.reusable.identifier {
+        tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
+            .flatMap { $0.generateExtension() }
+            .flatMap { $0.declaration }
+            .joinWithSeparator(newLine)
+        
+        collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
+            .flatMap { $0.generateExtension() }
+            .flatMap { $0.declaration }
+            .joinWithSeparator(newLine)
+        
+    } else {
+        tableViewCellContent = ""
+        collectionViewCellContent = ""
+    }
+    
+    let xibContent: String
+    if config.nib.xib {
+        xibContent = ProjectResource.sharedInstance.xibs
+            .flatMap { $0.generateExtension() }
+            .flatMap { $0.declaration }
+            .joinWithSeparator(newLine)
+    } else {
+        xibContent = ""
+    }
+    
+    let imageContent = Image(urls: paths).generate().declaration + newLine
+    
+    let stringContent: String
+    if config.string.localized {
+        stringContent = LocalizedString(urls: parser.localizablePaths).generate().declaration + newLine
+    } else {
+        stringContent = ""
+    }
+    
+    let content = (
+        Header
+            + importsContent + newLine
+            + xibProtocolContent
+            + tableViewExtensionContent
+            + collectionViewExtensionContent
+            + viewControllerContent
+            + tableViewCellContent
+            + collectionViewCellContent
+            + xibContent
+            + imageContent
+            + stringContent
+    )
+    
+    func write(code: String, fileURL: NSURL) throws {
         try code.writeToURL(fileURL, atomically: true, encoding: NSUTF8StringEncoding)
-    } catch let error as NSError {
-        fatalError(error.localizedDescription)
     }
+    
+    try write(content, fileURL: writeUrl)
+} catch {
+    if let e = error as? ResourceKitErrorType {
+        print(e.description())
+        
+    } else {
+        print(error)
+    }
+    
+    exit(3)
 }
-
-write(content, fileURL: writeUrl)

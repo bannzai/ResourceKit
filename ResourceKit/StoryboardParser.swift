@@ -14,14 +14,14 @@ final class StoryboardParser: NSObject, Parsable {
     private var _viewControllerInfos: [ViewControllerInfoOfStoryboard] = []
     private var _currentViewControllerInfo: ViewControllerInfoOfStoryboard?
     
-    init(url: NSURL) {
+    init(url: NSURL) throws {
         super.init()
         
         guard let ex = url.pathExtension where ex == "storyboard" else {
-            fatalError("\(#file) + \(#function) + \(#line)")
+            throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         guard let name = url.URLByDeletingPathExtension?.lastPathComponent else {
-            fatalError("\(#file) + \(#function) + \(#line)")
+            throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
         _name = name
@@ -30,7 +30,9 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        let parser = NSXMLParser(contentsOfURL: url)!
+        guard let parser = NSXMLParser(contentsOfURL: url) else {
+            throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
+        }
         parser.delegate = self
         parser.parse()
     }
@@ -80,7 +82,7 @@ final class StoryboardParser: NSObject, Parsable {
         }
         
         let storyboardIdentifier = attributes["storyboardIdentifier"] ?? ""
-        let viewControllerName = ResourceType(viewController: attributes["customClass"] ?? elementName).name
+        let viewControllerName = try? ResourceType(viewController: attributes["customClass"] ?? elementName).name
         
         _currentViewControllerInfo = ViewControllerInfoOfStoryboard (
             viewControllerId: viewControllerId,
@@ -107,7 +109,10 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        let className = ResourceType(reusable: attributes["customClass"] ?? elementName).name
+        guard let className = try? ResourceType(reusable: attributes["customClass"] ?? elementName).name else {
+            return
+        }
+        
         ProjectResource
             .sharedInstance
             .appendTableViewCell(
@@ -126,7 +131,10 @@ final class StoryboardParser: NSObject, Parsable {
         }
         
         
-        let className = ResourceType(reusable: attributes["customClass"] ?? elementName).name
+        guard let className = try? ResourceType(reusable: attributes["customClass"] ?? elementName).name else {
+            return
+        }
+        
         ProjectResource
             .sharedInstance
             .appendCollectionViewCell(

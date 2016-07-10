@@ -14,22 +14,23 @@ struct ProjectResourceParser {
     var paths: [NSURL] = []
     var localizablePaths: [NSURL] = []
     
-    init() {
-        self.init(xcodeURL: Environment.PROJECT_FILE_PATH.path, target: Environment.TARGET_NAME.element)
+    init() throws {
+        try self.init(xcodeURL: Environment.PROJECT_FILE_PATH.path, target: Environment.TARGET_NAME.element)
     }
     
-    init(xcodeURL: NSURL, target: String) {
+    private init(xcodeURL: NSURL, target: String) throws {
         guard let projectFile = try? XCProjectFile(xcodeprojURL: xcodeURL) else {
-            fatalError("xcodeURL: \(xcodeURL) ")
+            throw ResourceKitErrorType.xcodeProjectError(xcodeURL: xcodeURL, target: target, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
+        
         let allTarget = projectFile.project.targets
-        guard let target = allTarget.filter({ $0.name == target }).first else {
-            fatalError("allTargetName: \(allTarget.flatMap { $0.name }.joinWithSeparator(", "))")
+        guard let _target = allTarget.filter({ $0.name == target }).first else {
+            throw ResourceKitErrorType.xcodeProjectAllTargetError(xcodeURL: xcodeURL, target: target, allTargetName: "\(allTarget.flatMap { $0.name }.joinWithSeparator(", "))", errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
         self.projectFile = projectFile
-        self.paths = generateFileRefPaths(target).flatMap(Environment.pathFrom)
-        self.localizablePaths = generateLocalizablePaths(target).flatMap(Environment.pathFrom)
+        self.paths = generateFileRefPaths(_target).flatMap(Environment.pathFrom)
+        self.localizablePaths = generateLocalizablePaths(_target).flatMap(Environment.pathFrom)
         
         setupSuffixViewControllers()
     }
@@ -86,15 +87,17 @@ struct ProjectResourceParser {
         }
         if config.viewController.instantiateStoryboardAny {
             append(
-                ViewControllerResource.standards().flatMap { ViewController(className: $0.rawValue) }
+                ViewControllerResource.standards().flatMap { try? ViewController(className: $0.rawValue) }
             )
         }
         
     }
     
     private func viewControllerInfoWith(path: NSURL, suffix: String, pattern: String) -> ViewController? {
-        let content = try! String(contentsOfURL: path)
-        let regex = try! NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators)
+        guard let content = try? String(contentsOfURL: path),
+            regex = try? NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators) else {
+                return nil
+        }
         let results = regex.matchesInString(content, options: [], range: NSMakeRange(0, content.characters.count))
         
         return results.flatMap { (result) -> ViewController? in
@@ -111,7 +114,7 @@ struct ProjectResourceParser {
                     .filter { $0.hasSuffix(suffix) }
                 
                 
-                return ViewController (className: classes[0], superClassName: classes[1])
+                return try? ViewController (className: classes[0], superClassName: classes[1])
             }
             return nil }.first
     }

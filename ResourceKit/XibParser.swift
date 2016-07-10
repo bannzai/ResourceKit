@@ -15,14 +15,14 @@ final class XibPerser: NSObject, Parsable {
         "UIResponder"
     ]
     
-    init(url: NSURL) {
+    init(url: NSURL) throws {
         super.init()
         
         guard let ex = url.pathExtension where ex == "xib" else {
-            fatalError("\(#file) + \(#function) + \(#line)")
+            throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         guard let name = url.URLByDeletingPathExtension?.lastPathComponent else {
-            fatalError("\(#file) + \(#function) + \(#line)")
+            throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
         _name = name
@@ -36,7 +36,9 @@ final class XibPerser: NSObject, Parsable {
             .xibIdentifiers
             .append(_name)
         
-        let parser = NSXMLParser(contentsOfURL: url)!
+        guard let parser = NSXMLParser(contentsOfURL: url) else {
+            throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
+        }
         parser.delegate = self
         parser.parse()
     }

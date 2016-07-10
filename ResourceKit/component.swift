@@ -29,12 +29,12 @@ enum Environment: String {
     case SOURCE_ROOT
     case SRCROOT
     
-    var environment: [String: String] {
+    private static var environment: [String: String] {
         return NSProcessInfo.processInfo().environment
     }
     
     var element: String {
-        return environment[self.rawValue]!
+        return Environment.environment[self.rawValue]!
     }
     
     var path: NSURL {
@@ -64,4 +64,15 @@ enum Environment: String {
                 .URLByAppendingPathComponent(relativePath)
         }
     }
+    
+    private static var elements: [Environment] {
+        return [PROJECT_FILE_PATH ,TARGET_NAME, BUILT_PRODUCTS_DIR ,DEVELOPER_DIR ,SDKROOT ,SOURCE_ROOT ,SRCROOT]
+    }
+    
+    static func verifyUseEnvironment() throws {
+        if let empty = elements.filter ({ Environment.environment[$0.rawValue] == nil }).first {
+            throw ResourceKitErrorType.environmentError(environmentKey: empty.rawValue, errorInfo: ResourceKitErrorType.createErrorInfo())
+        }
+    }
+    
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol Parsable: NSXMLParserDelegate {
-    init(url: NSURL)
+    init(url: NSURL) throws
 }
 
 

@@ -137,9 +137,9 @@ class ViewController {
         return className.name
     }
     
-    init(className: String, superClassName: String = "") {
-        self.className = ResourceType(viewController: className)
-        self.superClassName = ResourceType(viewController: superClassName)
+    init(className: String, superClassName: String = "") throws {
+        self.className = try ResourceType(viewController: className)
+        self.superClassName = try ResourceType(viewController: superClassName)
     }
     
 }
