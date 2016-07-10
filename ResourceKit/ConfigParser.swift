@@ -21,7 +21,7 @@ struct Config {
     }
     
     init() {
-        if let dictionary = NSDictionary(contentsOfFile: Environment.SRCROOT.element + "/ResourceKitConfig.plist") as? [String: AnyObject] {
+        if let dictionary = NSDictionary(contentsOfFile: outputPath + "/ResourceKitConfig.plist") as? [String: AnyObject] {
             dictionary.forEach { (key: String , value: AnyObject) in
                 switch ConfigParser.Item(rawValue: key)! {
                 case .Segue:

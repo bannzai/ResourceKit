@@ -35,6 +35,6 @@ class SecondTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        perFormSegueShowOverride()
+        performSegueShowOverride()
     }
 }

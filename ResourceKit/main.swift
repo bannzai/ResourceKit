@@ -8,7 +8,17 @@
 
 import Foundation
 private let RESOURCE_FILENAME = "Resource.generated.swift"
-private let outputPath = NSProcessInfo.processInfo().environment["SRCROOT"]!
+
+private func extractGenerateDir() -> String? {
+    return NSProcessInfo
+        .processInfo()
+        .arguments
+        .filter { $0.rangeOfString("-p ") != nil }
+        .flatMap { $0.substringFromIndex($0.rangeOfString("-p ")!.endIndex) }
+        .last
+}
+
+let outputPath = extractGenerateDir() ?? Environment.SRCROOT.element
 private let outputUrl = NSURL(fileURLWithPath: outputPath)
 
 // DEBUG

@@ -65,7 +65,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        perFormSegueShowViewController("Title")
+        performSegueShowViewController()
     }
 
 

@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedSecondTableView() {
-        perFormSegueShowSecondTable()
+        performSegueShowSecondTable()
     }
 }
 
