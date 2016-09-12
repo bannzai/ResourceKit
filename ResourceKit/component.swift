@@ -34,7 +34,18 @@ enum Environment: String {
     }
     
     var element: String {
-        return Environment.environment[self.rawValue]!
+        guard let element = Environment.environment[self.rawValue] else {
+            let message: String = [
+                "Unexpected value for xcode environment when use Environment.element property.",
+                "file: \(#file)",
+                "line: \(#line)",
+                "function: \(#function)",
+                "rawValue: \(self.rawValue)",
+                ].reduce("")
+                { $0 + $1 + "\n" }
+            fatalError("message: \(message) ")
+        }
+        return element
     }
     
     var path: NSURL {

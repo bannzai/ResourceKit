@@ -13,8 +13,12 @@ private func extractGenerateDir() -> String? {
     return NSProcessInfo
         .processInfo()
         .arguments
-        .filter { $0.rangeOfString("-p ") != nil }
-        .flatMap { $0.substringFromIndex($0.rangeOfString("-p ")!.endIndex) }
+        .flatMap { arg in
+            guard let range = arg.rangeOfString("-p ") else {
+                return nil
+            }
+            return arg.substringFromIndex(range.endIndex)
+        }
         .last
 }
 
@@ -65,12 +69,11 @@ do {
     let paths = parser.paths.filter { $0.pathExtension != nil }
     
     paths
-        .filter { $0.pathExtension! == "storyboard" }
+        .filter { $0.pathExtension == "storyboard" }
         .forEach { let _ = try? StoryboardParser(url: $0) }
     
     paths
-        .filter { $0.pathExtension != nil }
-        .filter { $0.pathExtension! == "xib" }
+        .filter { $0.pathExtension == "xib" }
         .forEach { let _ = try? XibPerser(url: $0) }
     
     let importsContent = imports().joinWithSeparator(newLine)

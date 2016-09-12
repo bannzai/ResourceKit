@@ -84,7 +84,7 @@ final class StoryboardParser: NSObject, Parsable {
         let storyboardIdentifier = attributes["storyboardIdentifier"] ?? ""
         let viewControllerName = try? ResourceType(viewController: attributes["customClass"] ?? elementName).name
         
-        _currentViewControllerInfo = ViewControllerInfoOfStoryboard (
+        let currentViewControllerInfo = ViewControllerInfoOfStoryboard (
             viewControllerId: viewControllerId,
             storyboardName: _name,
             initialViewControllerId: _initialViewControllerIdentifier,
@@ -97,7 +97,9 @@ final class StoryboardParser: NSObject, Parsable {
             .filter({ $0.name == viewControllerName })
             .first?
             .storyboardInfos
-            .append(_currentViewControllerInfo!)
+            .append(currentViewControllerInfo)
+        
+        _currentViewControllerInfo = currentViewControllerInfo
     }
     
     private func generateTableViewCells(attributes: [String: String], elementName: String) {
