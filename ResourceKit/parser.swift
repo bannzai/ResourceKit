@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol Parsable: NSXMLParserDelegate {
-    init(url: NSURL) throws
+protocol Parsable: XMLParserDelegate {
+    init(url: URL) throws
 }
 
 

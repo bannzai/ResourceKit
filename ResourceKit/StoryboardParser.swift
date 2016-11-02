@@ -9,35 +9,32 @@
 import Foundation
 
 final class StoryboardParser: NSObject, Parsable {
-    private var _name: String = ""
-    private var _initialViewControllerIdentifier: String?
-    private var _viewControllerInfos: [ViewControllerInfoOfStoryboard] = []
-    private var _currentViewControllerInfo: ViewControllerInfoOfStoryboard?
+    fileprivate var _name: String = ""
+    fileprivate var _initialViewControllerIdentifier: String?
+    fileprivate var _viewControllerInfos: [ViewControllerInfoOfStoryboard] = []
+    fileprivate var _currentViewControllerInfo: ViewControllerInfoOfStoryboard?
     
-    init(url: NSURL) throws {
+    init(url: URL) throws {
         super.init()
         
-        guard let ex = url.pathExtension where ex == "storyboard" else {
-            throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
-        }
-        guard let name = url.URLByDeletingPathExtension?.lastPathComponent else {
+        guard url.pathExtension == "storyboard" else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
-        _name = name
+        _name = url.deletingPathExtension().lastPathComponent
         // Don't create ipad resources
-        if _name.containsString("~") { 
+        if _name.contains("~") { 
             return
         }
         
-        guard let parser = NSXMLParser(contentsOfURL: url) else {
+        guard let parser = XMLParser(contentsOf: url) else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         parser.delegate = self
         parser.parse()
     }
     
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         if elementName == "document" {
             _initialViewControllerIdentifier = attributeDict["initialViewController"]
             return
@@ -60,7 +57,7 @@ final class StoryboardParser: NSObject, Parsable {
         }
     }
     
-    private func extranctionForSegue(attributes: [String: String], elementName: String) {
+    fileprivate func extranctionForSegue(_ attributes: [String: String], elementName: String) {
         guard let segueIdentifier = attributes["identifier"] else {
             return
         }
@@ -72,7 +69,7 @@ final class StoryboardParser: NSObject, Parsable {
         _currentViewControllerInfo?.segues.append(segueIdentifier)
     }
     
-    private func generateViewControllerResource(attributes: [String: String], elementName: String) {
+    fileprivate func generateViewControllerResource(_ attributes: [String: String], elementName: String) {
         guard let viewControllerId = attributes["id"] else {
             return
         }
@@ -102,7 +99,7 @@ final class StoryboardParser: NSObject, Parsable {
         _currentViewControllerInfo = currentViewControllerInfo
     }
     
-    private func generateTableViewCells(attributes: [String: String], elementName: String) {
+    fileprivate func generateTableViewCells(_ attributes: [String: String], elementName: String) {
         guard let reusableIdentifier = attributes["reuseIdentifier"] else {
             return
         }
@@ -123,7 +120,7 @@ final class StoryboardParser: NSObject, Parsable {
         )
     }
     
-    private func generateCollectionViewCells(attributes: [String: String], elementName: String) {
+    fileprivate func generateCollectionViewCells(_ attributes: [String: String], elementName: String) {
         guard let reusableIdentifier = attributes["reuseIdentifier"] else {
             return
         }

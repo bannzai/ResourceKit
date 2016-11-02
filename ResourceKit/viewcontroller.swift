@@ -73,15 +73,15 @@ class ViewController {
     
     var _seguesForGenerateStruct: [String] = []
     
-    private lazy var hasSupeClass: Bool = {
+    fileprivate lazy var hasSupeClass: Bool = {
         return self.superClass != nil
     }()
-    private lazy var superClass: ViewController? =
+    fileprivate lazy var superClass: ViewController? =
         ProjectResource.sharedInstance.viewControllers
         .filter ({ $0.className == self.superClassName })
         .first
     
-    func needOverrideForStoryboard(storyboard: ViewControllerInfoOfStoryboard) -> Bool {
+    func needOverrideForStoryboard(_ storyboard: ViewControllerInfoOfStoryboard) -> Bool {
         if !hasSupeClass {
             return false
         }
@@ -106,7 +106,7 @@ class ViewController {
         return storyboardsForIsNotInitial.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1
     }
     
-    func needOverrideForSegue(storyboard: ViewControllerInfoOfStoryboard) -> Bool {
+    func needOverrideForSegue(_ storyboard: ViewControllerInfoOfStoryboard) -> Bool {
         if !hasSupeClass {
             return false
         }
@@ -125,11 +125,11 @@ class ViewController {
         }
     }
     
-    func classFunctionHeadForViewControllerInstance(storyboard: ViewControllerInfoOfStoryboard) -> String {
+    func classFunctionHeadForViewControllerInstance(_ storyboard: ViewControllerInfoOfStoryboard) -> String {
         return needOverrideForStoryboard(storyboard) ? "class override" : "class"
     }
 
-    func instanceFunctionHeadForSegue(storyboard: ViewControllerInfoOfStoryboard) -> String {
+    func instanceFunctionHeadForSegue(_ storyboard: ViewControllerInfoOfStoryboard) -> String {
         return needOverrideForSegue(storyboard) ? "override" : "internal"
     }
     
@@ -167,7 +167,7 @@ extension ViewController {
         return generateExtension()
     }
     
-    private func structs() -> [Struct] {
+    fileprivate func structs() -> [Struct] {
         if !config.segue.standard {
             return []
         }
@@ -177,7 +177,7 @@ extension ViewController {
         return [segueStructs(_seguesForGenerateStruct)]
     }
     
-    private func segueStructs(segueIdentifiers: [String]) -> Struct {
+    fileprivate func segueStructs(_ segueIdentifiers: [String]) -> Struct {
         return Struct (
             name: "Segue",
             lets: segueIdentifiers.flatMap {
@@ -192,7 +192,7 @@ extension ViewController {
         )
     }
     
-    private func generateFunctions(storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
+    fileprivate func generateFunctions(_ storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
         if !config.viewController.instantiateStoryboardAny &&
             !config.needGenerateSegue {
             return []
@@ -209,7 +209,7 @@ extension ViewController {
         return [generateFromStoryboard(storyboard)] + performSegues(storyboard)
     }
     
-    private func performSegues(storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
+    fileprivate func performSegues(_ storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
         if !config.needGenerateSegue {
             return []
         }
@@ -219,12 +219,12 @@ extension ViewController {
         }
     }
     
-    private func performSegueAndTemporarySave(storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> Function {
+    fileprivate func performSegueAndTemporarySave(_ storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> Function {
        _seguesForGenerateStruct.append(segueIdentifier)
         return performSegue(storyboard, segueIdentifier: segueIdentifier)
     }
     
-    private func performSegue(storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> Function {
+    fileprivate func performSegue(_ storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> Function {
         if config.segue.addition {
             return Function (
                 head: instanceFunctionHeadForSegue(storyboard),
@@ -248,11 +248,11 @@ extension ViewController {
         )
     }
     
-    private func generateFromStoryboard(storyboard: ViewControllerInfoOfStoryboard) -> Function {
+    fileprivate func generateFromStoryboard(_ storyboard: ViewControllerInfoOfStoryboard) -> Function {
         return storyboard.isInitial ? fromStoryboardForInitial(storyboard) : fromStoryboard(storyboard)
     }
     
-    private func fromStoryboard(storyboard: ViewControllerInfoOfStoryboard) -> Function {
+    fileprivate func fromStoryboard(_ storyboard: ViewControllerInfoOfStoryboard) -> Function {
         if storyboard.storyboardIdentifier.isEmpty {
             return Function.dummyFunction()
         }
@@ -284,7 +284,7 @@ extension ViewController {
         )
     }
     
-    private func fromStoryboardForInitial(storyboard: ViewControllerInfoOfStoryboard) -> Function {
+    fileprivate func fromStoryboardForInitial(_ storyboard: ViewControllerInfoOfStoryboard) -> Function {
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return Function (
                 head: classFunctionHeadForViewControllerInstance(storyboard),

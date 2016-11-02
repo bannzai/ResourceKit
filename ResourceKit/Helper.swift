@@ -13,6 +13,6 @@ extension String {
         return String(characters.prefix(1))
     }
     var lowerFirst: String {
-        return first.lowercaseString + String(characters.dropFirst())
+        return first.lowercased() + String(characters.dropFirst())
     }
 }

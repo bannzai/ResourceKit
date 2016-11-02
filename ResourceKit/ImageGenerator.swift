@@ -10,7 +10,7 @@ import Foundation
 
 protocol Generattable {
     associatedtype GenerateType
-    init(urls: [NSURL])
+    init(urls: [URL])
     func generate() -> GenerateType
 }
 
@@ -18,12 +18,12 @@ struct Image: Generattable {
     let assets: Assets
     let resources: Resources
     
-    init(urls: [NSURL]) {
+    init(urls: [URL]) {
         assets = Assets(urls: urls)
         resources = Resources(urls: urls)
     }
     
-    static func imageFunction(withName: String) -> String {
+    static func imageFunction(_ withName: String) -> String {
         return "UIImage(named: \"\(withName)\")!"
     }
     
@@ -60,24 +60,23 @@ extension Image {
     struct Assets: Generattable {
         let imageNames: [String]
         
-        init(urls: [NSURL]) {
+        init(urls: [URL]) {
             let xcassets = urls
                 .filter { $0.pathExtension == "xcassets" }
                 .flatMap {
-                    NSFileManager
-                        .defaultManager()
-                        .enumeratorAtURL(
-                            $0,
+                    FileManager.default
+                        .enumerator(
+                            at: $0,
                             includingPropertiesForKeys: nil,
-                            options: .SkipsHiddenFiles,
+                            options: .skipsHiddenFiles,
                             errorHandler: nil
                     )
             }
             
             imageNames = xcassets
-                .flatMap { $0.flatMap { url in url as? NSURL }  }
+                .flatMap { $0.flatMap { url in url as? URL }  }
                 .filter { $0.pathExtension == "imageset"}
-                .flatMap { $0.URLByDeletingPathExtension?.lastPathComponent }
+                .flatMap { $0.deletingPathExtension().lastPathComponent }
         }
         
         func generate() -> Struct {
@@ -102,14 +101,14 @@ extension Image {
         static let supportExtensions: Set<String> = [ "png", "jpg", "gif" ]
         let imageNames: [String]
         
-        init(urls: [NSURL]) {
+        init(urls: [URL]) {
             imageNames = urls
-                .filter { Resources.supportExtensions.contains($0.pathExtension ?? "") }
-                .flatMap { $0.URLByDeletingPathExtension?.lastPathComponent }
+                .filter { Resources.supportExtensions.contains($0.pathExtension) }
+                .flatMap { $0.deletingPathExtension().lastPathComponent }
                 .flatMap { name -> String? in
                     let pattern = "@[0-9]x"
-                    let regex = try? NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators)
-                    let result = regex?.matchesInString(name, options: [], range: NSMakeRange(0, name.characters.count)).first
+                    let regex = try? NSRegularExpression(pattern: pattern, options: .useUnixLineSeparators)
+                    let result = regex?.matches(in: name, options: [], range: NSMakeRange(0, name.characters.count)).first
                     
                     if result != nil {
                         return nil

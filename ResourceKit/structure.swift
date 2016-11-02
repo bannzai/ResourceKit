@@ -24,7 +24,7 @@ struct Body: Structure {
     }
     
     var declaration: String {
-        return body.flatMap { indent + $0 }.joinWithSeparator(newLine + indent)
+        return body.flatMap { indent + $0 }.joined(separator: newLine + indent)
     }
 }
 
@@ -43,13 +43,13 @@ struct Argument: Structure {
         return defaultValue.isEmpty ? "" : " = " + defaultValue
     }
     
-    static func generateDeclaration(arguments: [Argument]) -> String {
+    static func generateDeclaration(_ arguments: [Argument]) -> String {
         if arguments.isEmpty {
             return "()"
         }
         let args = arguments.flatMap {
             "\($0.name): \($0.type)\($0.generateDefault())"
-        }.joinWithSeparator(", ")
+        }.joined(separator: ", ")
         return "(\(args))"
     }
     
@@ -65,12 +65,12 @@ struct Function: Structure {
     let returnType: String
     let body: Body
     
-    private var isDummy = false
+    fileprivate var isDummy = false
     static func dummyFunction() -> Function {
         return Function()
     }
     
-    private init() {
+    fileprivate init() {
         self.head = ""
         self.name = ""
         self.arguments = []
@@ -105,7 +105,7 @@ struct Function: Structure {
             "\(head) func \(name)\(argumentsDeclaration) -> \(returnType) {",
             body.declaration,
             "}"
-        ].joinWithSeparator(lineAndIndent)
+        ].joined(separator: lineAndIndent)
     }
 }
 
@@ -123,9 +123,9 @@ struct Extension: Structure {
     var declaration: String {
         return [
             "extension \(type) { ",
-            functions.flatMap { $0.declaration }.joinWithSeparator(lineAndIndent),
-            structs.flatMap { $0.declaration }.joinWithSeparator(lineAndIndent)
-        ].joinWithSeparator(lineAndIndent) + " \(newLine)} \(newLine)"
+            functions.flatMap { $0.declaration }.joined(separator: lineAndIndent),
+            structs.flatMap { $0.declaration }.joined(separator: lineAndIndent)
+        ].joined(separator: lineAndIndent) + " \(newLine)} \(newLine)"
     }
 }
 
@@ -136,19 +136,19 @@ struct Enum: Structure {
     var declaration: String {
         return [
             "enum \(name) { ",
-            elements.flatMap { "\(indent)case \($0)" }.joinWithSeparator(newLine),
+            elements.flatMap { "\(indent)case \($0)" }.joined(separator: newLine),
             "} \(newLine)"
-        ].joinWithSeparator(newLine)
+        ].joined(separator: newLine)
     }
     
-    func caseParagraph(caseString: String -> String) -> String {
+    func caseParagraph(_ caseString: (String) -> String) -> String {
         return [
             "switch \(name) {" ,
             elements.flatMap { 
-                ["\(indent)case \($0): ", caseString($0)].joinWithSeparator(newLine)
-                }.joinWithSeparator(newLine),
+                ["\(indent)case \($0): ", caseString($0)].joined(separator: newLine)
+                }.joined(separator: newLine),
             "}\(newLine)"
-        ].joinWithSeparator(newLine)
+        ].joined(separator: newLine)
     }
 }
 
@@ -172,10 +172,10 @@ struct Struct: Structure {
     var declaration: String {
         return [
             "struct \(name)\(generateProtocol()) {",
-            lets.flatMap { indent + $0.declaration }.joinWithSeparator(lineAndIndent),
-            functions.flatMap { indent + $0.declaration }.joinWithSeparator(lineAndIndent),
+            lets.flatMap { indent + $0.declaration }.joined(separator: lineAndIndent),
+            functions.flatMap { indent + $0.declaration }.joined(separator: lineAndIndent),
             "}"
-        ].joinWithSeparator(lineAndIndent)
+        ].joined(separator: lineAndIndent)
     }
 }
 
@@ -188,9 +188,9 @@ struct Class: Structure {
         "class \(name) { ",
             functions
                 .flatMap { $0.declaration }
-                .joinWithSeparator(newLine),
+                .joined(separator: newLine),
             "}"
-        ].joinWithSeparator(newLine)
+        ].joined(separator: newLine)
     }
 }
 
@@ -282,10 +282,10 @@ struct Protocol: Structure {
     var declaration: String {
         return [
             "protocol \(name) {",
-            getters.flatMap { indent + $0.declaration + " { get } "}.joinWithSeparator(newLine),
-            functions.flatMap { indent + $0.declaration }.joinWithSeparator(newLine),
+            getters.flatMap { indent + $0.declaration + " { get } "}.joined(separator: newLine),
+            functions.flatMap { indent + $0.declaration }.joined(separator: newLine),
             "}"
-        ].joinWithSeparator(newLine)
+        ].joined(separator: newLine)
     }
     
     
