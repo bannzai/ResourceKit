@@ -1,5 +1,5 @@
 //
-//  project.swift
+//  Project.swift
 //  ResourceKit
 //
 //  Created by Hirose.Yudai on 2016/04/07.
@@ -10,14 +10,14 @@ import Foundation
 
 class ProjectResource {
     static let sharedInstance: ProjectResource = ProjectResource()
-    private init() { }
+    fileprivate init() { }
     var viewControllers: [ViewController] = []
     var tableViewCells: [TableViewCell] = []
     var collectionViewCells: [CollectionViewCell] = []
     var xibs: [XibForView] = []
     var xibIdentifiers = [String]()
     
-    func appendTableViewCell(className: String, reusableIdentifier: String) {
+    func appendTableViewCell(_ className: String, reusableIdentifier: String) {
         guard let cell = tableViewCells
             .filter ({ $0.className == className})
             .first else {
@@ -30,14 +30,14 @@ class ProjectResource {
                 return
         }
         
-        if cell.reusableIdentifiers.contains({ $0 == reusableIdentifier }) {
+        if cell.reusableIdentifiers.contains(where: { $0 == reusableIdentifier }) {
             return
         }
         
         cell.reusableIdentifiers.append(reusableIdentifier)
     }
     
-    func appendCollectionViewCell(className: String, reusableIdentifier: String) {
+    func appendCollectionViewCell(_ className: String, reusableIdentifier: String) {
         guard let cell = collectionViewCells
             .filter ({ $0.className == className})
             .first else {
@@ -50,15 +50,15 @@ class ProjectResource {
                 return
         }
         
-        if cell.reusableIdentifiers.contains({ $0 == reusableIdentifier }) {
+        if cell.reusableIdentifiers.contains(where: { $0 == reusableIdentifier }) {
             return
         }
         
         cell.reusableIdentifiers.append(reusableIdentifier)
     }
     
-    func appendXibForView(xib: XibForView) {
-        if xibs.contains({ $0.className == xib.className }) {
+    func appendXibForView(_ xib: XibForView) {
+        if xibs.contains(where: { $0.className == xib.className }) {
             return
         }
         xibs.append(xib)

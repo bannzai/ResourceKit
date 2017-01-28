@@ -1,5 +1,5 @@
 //
-//  resource.swift
+//  Resource.swift
 //  ResourceKit
 //
 //  Created by kingkong999yhirose on 2016/04/15.
@@ -10,36 +10,36 @@ import Foundation
 
 
 enum ResourceType: Equatable {
-    case Standard(String)
-    case Custom(String)
+    case standard(String)
+    case custom(String)
     
-    static func isSegue(elementName: String) -> Bool {
+    static func isSegue(_ elementName: String) -> Bool {
         return elementName == "segue"
     }
     
-    static func isTableViewCell(elementName: String) -> Bool {
+    static func isTableViewCell(_ elementName: String) -> Bool {
         if let reusable = ReusableResource(name: elementName)
-        where reusable == .UITableViewCell {
+        , reusable == .UITableViewCell {
             return true
         }
         
         return false
     }
     
-    static func isCollectionViewCell(elementName: String) -> Bool {
+    static func isCollectionViewCell(_ elementName: String) -> Bool {
         if let reusable = ReusableResource(name: elementName)
-        where reusable == .UICollectionViewCell {
+        , reusable == .UICollectionViewCell {
             return true
         }
         
         return false
     }
     
-    static func isReusableStandardType(elementName: String) -> Bool {
+    static func isReusableStandardType(_ elementName: String) -> Bool {
         return isTableViewCell(elementName) || isCollectionViewCell(elementName)
     }
     
-    static func isViewControllerStandardType(elementName: String) -> Bool {
+    static func isViewControllerStandardType(_ elementName: String) -> Bool {
         if let _ = ViewControllerResource(name: elementName) {
             return true
         }
@@ -52,11 +52,11 @@ enum ResourceType: Equatable {
             guard let resource = ReusableResource(name: reusable) else {
                 throw ResourceKitErrorType.resourceParseError(name: reusable, errorInfo: ResourceKitErrorType.createErrorInfo())
             }
-            self = Standard(resource.rawValue)
+            self = .standard(resource.rawValue)
             return
         }
         
-        self = Custom(reusable)
+        self = .custom(reusable)
     }
     
     init(viewController: String) throws {
@@ -64,18 +64,18 @@ enum ResourceType: Equatable {
             guard let resource = ViewControllerResource(name: viewController) else {
                 throw ResourceKitErrorType.resourceParseError(name: viewController, errorInfo: ResourceKitErrorType.createErrorInfo())
             }
-            self = Standard(resource.rawValue)
+            self = .standard(resource.rawValue)
             return
         }
         
-        self = Custom(viewController)
+        self = .custom(viewController)
     }
     
     var name: String {
         switch self {
-        case .Standard(let standard):
+        case .standard(let standard):
             return standard
-        case .Custom(let custom):
+        case .custom(let custom):
             return custom
         }
     }

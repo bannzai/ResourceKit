@@ -10,12 +10,12 @@ import Foundation
 
 struct LocalizedString: Generattable {
     let localizableStrings:[String: String]
-    init(urls: [NSURL]) {
+    init(urls: [URL]) {
         let files = urls.filter { $0.lastPathComponent == "Localizable.strings" }
         
         let maximumLocalizableStringPairs =
-            files.flatMap ({ NSDictionary(contentsOfURL: $0) })
-                .sort ({ $0.count > $1.count })
+            files.flatMap ({ NSDictionary(contentsOf: $0) })
+                .sorted (by: { $0.count > $1.count })
                 .first
         
         guard let localizableStrings = maximumLocalizableStringPairs as? [String: String] else {
@@ -37,11 +37,11 @@ struct LocalizedString: Generattable {
         )
     }
     
-    private func generateLocalizableConstants() -> [Let] {
-        func toConstantName(key: String) -> String {
+    fileprivate func generateLocalizableConstants() -> [Let] {
+        func toConstantName(_ key: String) -> String {
             return key
-                .stringByReplacingOccurrencesOfString("[^a-z,^A-Z,^0-9]", withString: "_", options: .RegularExpressionSearch, range: nil)
-                .stringByReplacingOccurrencesOfString(",", withString: "_", options: .RegularExpressionSearch, range: nil)
+                .replacingOccurrences(of: "[^a-z,^A-Z,^0-9]", with: "_", options: .regularExpression, range: nil)
+                .replacingOccurrences(of: ",", with: "_", options: .regularExpression, range: nil)
             
         }
         return localizableStrings.keys.flatMap {

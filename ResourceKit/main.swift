@@ -8,48 +8,52 @@
 
 import Foundation
 private let RESOURCE_FILENAME = "Resource.generated.swift"
+private let env = ProcessInfo().environment
+let debug = env["DEBUG"] != nil
 
 private func extractGenerateDir() -> String? {
-    return NSProcessInfo
-        .processInfo()
+    return ProcessInfo
+        .processInfo
         .arguments
         .flatMap { arg in
-            guard let range = arg.rangeOfString("-p ") else {
+            guard let range = arg.range(of: "-p ") else {
                 return nil
             }
-            return arg.substringFromIndex(range.endIndex)
+            return arg.substring(from: range.upperBound)
         }
         .last
 }
 
-do {
-    try Environment.verifyUseEnvironment()
-} catch {
-    exit(1)
+if !debug {
+    do {
+        try Environment.verifyUseEnvironment()
+    } catch {
+        exit(1)
+    }
 }
 
-let outputPath = extractGenerateDir() ?? Environment.SRCROOT.element
+let debugOutputPath = env["DEBUG_OUTPUT_PATH"]
+let outputPath = debugOutputPath ?? extractGenerateDir() ?? Environment.SRCROOT.element
 let config: Config = Config()
 
 do {
-    try Environment.verifyUseEnvironment()
-    
-    let outputUrl = NSURL(fileURLWithPath: outputPath)
+    let outputUrl = URL(fileURLWithPath: outputPath)
     var resourceValue: AnyObject?
-    try outputUrl.getResourceValue(&resourceValue, forKey: NSURLIsDirectoryKey)
+    try (outputUrl as NSURL).getResourceValue(&resourceValue, forKey: URLResourceKey.isDirectoryKey)
     
-    let writeUrl: NSURL
-    writeUrl = outputUrl.URLByAppendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
-    
+    let writeUrl: URL
+    writeUrl = outputUrl.appendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
+
     func imports() -> [String] {
-        guard let content = try? String(contentsOfURL: writeUrl) else {
+        
+        guard let content = try? String(contentsOf: writeUrl) else {
             return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
         }
         let pattern = "\\s*import\\s+.+"
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators) else {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .useUnixLineSeparators) else {
             return ["import UIKit"]
         }
-        let results = regex.matchesInString(content, options: [], range: NSMakeRange(0, content.characters.count))
+        let results = regex.matches(in: content, options: [], range: NSMakeRange(0, content.characters.count))
         
         if results.isEmpty {
             return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
@@ -57,15 +61,18 @@ do {
         
         return results.flatMap { (result) -> String? in
             if result.range.location != NSNotFound {
-                let matchingString = (content as NSString).substringWithRange(result.range) as String
+                let matchingString = (content as NSString).substring(with: result.range) as String
                 return matchingString
-                    .stringByReplacingOccurrencesOfString("\n", withString: "")
+                    .replacingOccurrences(of: "\n", with: "")
             }
             return nil
         }
     }
     
-    let parser = try ProjectResourceParser()
+    
+    let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
+    let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
+    let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget)
     let paths = parser.paths.filter { $0.pathExtension != nil }
     
     paths
@@ -76,7 +83,7 @@ do {
         .filter { $0.pathExtension == "xib" }
         .forEach { let _ = try? XibPerser(url: $0) }
     
-    let importsContent = imports().joinWithSeparator(newLine)
+    let importsContent = imports().joined(separator: newLine)
     
     let xibProtocolContent = Protocol(
         name: "XibProtocol",
@@ -97,21 +104,21 @@ do {
         type: "UITableView",
         functions: [
             Function(
-                name: "registerNib",
+                name: "register",
                 arguments: [
-                    Argument(name: "nib", type: "XibProtocol")
+                    Argument(name: "_ nib", type: "XibProtocol")
                 ],
                 returnType: "Void",
-                body: Body("registerNib(nib.nib(), forCellReuseIdentifier: nib.name)")
+                body: Body("register(nib.nib(), forCellReuseIdentifier: nib.name)")
             )
             ,
             Function(
-                name: "registerNibs",
+                name: "register",
                 arguments: [
                     Argument(name: "nibs", type: "[XibProtocol]")
                 ],
                 returnType: "Void",
-                body: Body("nibs.forEach(registerNib)")
+                body: Body("nibs.forEach(register)")
             )
         ]
         ).declaration + newLine
@@ -120,21 +127,21 @@ do {
         type: "UICollectionView",
         functions: [
             Function(
-                name: "registerNib",
+                name: "register",
                 arguments: [
-                    Argument(name: "nib", type: "XibProtocol")
+                    Argument(name: "_ nib", type: "XibProtocol")
                 ],
                 returnType: "Void",
-                body: Body("registerNib(nib.nib(), forCellWithReuseIdentifier: nib.name)")
+                body: Body("register(nib.nib(), forCellWithReuseIdentifier: nib.name)")
             )
             ,
             Function(
-                name: "registerNibs",
+                name: "register",
                 arguments: [
                     Argument(name: "nibs", type: "[XibProtocol]")
                 ],
                 returnType: "Void",
-                body: Body("nibs.forEach(registerNib)")
+                body: Body("nibs.forEach(register)")
             )
         ]
         ).declaration + newLine
@@ -143,7 +150,7 @@ do {
     let viewControllerContent = ProjectResource.sharedInstance.viewControllers
         .flatMap { $0.generateExtensionIfNeeded() }
         .flatMap { $0.declaration }
-        .joinWithSeparator(newLine)
+        .joined(separator: newLine)
     
     let tableViewCellContent: String
     let collectionViewCellContent: String
@@ -152,12 +159,12 @@ do {
         tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
             .flatMap { $0.generateExtension() }
             .flatMap { $0.declaration }
-            .joinWithSeparator(newLine)
+            .joined(separator: newLine)
         
         collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
             .flatMap { $0.generateExtension() }
             .flatMap { $0.declaration }
-            .joinWithSeparator(newLine)
+            .joined(separator: newLine)
         
     } else {
         tableViewCellContent = ""
@@ -169,7 +176,7 @@ do {
         xibContent = ProjectResource.sharedInstance.xibs
             .flatMap { $0.generateExtension() }
             .flatMap { $0.declaration }
-            .joinWithSeparator(newLine)
+            .joined(separator: newLine)
     } else {
         xibContent = ""
     }
@@ -197,8 +204,8 @@ do {
             + stringContent
     )
     
-    func write(code: String, fileURL: NSURL) throws {
-        try code.writeToURL(fileURL, atomically: true, encoding: NSUTF8StringEncoding)
+    func write(_ code: String, fileURL: URL) throws {
+        try code.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
     }
     
     try write(content, fileURL: writeUrl)

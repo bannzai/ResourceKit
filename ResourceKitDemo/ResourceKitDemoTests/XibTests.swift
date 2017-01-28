@@ -21,7 +21,7 @@ class XibTests: XCTestCase {
     
     
     func testPerformanceExample() {
-        self.measureBlock {
+        self.measure {
         }
     }
     
@@ -30,6 +30,6 @@ class XibTests: XCTestCase {
     }
     
     func testView() {
-        XCTAssertTrue(CustomView.Xib().view().isMemberOfClass(CustomView))
+        XCTAssertTrue(CustomView.Xib().view().isMember(of: CustomView.classForCoder()))
     }
 }

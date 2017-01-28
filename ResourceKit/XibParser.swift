@@ -9,25 +9,23 @@
 import Foundation
 
 final class XibPerser: NSObject, Parsable {
-    private var _name: String = ""
-    private var isOnce: Bool = false
-    private let ignoreCase = [
+    fileprivate var _name: String = ""
+    fileprivate var isOnce: Bool = false
+    fileprivate let ignoreCase = [
         "UIResponder"
     ]
     
-    init(url: NSURL) throws {
+    init(url: URL) throws {
         super.init()
         
-        guard let ex = url.pathExtension where ex == "xib" else {
+        guard url.pathExtension == "xib" else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
-        guard let name = url.URLByDeletingPathExtension?.lastPathComponent else {
-            throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
-        }
-        
-        _name = name
+    
+    
+        _name = url.deletingPathExtension().lastPathComponent
         // Don't create ipad resources
-        if _name.containsString("~") {
+        if _name.contains("~") {
             return
         }
         
@@ -36,18 +34,18 @@ final class XibPerser: NSObject, Parsable {
             .xibIdentifiers
             .append(_name)
         
-        guard let parser = NSXMLParser(contentsOfURL: url) else {
+        guard let parser = XMLParser(contentsOf: url) else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         parser.delegate = self
         parser.parse()
     }
     
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         generateXibs(attributeDict, elementName: elementName)
     }
     
-    private func generateXibs(attributes: [String: String], elementName: String) {
+    fileprivate func generateXibs(_ attributes: [String: String], elementName: String) {
         if isOnce {
             return
         }
@@ -68,11 +66,11 @@ final class XibPerser: NSObject, Parsable {
         ProjectResource
             .sharedInstance
             .appendXibForView(
-            XibForView(
-                name: _name,
-                className: className,
-                isFilesOwner: hasFilesOwner
-            )
+                XibForView(
+                    name: _name,
+                    className: className,
+                    isFilesOwner: hasFilesOwner
+                )
         )
     }
 }

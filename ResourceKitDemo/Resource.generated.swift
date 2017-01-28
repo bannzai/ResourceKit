@@ -8,21 +8,21 @@ protocol XibProtocol {
 	 func nib() -> UINib
 }
 extension UITableView { 
-	internal func registerNib(nib: XibProtocol) -> Void {
-		registerNib(nib.nib(), forCellReuseIdentifier: nib.name)
+	internal func register(_ nib: XibProtocol) -> Void {
+		register(nib.nib(), forCellReuseIdentifier: nib.name)
 	}
-	internal func registerNibs(nibs: [XibProtocol]) -> Void {
-		nibs.forEach(registerNib)
+	internal func register(nibs: [XibProtocol]) -> Void {
+		nibs.forEach(register)
 	}
 	 
 } 
 
 extension UICollectionView { 
-	internal func registerNib(nib: XibProtocol) -> Void {
-		registerNib(nib.nib(), forCellWithReuseIdentifier: nib.name)
+	internal func register(_ nib: XibProtocol) -> Void {
+		register(nib.nib(), forCellWithReuseIdentifier: nib.name)
 	}
-	internal func registerNibs(nibs: [XibProtocol]) -> Void {
-		nibs.forEach(registerNib)
+	internal func register(nibs: [XibProtocol]) -> Void {
+		nibs.forEach(register)
 	}
 	 
 } 
@@ -30,7 +30,7 @@ extension UICollectionView {
 extension ViewController { 
 	class func instanceFromInstanceFromOverride() -> ViewController {
 		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
-		let viewController = storyboard.instantiateViewControllerWithIdentifier("BaseInstance") as! ViewController
+		let viewController = storyboard.instantiateViewController(withIdentifier: "BaseInstance") as! ViewController
 		return viewController
 	}
 	class func initialViewController() -> ViewController {
@@ -38,7 +38,7 @@ extension ViewController {
 		let viewController = storyboard.instantiateInitialViewController() as! ViewController
 		return viewController
 	}
-	internal func performSegueShowSecondTable(closure: (UIStoryboardSegue -> Void)? = nil) -> Void {
+	internal func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) -> Void {
 		performSegue("ShowSecondTable", closure: closure)
 	}
 	struct Segue {
@@ -50,10 +50,10 @@ extension ViewController {
 extension TableViewController { 
 	class func instanceFromTabBarController() -> TableViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
-		let viewController = storyboard.instantiateViewControllerWithIdentifier("TableView") as! TableViewController
+		let viewController = storyboard.instantiateViewController(withIdentifier: "TableView") as! TableViewController
 		return viewController
 	}
-	internal func performSegueShowViewController(closure: (UIStoryboardSegue -> Void)? = nil) -> Void {
+	internal func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) -> Void {
 		performSegue("ShowViewController", closure: closure)
 	}
 	struct Segue {
@@ -65,12 +65,12 @@ extension TableViewController {
 extension OverrideViewController { 
 	class func instanceFromInstanceFromOverrideOtherIdentifier() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
-		let viewController = storyboard.instantiateViewControllerWithIdentifier("OtherIdentifier") as! OverrideViewController
+		let viewController = storyboard.instantiateViewController(withIdentifier: "OtherIdentifier") as! OverrideViewController
 		return viewController
 	}
 	class func instanceFromInstanceFromOverrideOverrideInstance() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
-		let viewController = storyboard.instantiateViewControllerWithIdentifier("OverrideInstance") as! OverrideViewController
+		let viewController = storyboard.instantiateViewController(withIdentifier: "OverrideInstance") as! OverrideViewController
 		return viewController
 	}
 	class override func initialViewController() -> OverrideViewController {
@@ -78,7 +78,7 @@ extension OverrideViewController {
 		let viewController = storyboard.instantiateInitialViewController() as! OverrideViewController
 		return viewController
 	}
-	override func performSegueShowSecondTable(closure: (UIStoryboardSegue -> Void)? = nil) -> Void {
+	override func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) -> Void {
 		performSegue("ShowSecondTable", closure: closure)
 	}
 	struct Segue {
@@ -93,7 +93,7 @@ extension SecondTableViewController {
 		let viewController = storyboard.instantiateInitialViewController() as! SecondTableViewController
 		return viewController
 	}
-	internal func performSegueShowOverride(closure: (UIStoryboardSegue -> Void)? = nil) -> Void {
+	internal func performSegueShowOverride(closure: ((UIStoryboardSegue) -> Void)? = nil) -> Void {
 		performSegue("ShowOverride", closure: closure)
 	}
 	struct Segue {
@@ -105,10 +105,10 @@ extension SecondTableViewController {
 extension CollectionViewController { 
 	class func instanceFromTabBarController() -> CollectionViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
-		let viewController = storyboard.instantiateViewControllerWithIdentifier("CollectionView") as! CollectionViewController
+		let viewController = storyboard.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
 		return viewController
 	}
-	internal func performSegueShowViewController(closure: (UIStoryboardSegue -> Void)? = nil) -> Void {
+	internal func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) -> Void {
 		performSegue("ShowViewController", closure: closure)
 	}
 	struct Segue {
@@ -120,7 +120,7 @@ extension CollectionViewController {
 extension SecondCollectionViewController { 
 	class func instanceFromTabBarController() -> SecondCollectionViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
-		let viewController = storyboard.instantiateViewControllerWithIdentifier("SecondCollectionView") as! SecondCollectionViewController
+		let viewController = storyboard.instantiateViewController(withIdentifier: "SecondCollectionView") as! SecondCollectionViewController
 		return viewController
 	}
 	 
@@ -156,12 +156,12 @@ extension UITabBarController {
 extension UINavigationController { 
 	class func instanceFromTabBarControllerNav1() -> UINavigationController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
-		let viewController = storyboard.instantiateViewControllerWithIdentifier("Nav1") as! UINavigationController
+		let viewController = storyboard.instantiateViewController(withIdentifier: "Nav1") as! UINavigationController
 		return viewController
 	}
 	class func instanceFromTabBarControllerNav2() -> UINavigationController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
-		let viewController = storyboard.instantiateViewControllerWithIdentifier("Nav2") as! UINavigationController
+		let viewController = storyboard.instantiateViewController(withIdentifier: "Nav2") as! UINavigationController
 		return viewController
 	}
 	 
@@ -188,7 +188,7 @@ extension TableViewCell {
 		return UINib(nibName: "TableViewCell", bundle: nil) 
 	}
 		internal func view() -> TableViewCell {
-		return nib().instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
+		return nib().instantiate(withOwner: nil, options: nil)[0] as! TableViewCell
 	}
 	} 
 } 
@@ -201,7 +201,7 @@ extension CollectionViewCell {
 		return UINib(nibName: "CollectionViewCell", bundle: nil) 
 	}
 		internal func view() -> CollectionViewCell {
-		return nib().instantiateWithOwner(nil, options: nil)[0] as! CollectionViewCell
+		return nib().instantiate(withOwner: nil, options: nil)[0] as! CollectionViewCell
 	}
 	} 
 } 
@@ -214,7 +214,7 @@ extension CustomView {
 		return UINib(nibName: "CustomView", bundle: nil) 
 	}
 		internal func view() -> CustomView {
-		return nib().instantiateWithOwner(nil, options: nil)[0] as! CustomView
+		return nib().instantiate(withOwner: nil, options: nil)[0] as! CustomView
 	}
 	} 
 } 
@@ -244,18 +244,18 @@ extension UIImage {
 extension String { 
 	
 	struct Localized {
-		static let hello_world_2: String = NSLocalizedString("hello world 2", comment: "")
 		static let helloworld: String = NSLocalizedString("helloworld", comment: "")
-		static let hello_world_08: String = NSLocalizedString("hello,world 08", comment: "")
-		static let hello_world_11___: String = NSLocalizedString("hello}world 11 %@", comment: "")
-		static let hello_world_12___: String = NSLocalizedString("hello}world 12 %@", comment: "")
 		static let hello_world_3: String = NSLocalizedString("hello world 3", comment: "")
-		static let hello_world_07: String = NSLocalizedString("hello?world 07", comment: "")
-		static let hello_world_4: String = NSLocalizedString("hello world 4", comment: "")
-		static let hello_world_10: String = NSLocalizedString("hello}world 10", comment: "")
 		static let hello_world_09: String = NSLocalizedString("hello(world 09", comment: "")
 		static let hello_world_06: String = NSLocalizedString("hello!world 06", comment: "")
+		static let hello_world_07: String = NSLocalizedString("hello?world 07", comment: "")
+		static let hello_world_08: String = NSLocalizedString("hello,world 08", comment: "")
 		static let hello_world_1: String = NSLocalizedString("hello world 1", comment: "")
+		static let hello_world_11___: String = NSLocalizedString("hello}world 11 %@", comment: "")
+		static let hello_world_12___: String = NSLocalizedString("hello}world 12 %@", comment: "")
+		static let hello_world_10: String = NSLocalizedString("hello}world 10", comment: "")
+		static let hello_world_4: String = NSLocalizedString("hello world 4", comment: "")
+		static let hello_world_2: String = NSLocalizedString("hello world 2", comment: "")
 		static let hello_world_05: String = NSLocalizedString("hello.world 05", comment: "")
 	
 	} 

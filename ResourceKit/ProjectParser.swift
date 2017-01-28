@@ -10,22 +10,18 @@ import Foundation
 
 
 struct ProjectResourceParser {
-    private var projectFile: XCProjectFile
-    var paths: [NSURL] = []
-    var localizablePaths: [NSURL] = []
+    fileprivate var projectFile: XCProjectFile
+    private(set) var paths: [URL] = []
+    var localizablePaths: [URL] = []
     
-    init() throws {
-        try self.init(xcodeURL: Environment.PROJECT_FILE_PATH.path, target: Environment.TARGET_NAME.element)
-    }
-    
-    private init(xcodeURL: NSURL, target: String) throws {
+    init(xcodeURL: URL, target: String) throws {
         guard let projectFile = try? XCProjectFile(xcodeprojURL: xcodeURL) else {
             throw ResourceKitErrorType.xcodeProjectError(xcodeURL: xcodeURL, target: target, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
         let allTarget = projectFile.project.targets
         guard let _target = allTarget.filter({ $0.name == target }).first else {
-            throw ResourceKitErrorType.xcodeProjectAllTargetError(xcodeURL: xcodeURL, target: target, allTargetName: "\(allTarget.flatMap { $0.name }.joinWithSeparator(", "))", errorInfo: ResourceKitErrorType.createErrorInfo())
+            throw ResourceKitErrorType.xcodeProjectAllTargetError(xcodeURL: xcodeURL, target: target, allTargetName: "\(allTarget.flatMap { $0.name }.joined(separator: ", "))", errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
         self.projectFile = projectFile
@@ -35,7 +31,7 @@ struct ProjectResourceParser {
         setupSuffixViewControllers()
     }
     
-    private func generateLocalizablePaths(target: PBXNativeTarget) -> [Path] {
+    fileprivate func generateLocalizablePaths(_ target: PBXNativeTarget) -> [Path] {
         let resourcesFileRefs = target.buildPhases
             .flatMap { $0 as? PBXResourcesBuildPhase }
             .flatMap { $0.files }
@@ -49,7 +45,7 @@ struct ProjectResourceParser {
         return localizablePaths
     }
     
-    private func generateFileRefPaths(target: PBXNativeTarget) -> [Path] {
+    fileprivate func generateFileRefPaths(_ target: PBXNativeTarget) -> [Path] {
         return target.buildPhases
             .flatMap { $0.files }
             .flatMap { $0.fileRef }
@@ -57,13 +53,13 @@ struct ProjectResourceParser {
             .flatMap { $0.fullPath }
     }
     
-    private mutating func setupSuffixViewControllers() {
-        func append(viewControllers: [ViewController]) {
+    fileprivate mutating func setupSuffixViewControllers() {
+        func append(_ viewControllers: [ViewController]) {
             ProjectResource
                 .sharedInstance
                 .viewControllers
-                .appendContentsOf(
-                    viewControllers
+                .append(
+                    contentsOf: viewControllers
             )
         }
         if config.viewController.instantiateStoryboardForSwift {
@@ -93,24 +89,24 @@ struct ProjectResourceParser {
         
     }
     
-    private func viewControllerInfoWith(path: NSURL, suffix: String, pattern: String) -> ViewController? {
-        guard let content = try? String(contentsOfURL: path),
-            regex = try? NSRegularExpression(pattern: pattern, options: .UseUnixLineSeparators) else {
+    fileprivate func viewControllerInfoWith(_ path: URL, suffix: String, pattern: String) -> ViewController? {
+        guard let content = try? String(contentsOf: path),
+            let regex = try? NSRegularExpression(pattern: pattern, options: .useUnixLineSeparators) else {
                 return nil
         }
-        let results = regex.matchesInString(content, options: [], range: NSMakeRange(0, content.characters.count))
+        let results = regex.matches(in: content, options: [], range: NSMakeRange(0, content.characters.count))
         
         return results.flatMap { (result) -> ViewController? in
             if result.range.location != NSNotFound {
-                let matchingString = (content as NSString).substringWithRange(result.range) as String
+                let matchingString = (content as NSString).substring(with: result.range) as String
                 let classes = matchingString
-                    .stringByReplacingOccurrencesOfString("\\s*@interface", withString: "", options: .RegularExpressionSearch, range: nil)
-                    .stringByReplacingOccurrencesOfString(".*class", withString: "", options: .RegularExpressionSearch, range: nil)
-                    .stringByReplacingOccurrencesOfString("{", withString: "")
-                    .stringByReplacingOccurrencesOfString("}", withString: "")
-                    .stringByReplacingOccurrencesOfString(" ", withString: "")
-                    .stringByReplacingOccurrencesOfString(":", withString: " ")
-                    .componentsSeparatedByString(" ")
+                    .replacingOccurrences(of: "\\s*@interface", with: "", options: .regularExpression, range: nil)
+                    .replacingOccurrences(of: ".*class", with: "", options: .regularExpression, range: nil)
+                    .replacingOccurrences(of: "{", with: "")
+                    .replacingOccurrences(of: "}", with: "")
+                    .replacingOccurrences(of: " ", with: "")
+                    .replacingOccurrences(of: ":", with: " ")
+                    .components(separatedBy: " ")
                     .filter { $0.hasSuffix(suffix) }
                 
                 
@@ -119,21 +115,20 @@ struct ProjectResourceParser {
             return nil }.first
     }
     
-    private func viewControllerInfoWith(paths: [NSURL], suffix: String, pattern: String) -> [ViewController] {
+    fileprivate func viewControllerInfoWith(_ paths: [URL], suffix: String, pattern: String) -> [ViewController] {
         return paths.flatMap {
             viewControllerInfoWith($0, suffix: suffix, pattern: pattern)
         }
     }
     
-    private func filterPaths(withExtension ex: String, suffixs: String...) -> [NSURL] {
+    fileprivate func filterPaths(withExtension ex: String, suffixs: String...) -> [URL] {
         return paths.filter { url in
-            guard let pathExtension = url.pathExtension
-                where pathExtension == ex
+            guard url.pathExtension == ex
                 else {
                     return false
             }
-            guard let fileName = url.URLByDeletingPathExtension?.lastPathComponent
-                where suffixs.contains({fileName.hasSuffix($0)})  else {
+            guard let fileName = Optional(url.deletingPathExtension().lastPathComponent)
+                , suffixs.contains(where: {fileName.hasSuffix($0)})  else {
                     return false
             }
             return true

@@ -20,16 +20,16 @@ class ViewControllerFromStoryboardTests: XCTestCase {
     }
     
     func testPerformanceExample() {
-        self.measureBlock {
+        self.measure {
         }
     }
     
     func testInitialViewController() {
-        XCTAssertTrue(ViewController.initialViewController().isMemberOfClass(ViewController))
+        XCTAssertTrue(ViewController.initialViewController().isMember(of: ViewController.classForCoder()))
     }
     
     func testInstanceFromViewController() {
-        XCTAssertTrue(ViewController.instanceFromInstanceFromOverride().isMemberOfClass(ViewController))
+        XCTAssertTrue(ViewController.instanceFromInstanceFromOverride().isMember(of: ViewController.classForCoder()))
     }
     
     func testSegueIdentifier() {

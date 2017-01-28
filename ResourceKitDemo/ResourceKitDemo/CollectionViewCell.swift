@@ -17,7 +17,7 @@ class CollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
-    func setupWith(image: UIImage) {
+    func setupWith(_ image: UIImage) {
         imageView.image = image
     }
 }
