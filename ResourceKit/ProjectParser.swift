@@ -14,11 +14,7 @@ struct ProjectResourceParser {
     var paths: [URL] = []
     var localizablePaths: [URL] = []
     
-    init() throws {
-        try self.init(xcodeURL: Environment.PROJECT_FILE_PATH.path as URL, target: Environment.TARGET_NAME.element)
-    }
-    
-    fileprivate init(xcodeURL: URL, target: String) throws {
+    init(xcodeURL: URL, target: String) throws {
         guard let projectFile = try? XCProjectFile(xcodeprojURL: xcodeURL) else {
             throw ResourceKitErrorType.xcodeProjectError(xcodeURL: xcodeURL, target: target, errorInfo: ResourceKitErrorType.createErrorInfo())
         }

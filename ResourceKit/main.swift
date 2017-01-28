@@ -8,6 +8,7 @@
 
 import Foundation
 private let RESOURCE_FILENAME = "Resource.generated.swift"
+private let env = ProcessInfo().environment
 
 private func extractGenerateDir() -> String? {
     return ProcessInfo
@@ -28,7 +29,8 @@ do {
     exit(1)
 }
 
-let outputPath = extractGenerateDir() ?? Environment.SRCROOT.element
+let debugOutputPath = env["DEBUG_OUTPUT_PATH"]
+let outputPath = debugOutputPath ?? extractGenerateDir() ?? Environment.SRCROOT.element
 let config: Config = Config()
 
 do {
@@ -66,7 +68,10 @@ do {
         }
     }
     
-    let parser = try ProjectResourceParser()
+    
+    let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(string: env["DEBUG_PROJECT_FILE_PATH"]!)! : Environment.PROJECT_FILE_PATH.path
+    let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.rawValue
+    let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget)
     let paths = parser.paths.filter { $0.pathExtension != nil }
     
     paths
@@ -103,7 +108,7 @@ do {
                     Argument(name: "nib", type: "XibProtocol")
                 ],
                 returnType: "Void",
-                body: Body("registerNib(nib.nib(), forCellReuseIdentifier: nib.name)")
+                body: Body("register(nib: nib.nib(), forCellReuseIdentifier: nib.name)")
             )
             ,
             Function(
@@ -126,7 +131,7 @@ do {
                     Argument(name: "nib", type: "XibProtocol")
                 ],
                 returnType: "Void",
-                body: Body("registerNib(nib.nib(), forCellWithReuseIdentifier: nib.name)")
+                body: Body("register(nib: nib.nib(), forCellWithReuseIdentifier: nib.name)")
             )
             ,
             Function(

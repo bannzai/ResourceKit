@@ -1,5 +1,5 @@
 //
-//  viewcontroller.swift
+//  ViewController.swift
 //  ResourceKit
 //
 //  Created by Hirose.Yudai on 2016/04/06.
@@ -229,7 +229,7 @@ extension ViewController {
             return Function (
                 head: instanceFunctionHeadForSegue(storyboard),
                 name: "performSegue\(segueIdentifier)",
-                arguments: [Argument(name: "closure", type: "(UIStoryboardSegue -> Void)?", defaultValue: "nil")],
+                arguments: [Argument(name: "closure", type: "((UIStoryboardSegue) -> Void)?", defaultValue: "nil")],
                 returnType: "Void",
                 body: Body([
                     "performSegue(\"\(segueIdentifier)\", closure: closure)"
@@ -265,7 +265,7 @@ extension ViewController {
                 returnType: name,
                 body: Body ([
                     "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                    "let viewController = storyboard.instantiateViewControllerWithIdentifier(\"\(storyboard.storyboardIdentifier)\") as! \(name)",
+                    "let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
                     "return viewController",
                     ])
             )
@@ -278,7 +278,7 @@ extension ViewController {
             returnType: name,
             body: Body([
                 "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                "let viewController = storyboard.instantiateViewControllerWithIdentifier(\"\(storyboard.storyboardIdentifier)\") as! \(name)",
+                "let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
                 "return viewController",
             ])
         )

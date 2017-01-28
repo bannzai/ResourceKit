@@ -9,12 +9,12 @@
 import Foundation
 
 struct Config {
-    var segue: ConfigParser.Segue = ConfigParser.Segue()
-    var image: ConfigParser.Image = ConfigParser.Image()
-    var string: ConfigParser.String = ConfigParser.String()
-    var viewController: ConfigParser.ViewController = ConfigParser.ViewController()
-    var nib: ConfigParser.Nib = ConfigParser.Nib()
-    var reusable: ConfigParser.Reusable = ConfigParser.Reusable()
+    private(set) var segue: ConfigParser.Segue = ConfigParser.Segue()
+    private(set) var image: ConfigParser.Image = ConfigParser.Image()
+    private(set) var string: ConfigParser.String = ConfigParser.String()
+    private(set) var viewController: ConfigParser.ViewController = ConfigParser.ViewController()
+    private(set) var nib: ConfigParser.Nib = ConfigParser.Nib()
+    private(set) var reusable: ConfigParser.Reusable = ConfigParser.Reusable()
     
     var needGenerateSegue: Bool {
         return segue.addition || segue.standard

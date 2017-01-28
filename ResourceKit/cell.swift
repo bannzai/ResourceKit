@@ -1,5 +1,5 @@
 //
-//  cell.swift
+//  Cell.swift
 //  ResourceKit
 //
 //  Created by Hirose.Yudai on 2016/04/07.

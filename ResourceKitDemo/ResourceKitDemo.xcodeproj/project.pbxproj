@@ -47,6 +47,7 @@
 		9CC4207C1CE3703100A6F8D8 /* ObjCOveerrideViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 9CC420751CE3648400A6F8D8 /* ObjCOveerrideViewController.h */; };
 		9CC4207D1CE3704C00A6F8D8 /* ObjCViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 9CC420721CE3646B00A6F8D8 /* ObjCViewController.h */; };
 		9CE69DE91CCC64410098C12A /* InstanceFromOverride.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CE69DE81CCC64410098C12A /* InstanceFromOverride.storyboard */; };
+		BAFB6F7C1E3C4BC200415630 /* Pods_ResourceKitDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFB6F7B1E3C4BC200415630 /* Pods_ResourceKitDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		9CC4207A1CE364E400A6F8D8 /* ObjCOverrideViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ObjCOverrideViewController.storyboard; sourceTree = "<group>"; };
 		9CE69DE81CCC64410098C12A /* InstanceFromOverride.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InstanceFromOverride.storyboard; sourceTree = "<group>"; };
 		A7B1D6D67008C709E244DEEE /* Pods-ResourceKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResourceKitDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ResourceKitDemo/Pods-ResourceKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		BAFB6F7B1E3C4BC200415630 /* Pods_ResourceKitDemo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_ResourceKitDemo.framework; path = "Pods/../build/Debug-iphoneos/Pods_ResourceKitDemo.framework"; sourceTree = "<group>"; };
 		C65892F186E764472C445A12 /* Pods-ResourceKitDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResourceKitDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ResourceKitDemoTests/Pods-ResourceKitDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		E73B6DBB5A5AC6ACBE6D64B0 /* Pods_ResourceKitDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ResourceKitDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6B29E3703B69BA00855EE69 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAFB6F7C1E3C4BC200415630 /* Pods_ResourceKitDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +161,7 @@
 		12681BD5765370E4CE887086 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BAFB6F7B1E3C4BC200415630 /* Pods_ResourceKitDemo.framework */,
 				F6B29E3703B69BA00855EE69 /* Pods.framework */,
 				894C2DB0B279F957D6F9FBC7 /* Pods_ResourceKitDemo.framework */,
 				E73B6DBB5A5AC6ACBE6D64B0 /* Pods_ResourceKitDemoTests.framework */,
@@ -750,6 +754,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = ResourceKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -767,6 +775,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = ResourceKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

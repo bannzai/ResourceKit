@@ -1,5 +1,5 @@
 //
-//  error.swift
+//  Error.swift
 //  ResourceKit
 //
 //  Created by kingkong999yhirose on 2016/07/10.
