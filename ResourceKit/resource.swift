@@ -1,5 +1,5 @@
 //
-//  resource.swift
+//  Resource.swift
 //  ResourceKit
 //
 //  Created by kingkong999yhirose on 2016/04/15.

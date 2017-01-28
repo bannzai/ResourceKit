@@ -71,7 +71,7 @@ do {
     
     
     let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
-    let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.rawValue
+    let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
     let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget)
     let paths = parser.paths.filter { $0.pathExtension != nil }
     

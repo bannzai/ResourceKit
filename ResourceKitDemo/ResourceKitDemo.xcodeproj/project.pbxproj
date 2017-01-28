@@ -302,6 +302,7 @@
 			buildConfigurationList = 9C8D69531CBA98DA006F7A40 /* Build configuration list for PBXNativeTarget "ResourceKitDemo" */;
 			buildPhases = (
 				72A1CA6E287AC4C6AD4FED10 /* [CP] Check Pods Manifest.lock */,
+				BAFB6F7D1E3C627400415630 /* ShellScript */,
 				9C8D69271CBA98DA006F7A40 /* Sources */,
 				9C8D69281CBA98DA006F7A40 /* Frameworks */,
 				9C8D69291CBA98DA006F7A40 /* Resources */,
@@ -506,6 +507,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ResourceKitDemoTests/Pods-ResourceKitDemoTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		BAFB6F7D1E3C627400415630 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/ResourceKit\"";
 		};
 		C54D35B7368100D449D5DBB9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
