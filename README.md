@@ -77,8 +77,8 @@ CocoaPods is the recommended way of installation, as this avoids including any b
  - [x] Images support.  
  - [x] LocaliazedString Support.  
  - [ ] Adjust indent.
- - [ ] Collaboration [SegueAddition](https://github.com/bannzai/SegueAddition).
- - [ ] User Chose Generate Resource Support.  
+ - [x] Collaboration [SegueAddition](https://github.com/bannzai/SegueAddition).
+ - [x] User Chose Generate Resource Support.  
 
 ## Help:
 ##### Q.When want to use a Third party UI Library, how should it be done  
