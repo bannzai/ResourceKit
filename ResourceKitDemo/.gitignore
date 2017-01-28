@@ -1,0 +1,5 @@
+
+Pods/**
+*.xcodeproj/project.xcworkspace
+*.xcworkspace
+
