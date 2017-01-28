@@ -26,7 +26,7 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.registerNib(TableViewCell.Xib())
+        tableView.registerNib(nib: TableViewCell.Xib())
         tableView.reloadData()
     }
 
