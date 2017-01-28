@@ -32,7 +32,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView?.registerNib(CollectionViewCell.Xib())
+        collectionView?.registerNib(nib: CollectionViewCell.Xib())
         collectionView?.reloadData()
     }
 
