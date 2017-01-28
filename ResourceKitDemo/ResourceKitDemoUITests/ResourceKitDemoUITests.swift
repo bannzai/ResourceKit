@@ -30,7 +30,7 @@ class ResourceKitDemoUITests: XCTestCase {
     
     func testCollection_Custom_SecondCollection_SecondCustom_SecondCollection() {
         let app = XCUIApplication()
-        app.tabBars.childrenMatchingType(.Button).matchingIdentifier("Item").elementBoundByIndex(1).tap()
+        app.tabBars.children(matching: .button).matching(identifier: "Item").element(boundBy: 1).tap()
         app.collectionViews.images["ninniku"].tap()
         app.buttons["SecondCollectionViewController"].tap()
         app.collectionViews.cells.staticTexts["52"].tap()
@@ -39,9 +39,9 @@ class ResourceKitDemoUITests: XCTestCase {
     
     func testTable_Custom_SecondTable_SecondCustom_SecondTable() {
         let app = XCUIApplication()
-        app.tables.childrenMatchingType(.Cell).elementBoundByIndex(0).staticTexts["hello world 4"].tap()
+        app.tables.children(matching: .cell).element(boundBy: 0).staticTexts["hello world 4"].tap()
         app.buttons["SecondTableViewController"].tap()
-        app.tables.childrenMatchingType(.Cell).elementBoundByIndex(1).staticTexts["Second"].tap()
+        app.tables.children(matching: .cell).element(boundBy: 1).staticTexts["Second"].tap()
         app.buttons["SecondTableViewController"].tap()
     }
     

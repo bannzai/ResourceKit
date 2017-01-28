@@ -20,7 +20,7 @@ class ViewControllerFromStoryboardTests: XCTestCase {
     }
     
     func testPerformanceExample() {
-        self.measureBlock {
+        self.measure {
         }
     }
     

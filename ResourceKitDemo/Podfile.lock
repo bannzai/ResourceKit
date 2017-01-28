@@ -1,10 +1,12 @@
 PODS:
-  - SegueAddition (1.0.0)
+  - SegueAddition (1.1.0)
 
 DEPENDENCIES:
   - SegueAddition
 
 SPEC CHECKSUMS:
-  SegueAddition: 3118093a089c44a57f75e28f1dd2e7bce1e45449
+  SegueAddition: 80b3f77c6c5ad082cb983df1d47f9721264deaf3
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 92652161d639f7d92903c222c5510fae64667b93
+
+COCOAPODS: 1.1.1

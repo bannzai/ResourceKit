@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         view.addSubview(CustomView.Xib().view())
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier != ViewController.Segue.showSecondTable {
             fatalError("\(#file) + \(#function) + \(#line)")
         }

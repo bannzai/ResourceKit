@@ -27,7 +27,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         ]
     }
     
-    var shoyus: [UIImage] = Array(count: 10, repeatedValue: CollectionViewController.baseShoyus).flatMap { $0 }
+    var shoyus: [UIImage] = Array(repeating: CollectionViewController.baseShoyus, count: 10).flatMap { $0 }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,35 +36,35 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         collectionView?.reloadData()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier != CollectionViewController.Segue.showViewController {
             fatalError("\(#file) + \(#function) + \(#line)")
         }
         
-        segue.destinationViewController.title = sender as? String
+        segue.destination.title = sender as? String
     }
 
     // MARK: UICollectionViewDataSource
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return shoyus.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CollectionViewCell.Xib().name, forIndexPath: indexPath) as! CollectionViewCell // TODO: Support Generics Type
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.Xib().name, for: indexPath) as! CollectionViewCell // TODO: Support Generics Type
         cell.setupWith(shoyus[indexPath.item]) // TODO: Support UIImage Name
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = CGRectGetWidth(UIScreen.mainScreen().bounds) / 3 - 2
-        return CGSizeMake(width, width)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = UIScreen.main.bounds.width / 3 - 2
+        return CGSize(width: width, height: width)
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegueShowViewController()
     }
 
