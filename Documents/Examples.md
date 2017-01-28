@@ -17,7 +17,7 @@ let viewController = ViewController.initialViewController()
 _Standard_
 ```swift
 let storyboard = UIStoryboard(name: "Storyboard", bundle: nil)
-let viewController = storyboard.instantiateViewControllerWithIdentifier("XXXX") as! ViewController
+let viewController = storyboard.instantiateViewController(withIdentifier: "XXXX") as! ViewController
 ```
 
 _Use ResourceKit_
@@ -29,8 +29,8 @@ let viewController = ViewController.instanceFromStoryboard()
 _standard_
 ```swift
 let storyboard = UIStoryboard(name: "Storyboard", bundle: nil)
-let viewController1 = storyboard.instantiateViewControllerWithIdentifier("XXXX") as! ViewController
-let viewController2 = storyboard.instantiateViewControllerWithIdentifier("YYYY") as! ViewController
+let viewController1 = storyboard.instantiateViewController(withIdentifier: "XXXX") as! ViewController
+let viewController2 = storyboard.instantiateViewController(withIdentifier: "YYYY") as! ViewController
 ```
 
 _Use ResourceKit_
@@ -73,7 +73,7 @@ performSegueOpen() // or performSegueOpen(sender: AnyObject?)
 _standard_
 ```swift
 let nib = UINib(nibName: "TableViewCell", bundle: nil)
-let cell nib.instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
+let cell nib.instantiate(withOwner: nil, options: nil)[0] as! TableViewCell
 ```
 
 _Use ResourceKit_

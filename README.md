@@ -18,14 +18,14 @@ ResouceKit makes your code that uses write for resources:
 ```swift
 // Get ViewController
 let storyboard = UIStoryboard(name: "Storyboard", bundle: nil)
-let viewController = storyboard.instantiateViewControllerWithIdentifier("XXXX") as! ViewController
+let viewController = storyboard.instantiateViewController(withIdentifier: "XXXX") as! ViewController
 
 // PerformSegue
-performSegueWithIdentifier("Open", sender: sender)
+performSegue(withIdentifier: "Open", sender: sender)
 
 // Nib
 let nib = UINib(nibName: "TableViewCell", bundle: nil)
-let cell = nib.instantiateWithOwner(nil, options: nil)[0] as! TableViewCell
+let cell = nib.instantiate(withOwner: nil, options: nil)[0] as! TableViewCell
 ```
 Please see `ResouceKitDemo` for more information, or [Examples.md](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md)
 
