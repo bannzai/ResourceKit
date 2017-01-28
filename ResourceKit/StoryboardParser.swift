@@ -34,7 +34,7 @@ final class StoryboardParser: NSObject, Parsable {
         parser.parse()
     }
     
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "document" {
             _initialViewControllerIdentifier = attributeDict["initialViewController"]
             return

@@ -114,7 +114,7 @@ final class XibForView {
             arguments: [],
             returnType: className,
             body: Body(
-                "return nib().instantiateWithOwner(nil, options: nil)[0] as! \(className)"
+                "return nib().instantiate(withOwner: nil, options: nil)[0] as! \(className)"
             )
         )
     }

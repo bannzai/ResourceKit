@@ -11,7 +11,7 @@ import Foundation
 
 struct ProjectResourceParser {
     fileprivate var projectFile: XCProjectFile
-    var paths: [URL] = []
+    private(set) var paths: [URL] = []
     var localizablePaths: [URL] = []
     
     init(xcodeURL: URL, target: String) throws {

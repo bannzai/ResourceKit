@@ -34,6 +34,9 @@ enum Environment: String {
     }
     
     var element: String {
+        if debug {
+            return Environment.environment["DEBUG_" + self.rawValue]!
+        }
         guard let element = Environment.environment[self.rawValue] else {
             let message: String = [
                 "Unexpected value for xcode environment when use Environment.element property.",

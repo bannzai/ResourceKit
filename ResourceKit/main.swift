@@ -9,6 +9,7 @@
 import Foundation
 private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let env = ProcessInfo().environment
+let debug = env["DEBUG"] != nil
 
 private func extractGenerateDir() -> String? {
     return ProcessInfo
@@ -23,10 +24,12 @@ private func extractGenerateDir() -> String? {
         .last
 }
 
-do {
-    try Environment.verifyUseEnvironment()
-} catch {
-    exit(1)
+if !debug {
+    do {
+        try Environment.verifyUseEnvironment()
+    } catch {
+        exit(1)
+    }
 }
 
 let debugOutputPath = env["DEBUG_OUTPUT_PATH"]
@@ -34,8 +37,6 @@ let outputPath = debugOutputPath ?? extractGenerateDir() ?? Environment.SRCROOT.
 let config: Config = Config()
 
 do {
-    try Environment.verifyUseEnvironment()
-    
     let outputUrl = URL(fileURLWithPath: outputPath)
     var resourceValue: AnyObject?
     try (outputUrl as NSURL).getResourceValue(&resourceValue, forKey: URLResourceKey.isDirectoryKey)
@@ -69,7 +70,7 @@ do {
     }
     
     
-    let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(string: env["DEBUG_PROJECT_FILE_PATH"]!)! : Environment.PROJECT_FILE_PATH.path
+    let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
     let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.rawValue
     let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget)
     let paths = parser.paths.filter { $0.pathExtension != nil }
@@ -103,21 +104,21 @@ do {
         type: "UITableView",
         functions: [
             Function(
-                name: "registerNib",
+                name: "register",
                 arguments: [
-                    Argument(name: "nib", type: "XibProtocol")
+                    Argument(name: "_ nib", type: "XibProtocol")
                 ],
                 returnType: "Void",
-                body: Body("register(nib: nib.nib(), forCellReuseIdentifier: nib.name)")
+                body: Body("register(nib.nib(), forCellReuseIdentifier: nib.name)")
             )
             ,
             Function(
-                name: "registerNibs",
+                name: "register",
                 arguments: [
                     Argument(name: "nibs", type: "[XibProtocol]")
                 ],
                 returnType: "Void",
-                body: Body("nibs.forEach(registerNib)")
+                body: Body("nibs.forEach(register)")
             )
         ]
         ).declaration + newLine
@@ -126,21 +127,21 @@ do {
         type: "UICollectionView",
         functions: [
             Function(
-                name: "registerNib",
+                name: "register",
                 arguments: [
-                    Argument(name: "nib", type: "XibProtocol")
+                    Argument(name: "_ nib", type: "XibProtocol")
                 ],
                 returnType: "Void",
-                body: Body("register(nib: nib.nib(), forCellWithReuseIdentifier: nib.name)")
+                body: Body("register(nib.nib(), forCellWithReuseIdentifier: nib.name)")
             )
             ,
             Function(
-                name: "registerNibs",
+                name: "register",
                 arguments: [
                     Argument(name: "nibs", type: "[XibProtocol]")
                 ],
                 returnType: "Void",
-                body: Body("nibs.forEach(registerNib)")
+                body: Body("nibs.forEach(register)")
             )
         ]
         ).declaration + newLine

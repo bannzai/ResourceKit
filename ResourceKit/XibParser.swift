@@ -23,6 +23,7 @@ final class XibPerser: NSObject, Parsable {
         }
     
     
+        _name = url.deletingPathExtension().lastPathComponent
         // Don't create ipad resources
         if _name.contains("~") {
             return
@@ -40,7 +41,7 @@ final class XibPerser: NSObject, Parsable {
         parser.parse()
     }
     
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         generateXibs(attributeDict, elementName: elementName)
     }
     
@@ -65,11 +66,11 @@ final class XibPerser: NSObject, Parsable {
         ProjectResource
             .sharedInstance
             .appendXibForView(
-            XibForView(
-                name: _name,
-                className: className,
-                isFilesOwner: hasFilesOwner
-            )
+                XibForView(
+                    name: _name,
+                    className: className,
+                    isFilesOwner: hasFilesOwner
+                )
         )
     }
 }
