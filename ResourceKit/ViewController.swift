@@ -243,7 +243,7 @@ extension ViewController {
             arguments: [Argument(name: "sender", type: "AnyObject?", defaultValue: "nil")],
             returnType: "Void",
             body: Body(
-                "performSegueWithIdentifier(\"\(segueIdentifier)\", sender: sender)"
+                "performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)"
             )
         )
     }
