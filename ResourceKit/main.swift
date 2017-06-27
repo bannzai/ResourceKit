@@ -10,6 +10,7 @@ import Foundation
 private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let env = ProcessInfo().environment
 let debug = env["DEBUG"] != nil
+let defaultAccessControl: String = "public"
 
 private func extractGenerateDir() -> String? {
     return ProcessInfo
@@ -85,67 +86,61 @@ do {
     
     let importsContent = imports().joined(separator: newLine)
     
-    let xibProtocolContent = Protocol(
-        name: "XibProtocol",
-        getters: [
-            Var(name: "name", type: "String")
-        ],
-        functions: [
-            FunctionForProtocol(
-                head: "",
-                name: "nib",
-                arguments: [],
-                returnType: "UINib"
-            )
-        ]
-        ).declaration + newLine
+    let xibProtocolContent: String = [
+        "\(defaultAccessControl) protocol XibProtocol {",
+        "   associatedtype View",
+        "   var name: String { get }",
+        "   func nib() -> UINib",
+        "}",
+    ].joined(separator: newLine)
     
-    let tableViewExtensionContent = Extension(
-        type: "UITableView",
-        functions: [
-            Function(
-                name: "register",
-                arguments: [
-                    Argument(name: "_ nib", type: "XibProtocol")
-                ],
-                returnType: "Void",
-                body: Body("register(nib.nib(), forCellReuseIdentifier: nib.name)")
-            )
-            ,
-            Function(
-                name: "register",
-                arguments: [
-                    Argument(name: "nibs", type: "[XibProtocol]")
-                ],
-                returnType: "Void",
-                body: Body("nibs.forEach(register)")
-            )
-        ]
-        ).declaration + newLine
+    let XibStructContent: String = [
+        "\(defaultAccessControl) struct Xib<V: UIView>: XibProtocol {",
+        "    \(defaultAccessControl) typealias View = V",
+        "    \(defaultAccessControl) let name: String",
+        "    ",
+        "    \(defaultAccessControl) init() {",
+        "        name = String(describing: View.classForCoder())",
+        "    }",
+        "    ",
+        "    \(defaultAccessControl) func nib() -> UINib {",
+        "        return UINib(nibName: name, bundle: Bundle(for: View.classForCoder()))",
+        "    }",
+        "}",
+    ].joined(separator: newLine)
     
-    let collectionViewExtensionContent = Extension(
-        type: "UICollectionView",
-        functions: [
-            Function(
-                name: "register",
-                arguments: [
-                    Argument(name: "_ nib", type: "XibProtocol")
-                ],
-                returnType: "Void",
-                body: Body("register(nib.nib(), forCellWithReuseIdentifier: nib.name)")
-            )
-            ,
-            Function(
-                name: "register",
-                arguments: [
-                    Argument(name: "nibs", type: "[XibProtocol]")
-                ],
-                returnType: "Void",
-                body: Body("nibs.forEach(register)")
-            )
-        ]
-        ).declaration + newLine
     
+    let tableViewExtensionContent: String = [
+        "\(defaultAccessControl) extension UITableView {",
+        "    \(defaultAccessControl) func register<X: XibProtocol>(xib: X) -> Void where X.View: UITableViewCell {",
+        "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
+        "    }",
+        "    ",
+        "    \(defaultAccessControl) func register<X: XibProtocol>(xibs: [X]) -> Void where X.View: UITableViewCell {",
+        "        xibs.forEach { register(xib: $0) }",
+        "    }",
+        "    ",
+        "    \(defaultAccessControl) func dequeueReusableCell<X: XibProtocol>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
+        "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
+        "    }",
+        "}",
+        ].joined(separator: newLine)
+    
+    let collectionViewExtensionContent = [
+        "\(defaultAccessControl) extension UICollectionView {",
+        "    \(defaultAccessControl) func register<X: XibProtocol>(xib: X) -> Void where X.View: UICollectionViewCell {",
+        "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
+        "    }",
+        "    ",
+        "    \(defaultAccessControl) func register<X: XibProtocol>(xibs: [X]) -> Void where X.View: UICollectionViewCell {",
+        "        xibs.forEach { register(xib: $0) }",
+        "    }",
+        "    ",
+        "    \(defaultAccessControl) func dequeueReusableCell<X: XibProtocol>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
+        "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
+        "    }",
+        "}",
+    ].joined(separator: newLine)
     
     let viewControllerContent = ProjectResource.sharedInstance.viewControllers
         .flatMap { $0.generateExtensionIfNeeded() }
@@ -194,6 +189,7 @@ do {
         Header
             + importsContent + newLine
             + xibProtocolContent
+            + XibStructContent
             + tableViewExtensionContent
             + collectionViewExtensionContent
             + viewControllerContent

@@ -21,7 +21,7 @@ enum ReusableResource: String {
     }
 }
 
-final class XibForView {
+final class XibForView: Declaration {
     let name: String
     let className: String
     var isFilesOwner = false
@@ -35,6 +35,16 @@ final class XibForView {
         self.className = className
         self.isFilesOwner = isFilesOwner
     }
+    
+    var declaration: String {
+        [
+        "struct "
+        
+        ]
+        "let name: String = \"\(className)\"",
+        return ""
+    }
+    
     
     func generateExtension() -> Extension {
         return Extension(
