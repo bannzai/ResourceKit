@@ -94,22 +94,6 @@ do {
         "}",
     ].joined(separator: newLine)
     
-    let XibStructContent: String = [
-        "\(defaultAccessControl) struct Xib<V: UIView>: XibProtocol {",
-        "    \(defaultAccessControl) typealias View = V",
-        "    \(defaultAccessControl) let name: String",
-        "    ",
-        "    \(defaultAccessControl) init() {",
-        "        name = String(describing: View.classForCoder())",
-        "    }",
-        "    ",
-        "    \(defaultAccessControl) func nib() -> UINib {",
-        "        return UINib(nibName: name, bundle: Bundle(for: View.classForCoder()))",
-        "    }",
-        "}",
-    ].joined(separator: newLine)
-    
-    
     let tableViewExtensionContent: String = [
         "\(defaultAccessControl) extension UITableView {",
         "    \(defaultAccessControl) func register<X: XibProtocol>(xib: X) -> Void where X.View: UITableViewCell {",
@@ -189,7 +173,6 @@ do {
         Header
             + importsContent + newLine
             + xibProtocolContent
-            + XibStructContent
             + tableViewExtensionContent
             + collectionViewExtensionContent
             + viewControllerContent
