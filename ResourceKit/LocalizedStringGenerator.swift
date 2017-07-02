@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LocalizedString: Generattable {
+struct LocalizedString: Declaration {
     let localizableStrings:[String: String]
     init(urls: [URL]) {
         let files = urls.filter { $0.lastPathComponent == "Localizable.strings" }
@@ -25,19 +25,11 @@ struct LocalizedString: Generattable {
         self.localizableStrings = localizableStrings
     }
     
-    func generate() -> Extension {
-        return Extension(
-            type: "String",
-            structs: [
-                Struct(
-                    name: "Localized",
-                    lets: generateLocalizableConstants()
-                )
-            ]
-        )
+    var declaration: String {
+        return generateLocalizableConstants().joined(separator: newLine)
     }
     
-    fileprivate func generateLocalizableConstants() -> [Let] {
+    fileprivate func generateLocalizableConstants() -> [String] {
         func toConstantName(_ key: String) -> String {
             return key
                 .replacingOccurrences(of: "[^a-z,^A-Z,^0-9]", with: "_", options: .regularExpression, range: nil)
@@ -45,12 +37,7 @@ struct LocalizedString: Generattable {
             
         }
         return localizableStrings.keys.flatMap {
-            Let(
-                isStatic: true,
-                name: toConstantName($0),
-                type: "String",
-                value: "NSLocalizedString(\"\($0)\", comment: \"\")"
-            )
+            return "\(accessControl) static let \(toConstantName($0)) = \"(NSLocalizedString(\"\($0)\", comment: \"\")"
         }
     }
 }
