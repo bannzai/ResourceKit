@@ -162,7 +162,7 @@ extension ViewController: Declaration {
         defer {
             removeTemporary()
         }
-        let begin = "\(accessControl) extension \(name) {"
+        let begin = "\(accessControl) extension \(name) {" + newLine
         let fromStoryboardFunctions = storyboardInfos.flatMap {
             self.generateFromStoryboardFunctions(from: $0)
         }.joined(separator: newLine)
@@ -186,7 +186,7 @@ extension ViewController: Declaration {
             return ""
         }
         
-        let begin = "\(accessControl) struct Segue {"
+        let begin = "\(accessControl) struct Segue {" + newLine
         let body = _seguesForGenerateStruct.flatMap {
             "\(accessControl) static let \($0.lowerFirst): String = \($0)"
             }.joined(separator: newLine)

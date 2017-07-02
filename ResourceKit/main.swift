@@ -104,7 +104,7 @@ do {
     let tableViewExtensionContent: String = [
         "\(accessControl) extension UITableView {",
         "    \(accessControl) func register<X: Xib>(xib: X) -> Void where X.View: UITableViewCell {",
-        "        register(xib.nib(), forCellReuseIdentifier: xib.nibName)",
+        "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
         "    }",
         "    ",
         "    \(accessControl) func register<X: >(xibs: [X]) -> Void where X.View: UITableViewCell {",
@@ -112,7 +112,7 @@ do {
         "    }",
         "    ",
         "    \(accessControl) func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
-        "        return dequeueReusableCell(withIdentifier: xib.nibName, for: indexPath) as! X.View",
+        "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
         "    }",
         "}",
         ].joined(separator: newLine)
@@ -120,7 +120,7 @@ do {
     let collectionViewExtensionContent = [
         "\(accessControl) extension UICollectionView {",
         "    \(accessControl) func register<X: Xib>(xib: X) -> Void where X.View: UICollectionViewCell {",
-        "        register(xib.nib(), forCellReuseIdentifier: xib.nibName)",
+        "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
         "    }",
         "    ",
         "    \(accessControl) func register<X: Xib>(xibs: [X]) -> Void where X.View: UICollectionViewCell {",
@@ -128,7 +128,7 @@ do {
         "    }",
         "    ",
         "    \(accessControl) func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
-        "        return dequeueReusableCell(withIdentifier: xib.nibName, for: indexPath) as! X.View",
+        "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
         "    }",
         "}",
     ].joined(separator: newLine)

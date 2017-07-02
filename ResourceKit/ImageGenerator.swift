@@ -17,7 +17,7 @@ protocol ImageGenerator: Declaration {
 
 extension ImageGenerator {
     var declaration: String {
-        return begin + body + end
+        return [begin, body, end].joined(separator: newLine)
     }
 }
 
@@ -35,7 +35,7 @@ struct Image: ImageGenerator {
     }
     
     var begin: String {
-        return "\(accessControl) extension UIImage {"
+        return "\(accessControl) extension UIImage {" + newLine
     }
     
     var body: String {
@@ -83,13 +83,13 @@ extension Image {
         }
         
         var begin: String {
-            return "\(accessControl) extension Asset {"
+            return "    \(accessControl) struct Asset {" 
         }
         var body: String {
             let body = imageNames
-                .flatMap { "\(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
+                .flatMap { "        \(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
                 .joined(separator: newLine)
-            return body
+            return body + newLine
         }
         var end: String {
             return "}" + newLine
@@ -119,11 +119,11 @@ extension Image {
         }
         
         var begin: String {
-            return "\(accessControl) extension Asset {"
+            return "    \(accessControl) struct Resources {"
         }
         var body: String {
             let body = imageNames
-                .flatMap { "\(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
+                .flatMap { "        \(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
                 .joined(separator: newLine)
             return body
         }
