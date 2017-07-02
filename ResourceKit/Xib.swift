@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ReusableResource: String {
+enum ReusableResourceType: String {
     case UITableViewCell
     case UICollectionViewCell
     
@@ -38,6 +38,7 @@ final class XibForView: Declaration {
     
     var declaration: String {
         return [
+            "\(accessControl) extension \(className) {",
             "   \(accessControl) struct Xib: XibProtocol {",
             "       \(accessControl) typealias View = \(className)",
             "       \(accessControl) let name: String = \"\(className)\"",
@@ -51,6 +52,7 @@ final class XibForView: Declaration {
             "       }",
             "",
             "   }",
+            "}",
             ].joined(separator: newLine)
     }
 }
