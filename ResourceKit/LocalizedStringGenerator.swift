@@ -29,7 +29,7 @@ struct LocalizedString: Declaration {
         return [
             "\(accessControl) extension String {",
             "\(tab1)\(accessControl) struct Localized {",
-            "\(tab2)\(accessControl) struct Localized",
+            "\(generateLocalizableConstants().joined(separator: newLine))",
             "\(tab1)}",
             "}",
             ].joined(separator: newLine)
@@ -43,7 +43,7 @@ struct LocalizedString: Declaration {
             
         }
         return localizableStrings.keys.flatMap {
-            return "\(tab3)\(accessControl) static let \(toConstantName($0)) = \"(NSLocalizedString(\"\($0)\", comment: \"\")"
+            return "\(tab2)\(accessControl) static let \(toConstantName($0)) = \"(NSLocalizedString(\"\($0)\", comment: \"\")"
         }
     }
 }
