@@ -69,13 +69,14 @@ class ViewControllerInfoOfStoryboard {
 class ViewController {
     var storyboardInfos: [ViewControllerInfoOfStoryboard] = []
     let className: ResourceType
-    let superClassName: ResourceType
+    let superClassName: ResourceType 
     
-    var _seguesForGenerateStruct: [String] = []
+    fileprivate var _seguesForGenerateStruct: [String] = []
     
     fileprivate lazy var hasSupeClass: Bool = {
         return self.superClass != nil
     }()
+    
     fileprivate lazy var superClass: ViewController? =
         ProjectResource.sharedInstance.viewControllers
         .filter ({ $0.className == self.superClassName })
@@ -125,12 +126,12 @@ class ViewController {
         }
     }
     
-    func classFunctionHeadForViewControllerInstance(_ storyboard: ViewControllerInfoOfStoryboard) -> String {
-        return needOverrideForStoryboard(storyboard) ? "class override" : "class"
+    func makeOverrideIfNeededForFromStoryboardFunction(from storyboard: ViewControllerInfoOfStoryboard) -> String? {
+        return needOverrideForStoryboard(storyboard) ? "override" : nil
     }
 
-    func instanceFunctionHeadForSegue(_ storyboard: ViewControllerInfoOfStoryboard) -> String {
-        return needOverrideForSegue(storyboard) ? "override" : "internal"
+    func makeOverrideIfNeededForPerformSegue(from storyboard: ViewControllerInfoOfStoryboard) -> String? {
+        return needOverrideForSegue(storyboard) ? "override" : nil
     }
     
     var name: String {
@@ -144,170 +145,156 @@ class ViewController {
     
 }
 
-extension ViewController {
-    func generateExtension() -> Extension {
+extension ViewController: Declaration {
+    var declaration: String {
+        return generateDeclarationIfStoryboardInfoExists()
+    }
+    
+    fileprivate func generateDeclarationIfStoryboardInfoExists() -> String {
+        if storyboardInfos.isEmpty {
+            return ""
+        }
+        
+        return generateDeclaration()
+    }
+    
+    fileprivate func generateDeclaration() -> String {
         defer {
             removeTemporary()
         }
-        return Extension (
-            type: name,
-            functions: storyboardInfos.flatMap { self.generateFunctions($0) },
-            structs: structs()
-        )
+        let begin = "\(accessControl) extension \(name) {"
+        let fromStoryboardFunctions = storyboardInfos.flatMap {
+            self.generateFromStoryboardFunctions(from: $0)
+        }.joined(separator: newLine)
+        let segueStruct = generateForSegueStruct()
+        let body = fromStoryboardFunctions + newLine + segueStruct
+        let end = "}" +  newLine
+        
+        return begin + body + end
+        
     }
     
-    func removeTemporary() {
+    fileprivate func removeTemporary() {
         _seguesForGenerateStruct.removeAll()
     }
     
-    func generateExtensionIfNeeded() -> Extension? {
-        if storyboardInfos.isEmpty {
-            return nil
-        }
-        return generateExtension()
-    }
-    
-    fileprivate func structs() -> [Struct] {
+    fileprivate func generateForSegueStruct() -> String {
         if !config.segue.standard {
-            return []
+            return ""
         }
         if _seguesForGenerateStruct.isEmpty {
-            return []
+            return ""
         }
-        return [segueStructs(_seguesForGenerateStruct)]
+        
+        let begin = "\(accessControl) struct Segue {"
+        let body = _seguesForGenerateStruct.flatMap {
+            "\(accessControl) static let \($0.lowerFirst): String = \($0)"
+            }.joined(separator: newLine)
+        let end = "}"
+        return begin + body + end
     }
     
-    fileprivate func segueStructs(_ segueIdentifiers: [String]) -> Struct {
-        return Struct (
-            name: "Segue",
-            lets: segueIdentifiers.flatMap {
-                Let (
-                    isStatic: true,
-                    name: $0.lowerFirst,
-                    type: "String",
-                    value: $0,
-                    isConvertStringValue: true
-                )
-            }
-        )
-    }
-    
-    fileprivate func generateFunctions(_ storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
+    fileprivate func generateFromStoryboardFunctions(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         if !config.viewController.instantiateStoryboardAny &&
             !config.needGenerateSegue {
-            return []
+            return ""
         }
         
         if !config.viewController.instantiateStoryboardAny {
-            return performSegues(storyboard)
+            return generatePerformSegues(from: storyboard)
         }
         
         if !config.needGenerateSegue {
-            return [generateFromStoryboard(storyboard)]
+            return generateFromStoryboard(from: storyboard)
         }
         
-        return [generateFromStoryboard(storyboard)] + performSegues(storyboard)
+        return generateFromStoryboard(from: storyboard) + generatePerformSegues(from: storyboard)
     }
     
-    fileprivate func performSegues(_ storyboard: ViewControllerInfoOfStoryboard) -> [Function] {
+    fileprivate func generatePerformSegues(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         if !config.needGenerateSegue {
-            return []
+            return ""
         }
         
-        return storyboard.segues.flatMap {
-            performSegueAndTemporarySave(storyboard, segueIdentifier: $0)
-        }
+        return storyboard
+            .segues
+            .flatMap {
+                generatePerformSegueAndTemporarySave(storyboard, segueIdentifier: $0)
+            }
+            .joined(separator: newLine)
     }
     
-    fileprivate func performSegueAndTemporarySave(_ storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> Function {
+    fileprivate func generatePerformSegueAndTemporarySave(_ storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> String {
        _seguesForGenerateStruct.append(segueIdentifier)
-        return performSegue(storyboard, segueIdentifier: segueIdentifier)
+        return generatePerformSegue(from: storyboard, and: segueIdentifier)
     }
     
-    fileprivate func performSegue(_ storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> Function {
+    fileprivate func generatePerformSegue(from storyboard: ViewControllerInfoOfStoryboard, and segueIdentifier: String) -> String {
+        let overrideOrEmpty = makeOverrideIfNeededForPerformSegue(from: storyboard) ?? ""
         if config.segue.addition {
-            return Function (
-                head: instanceFunctionHeadForSegue(storyboard),
-                name: "performSegue\(segueIdentifier)",
-                arguments: [Argument(name: "closure", type: "((UIStoryboardSegue) -> Void)?", defaultValue: "nil")],
-                returnType: "Void",
-                body: Body([
-                    "performSegue(\"\(segueIdentifier)\", closure: closure)"
-                    ]
-                )
-            )
+            return [
+                "\(overrideOrEmpty) \(accessControl) func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
+                "   performSegue(\"\(segueIdentifier)\", closure: closure)",
+                "}",
+            ].joined(separator: newLine)
         }
-        return Function (
-            head: instanceFunctionHeadForSegue(storyboard),
-            name: "performSegue\(segueIdentifier)",
-            arguments: [Argument(name: "sender", type: "AnyObject?", defaultValue: "nil")],
-            returnType: "Void",
-            body: Body(
-                "performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)"
-            )
-        )
+        return [
+            "\(overrideOrEmpty) \(accessControl) func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
+            "   performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
+            "}",
+            ].joined(separator: newLine)
     }
     
-    fileprivate func generateFromStoryboard(_ storyboard: ViewControllerInfoOfStoryboard) -> Function {
-        return storyboard.isInitial ? fromStoryboardForInitial(storyboard) : fromStoryboard(storyboard)
+    fileprivate func generateFromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
+        return storyboard.isInitial ? fromStoryboardForInitial(from: storyboard) : fromStoryboard(from: storyboard)
     }
     
-    fileprivate func fromStoryboard(_ storyboard: ViewControllerInfoOfStoryboard) -> Function {
+    fileprivate func fromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         if storyboard.storyboardIdentifier.isEmpty {
-            return Function.dummyFunction()
+            return ""
         }
         
+        let overrideOrEmpty = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard) ?? ""
+        let head = "\(overrideOrEmpty) \(accessControl) class func"
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
-            return Function (
-                head: classFunctionHeadForViewControllerInstance(storyboard),
-                name: "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)",
-                arguments: [],
-                returnType: name,
-                body: Body ([
-                    "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                    "let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
-                    "return viewController",
-                    ])
-            )
+            return [
+                head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() {",
+                "   let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+                "   let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
+                "   return viewController",
+                "}"
+            ].joined(separator: newLine)
         }
         
-        return Function (
-            head: classFunctionHeadForViewControllerInstance(storyboard),
-            name: "instanceFrom\(storyboard.storyboardName)",
-            arguments: [],
-            returnType: name,
-            body: Body([
-                "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                "let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
-                "return viewController",
-            ])
-        )
+        return [
+            head + "instanceFrom\(storyboard.storyboardName)() {",
+            "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+            "let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
+            "return viewController",
+            "}",
+        ].joined(separator: newLine)
     }
     
-    fileprivate func fromStoryboardForInitial(_ storyboard: ViewControllerInfoOfStoryboard) -> Function {
+    fileprivate func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
+        let overrideOrEmpty = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard) ?? ""
+        let head = "\(overrideOrEmpty) \(accessControl) class func"
+        
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
-            return Function (
-                head: classFunctionHeadForViewControllerInstance(storyboard),
-                name: "initialFrom\(storyboard.storyboardName)",
-                arguments: [],
-                returnType: name,
-                body: Body([
-                    "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                    "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
-                    "return viewController",
-                    ])
-            )
-        }
-        return Function (
-            head: classFunctionHeadForViewControllerInstance(storyboard),
-            name: "initialViewController",
-            arguments: [],
-            returnType: name,
-            body: Body([
-                "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
+            return [
+                head + "initialFrom\(storyboard.storyboardName)() {",
+                "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
                 "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
                 "return viewController",
-            ])
-        )
+                "}"
+                ].joined(separator: newLine)
+        }
+        
+        return [
+            head + "initialViewController() {",
+            "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
+            "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
+            "return viewController",
+            "}"
+            ].joined(separator: newLine)
     }
 }

@@ -134,7 +134,6 @@ do {
     ].joined(separator: newLine)
     
     let viewControllerContent = ProjectResource.sharedInstance.viewControllers
-        .flatMap { $0.generateExtensionIfNeeded() }
         .flatMap { $0.declaration }
         .joined(separator: newLine)
     

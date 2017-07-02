@@ -67,7 +67,7 @@ final class XibPerser: NSObject, Parsable {
             .sharedInstance
             .appendXibForView(
                 XibForView(
-                    name: _name,
+                    nibName: _name,
                     className: className,
                     isFilesOwner: hasFilesOwner
                 )
