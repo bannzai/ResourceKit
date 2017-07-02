@@ -92,7 +92,7 @@ extension Image {
             return body + newLine
         }
         var end: String {
-            return "}" + newLine
+            return "    }" + newLine
         }
     }
 }
@@ -128,7 +128,7 @@ extension Image {
             return body
         }
         var end: String {
-            return "}" + newLine
+            return "    }" + newLine
         }
     }
 }

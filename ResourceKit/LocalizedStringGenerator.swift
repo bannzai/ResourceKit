@@ -26,7 +26,13 @@ struct LocalizedString: Declaration {
     }
     
     var declaration: String {
-        return generateLocalizableConstants().joined(separator: newLine)
+        return [
+            "\(accessControl) extension String {",
+            "   \(accessControl) struct Localized {",
+            "       \(accessControl) struct Localized",
+            "   }",
+            "}",
+            ].joined(separator: newLine)
     }
     
     fileprivate func generateLocalizableConstants() -> [String] {
@@ -37,7 +43,7 @@ struct LocalizedString: Declaration {
             
         }
         return localizableStrings.keys.flatMap {
-            return "\(accessControl) static let \(toConstantName($0)) = \"(NSLocalizedString(\"\($0)\", comment: \"\")"
+            return "    \(accessControl) static let \(toConstantName($0)) = \"(NSLocalizedString(\"\($0)\", comment: \"\")"
         }
     }
 }

@@ -255,7 +255,7 @@ extension ViewController: Declaration {
         }
         
         let overrideOrEmpty = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard) ?? ""
-        let head = "\(overrideOrEmpty) \(accessControl) class func"
+        let head = "\(overrideOrEmpty) \(accessControl) class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() {",
@@ -277,7 +277,7 @@ extension ViewController: Declaration {
     
     fileprivate func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         let overrideOrEmpty = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard) ?? ""
-        let head = "\(overrideOrEmpty) \(accessControl) class func"
+        let head = "\(overrideOrEmpty) \(accessControl) class func "
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [

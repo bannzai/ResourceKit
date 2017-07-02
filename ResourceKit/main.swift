@@ -107,7 +107,7 @@ do {
         "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
         "    }",
         "    ",
-        "    \(accessControl) func register<X: >(xibs: [X]) -> Void where X.View: UITableViewCell {",
+        "    \(accessControl) func register<X: Xib>(xibs: [X]) -> Void where X.View: UITableViewCell {",
         "        xibs.forEach { register(xib: $0) }",
         "    }",
         "    ",
