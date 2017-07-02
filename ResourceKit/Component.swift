@@ -9,15 +9,9 @@
 import Foundation
 
 let newLine = "\n"
-let indent = "\t"
-let lineAndIndent = newLine + indent
-let indentClosure: ((Int) -> String) = { level in
-    var str = ""
-    for i in 0..<level {
-        str += indent
-    }
-    return str
-}
+let tab1 = "\t"
+let tab2 = "\t\t"
+let tab3 = "\t\t\t"
 
 let Header = [
     "// This is a generated file \n",

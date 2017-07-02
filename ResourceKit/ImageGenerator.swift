@@ -83,16 +83,16 @@ extension Image {
         }
         
         var begin: String {
-            return "    \(accessControl) struct Asset {" 
+            return "\(tab1)\(accessControl) struct Asset {" 
         }
         var body: String {
             let body = imageNames
-                .flatMap { "        \(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
+                .flatMap { "\(tab2)\(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
                 .joined(separator: newLine)
             return body + newLine
         }
         var end: String {
-            return "    }" + newLine
+            return "\(tab1)}" + newLine
         }
     }
 }
@@ -119,16 +119,16 @@ extension Image {
         }
         
         var begin: String {
-            return "    \(accessControl) struct Resources {"
+            return "\(tab1)\(accessControl) struct Resources {"
         }
         var body: String {
             let body = imageNames
-                .flatMap { "        \(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
+                .flatMap { "\(tab2)\(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
                 .joined(separator: newLine)
             return body
         }
         var end: String {
-            return "    }" + newLine
+            return "\(tab1)}" + newLine
         }
     }
 }

@@ -170,7 +170,7 @@ extension ViewController: Declaration {
         let body = fromStoryboardFunctions + newLine + segueStruct
         let end = "}" +  newLine
         
-        return begin + body + end
+        return [begin, body, end].joined(separator: newLine)
         
     }
     
@@ -186,12 +186,12 @@ extension ViewController: Declaration {
             return ""
         }
         
-        let begin = "\(accessControl) struct Segue {" + newLine
+        let begin = "\(tab1)\(accessControl) struct Segue {" + newLine
         let body = _seguesForGenerateStruct.flatMap {
-            "\(accessControl) static let \($0.lowerFirst): String = \($0)"
+            "\(tab2)\(accessControl) static let \($0.lowerFirst): String = \($0)"
             }.joined(separator: newLine)
-        let end = "}"
-        return begin + body + end
+        let end = "\(tab1)}"
+        return [begin, body, end].joined(separator: newLine)
     }
     
     fileprivate func generateFromStoryboardFunctions(from storyboard: ViewControllerInfoOfStoryboard) -> String {
@@ -233,15 +233,15 @@ extension ViewController: Declaration {
         let overrideOrEmpty = makeOverrideIfNeededForPerformSegue(from: storyboard) ?? ""
         if config.segue.addition {
             return [
-                "\(overrideOrEmpty) \(accessControl) func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
-                "   performSegue(\"\(segueIdentifier)\", closure: closure)",
-                "}",
+                "\(tab1)\(overrideOrEmpty) \(accessControl) func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
+                "\(tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
+                "\(tab1)}",
             ].joined(separator: newLine)
         }
         return [
-            "\(overrideOrEmpty) \(accessControl) func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
-            "   performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
-            "}",
+            "\(tab1)\(overrideOrEmpty) \(accessControl) func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
+            "\(tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
+            "\(tab1)}",
             ].joined(separator: newLine)
     }
     
@@ -259,18 +259,18 @@ extension ViewController: Declaration {
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(className.name) {",
-                "   let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                "   let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
-                "   return viewController",
+                "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+                "\(tab1)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
+                "\(tab1)return viewController",
                 "}"
             ].joined(separator: newLine)
         }
         
         return [
             head + "instanceFrom\(storyboard.storyboardName)() -> \(className.name) {",
-            "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-            "let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
-            "return viewController",
+            "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+            "\(tab1)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
+            "\(tab1)return viewController",
             "}",
         ].joined(separator: newLine)
     }
@@ -282,18 +282,18 @@ extension ViewController: Declaration {
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [
                 head + "initialFrom\(storyboard.storyboardName)() -> \(className.name) {",
-                "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
-                "return viewController",
+                "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+                "\(tab1)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
+                "\(tab1)return viewController",
                 "}"
                 ].joined(separator: newLine)
         }
         
         return [
             head + "initialViewController() -> \(className.name) {",
-            "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
-            "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
-            "return viewController",
+            "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
+            "\(tab1)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
+            "\(tab1)return viewController",
             "}"
             ].joined(separator: newLine)
     }
