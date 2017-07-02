@@ -143,12 +143,10 @@ do {
     
     if config.reusable.identifier {
         tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
-            .flatMap { $0.generateExtension() }
             .flatMap { $0.declaration }
             .joined(separator: newLine)
         
         collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
-            .flatMap { $0.generateExtension() }
             .flatMap { $0.declaration }
             .joined(separator: newLine)
         
@@ -160,18 +158,18 @@ do {
     let xibContent: String
     if config.nib.xib {
         xibContent = ProjectResource.sharedInstance.xibs
-            .flatMap { $0.generateExtension() }
             .flatMap { $0.declaration }
             .joined(separator: newLine)
     } else {
         xibContent = ""
     }
     
-    let imageContent = Image(urls: paths).generate().declaration + newLine
+    let imageContent = Image(urls: paths).declaration + newLine
     
     let stringContent: String
+    
     if config.string.localized {
-        stringContent = LocalizedString(urls: parser.localizablePaths).generate().declaration + newLine
+        stringContent = LocalizedString(urls: parser.localizablePaths).declaration + newLine
     } else {
         stringContent = ""
     }
