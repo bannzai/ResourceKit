@@ -8,77 +8,41 @@
 
 import Foundation
 
-class TableViewCell {
-    let className: String
-    var reusableIdentifiers: [String] = []
-    
-    init(reusableIdentifier: String, className: String) {
-        self.reusableIdentifiers.append(reusableIdentifier)
-        self.className = className
-    }
+protocol ReusableResource: Declaration {
+    var className: String { get }
+    var reusableIdentifiers: [String] { get }
 }
 
-class CollectionViewCell {
-    let className: String
-    var reusableIdentifiers: [String] = []
-    
-    init(reusableIdentifier: String, className: String) {
-        self.reusableIdentifiers.append(reusableIdentifier)
-        self.className = className
-    }
-}
-
-extension TableViewCell: Declaration {
+extension ReusableResource {
     var declaration: String {
-        let 
-    }
-    
-    func generateExtension() -> Extension {
-        return Extension (
-            type: className,
-            structs: [generateStruct()]
-        )
-    }
-    
-    func generateStruct() -> Struct {
-        return Struct(
-            name: "Reusable",
-            lets:
-            reusableIdentifiers.flatMap {
-                Let(
-                    isStatic: true,
-                    name: $0,
-                    type: "String",
-                    value: $0,
-                    isConvertStringValue: true
-                )
-            }
-        )
+        return [
+            "\(accessControl) extension \(className) {",
+            "   \(accessControl) struct ReusableImpl: Reusable {",
+            "       \(accessControl) typealias View = \(className)",
+            "       \(accessControl) let name: String = \"\(className)\"",
+            "   }",
+            "}",
+        ].joined(separator: newLine)
     }
 }
 
-extension CollectionViewCell {
-    func generateExtension() -> Extension {
-        return Extension (
-            type: className,
-            structs: [generateStruct()]
-        )
-    }
+class TableViewCell: ReusableResource {
+    let className: String
+    private(set) var reusableIdentifiers: [String] = []
     
-    func generateStruct() -> Struct {
-        return Struct(
-            name: "Reusable",
-            lets:
-            reusableIdentifiers.flatMap {
-                Let(
-                    isStatic: true,
-                    name: $0,
-                    type: "String",
-                    value: $0,
-                    isConvertStringValue: true
-                )
-            }
-        )
+    init(reusableIdentifier: String, className: String) {
+        self.reusableIdentifiers.append(reusableIdentifier)
+        self.className = className
+    }
+}
+
+class CollectionViewCell: ReusableResource {
+    let className: String
+    private(set) var reusableIdentifiers: [String] = []
+    
+    init(reusableIdentifier: String, className: String) {
+        self.reusableIdentifiers.append(reusableIdentifier)
+        self.className = className
     }
 }
 
