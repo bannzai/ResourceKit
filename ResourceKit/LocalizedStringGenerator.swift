@@ -43,7 +43,7 @@ struct LocalizedString: Declaration {
             
         }
         return localizableStrings.keys.flatMap {
-            return "\(tab2)\(accessControl) static let \(toConstantName($0)) = \"(NSLocalizedString(\"\($0)\", comment: \"\")"
+            return "\(tab2)\(accessControl) static let \(toConstantName($0)) = NSLocalizedString(\"\($0)\", comment: \"\")"
         }
     }
 }
