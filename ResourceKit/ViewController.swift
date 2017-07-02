@@ -188,7 +188,7 @@ extension ViewController: Declaration {
         
         let begin = "\(tab1)\(accessControl) struct Segue {" 
         let body = _seguesForGenerateStruct.flatMap {
-            "\(tab2)\(accessControl) static let \($0.lowerFirst): String = \($0)"
+            "\(tab2)\(accessControl) static let \($0.lowerFirst): String = \"\($0)\""
             }.joined(separator: newLine)
         let end = "\(tab1)}"
         return [begin, body, end].joined(separator: newLine)
@@ -230,7 +230,8 @@ extension ViewController: Declaration {
     }
     
     fileprivate func generatePerformSegue(from storyboard: ViewControllerInfoOfStoryboard, and segueIdentifier: String) -> String {
-        let overrideOrEmpty = makeOverrideIfNeededForPerformSegue(from: storyboard) ?? ""
+        let overrideOrNil = makeOverrideIfNeededForPerformSegue(from: storyboard)
+        let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
         let head = "\(tab1)\(overrideOrEmpty)"
         if config.segue.addition {
             return [
@@ -255,8 +256,9 @@ extension ViewController: Declaration {
             return ""
         }
         
-        let overrideOrEmpty = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard) ?? ""
-        let head = "\(tab1)\(overrideOrEmpty) \(accessControl) class func "
+        let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
+        let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
+        let head = "\(tab1)\(overrideOrEmpty.isEmpty)\(accessControl) class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(className.name) {",
@@ -277,8 +279,9 @@ extension ViewController: Declaration {
     }
     
     fileprivate func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
-        let overrideOrEmpty = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard) ?? ""
-        let head = "\(tab1)\(overrideOrEmpty) \(accessControl) class func "
+        let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
+        let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
+        let head = "\(tab1)\(overrideOrEmpty)\(accessControl) class func "
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [
