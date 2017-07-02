@@ -88,7 +88,7 @@ do {
     let importsContent = imports().joined(separator: newLine)
     
     let xibProtocolContent: String = [
-        "\(accessControl) protocol XibProtocol {",
+        "\(accessControl) protocol Xib {",
         "   associatedtype View",
         "   var name: String { get }",
         "   func nib() -> UINib",
@@ -98,7 +98,7 @@ do {
     
     let tableViewExtensionContent: String = [
         "\(accessControl) extension UITableView {",
-        "    \(accessControl) func register<X: XibProtocol>(xib: X) -> Void where X.View: UITableViewCell {",
+        "    \(accessControl) func register<X: Xib>(xib: X) -> Void where X.View: UITableViewCell {",
         "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
         "    }",
         "    ",
@@ -106,7 +106,7 @@ do {
         "        xibs.forEach { register(xib: $0) }",
         "    }",
         "    ",
-        "    \(accessControl) func dequeueReusableCell<X: XibProtocol>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
+        "    \(accessControl) func dequeueReusableCell<X: Xib>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
         "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
         "    }",
         "}",
@@ -114,15 +114,15 @@ do {
     
     let collectionViewExtensionContent = [
         "\(accessControl) extension UICollectionView {",
-        "    \(accessControl) func register<X: XibProtocol>(xib: X) -> Void where X.View: UICollectionViewCell {",
+        "    \(accessControl) func register<X: Xib>(xib: X) -> Void where X.View: UICollectionViewCell {",
         "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
         "    }",
         "    ",
-        "    \(accessControl) func register<X: XibProtocol>(xibs: [X]) -> Void where X.View: UICollectionViewCell {",
+        "    \(accessControl) func register<X: Xib>(xibs: [X]) -> Void where X.View: UICollectionViewCell {",
         "        xibs.forEach { register(xib: $0) }",
         "    }",
         "    ",
-        "    \(accessControl) func dequeueReusableCell<X: XibProtocol>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
+        "    \(accessControl) func dequeueReusableCell<X: Xib>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
         "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
         "    }",
         "}",

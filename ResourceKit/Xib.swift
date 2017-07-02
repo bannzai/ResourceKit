@@ -39,7 +39,7 @@ final class XibForView: Declaration {
     var declaration: String {
         return [
             "\(accessControl) extension \(className) {",
-            "   \(accessControl) struct Xib: XibProtocol {",
+            "   \(accessControl) struct XibImpl: Xib {",
             "       \(accessControl) typealias View = \(className)",
             "       \(accessControl) let name: String = \"\(className)\"",
             "       ",
