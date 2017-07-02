@@ -201,14 +201,14 @@ extension ViewController: Declaration {
         }
         
         if !config.viewController.instantiateStoryboardAny {
-            return generatePerformSegues(from: storyboard)
+            return generatePerformSegues(from: storyboard) + newLine
         }
         
         if !config.needGenerateSegue {
-            return generateFromStoryboard(from: storyboard)
+            return generateFromStoryboard(from: storyboard) + newLine
         }
         
-        return generateFromStoryboard(from: storyboard) + generatePerformSegues(from: storyboard)
+        return generateFromStoryboard(from: storyboard) + newLine + generatePerformSegues(from: storyboard) + newLine
     }
     
     fileprivate func generatePerformSegues(from storyboard: ViewControllerInfoOfStoryboard) -> String {
@@ -234,20 +234,20 @@ extension ViewController: Declaration {
         let head = "\(tab1)\(overrideOrEmpty)"
         if config.segue.addition {
             return [
-                "\(tab1)\(head) \(accessControl) func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
+                "\(head) \(accessControl) func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
                 "\(tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
                 "\(tab1)}",
             ].joined(separator: newLine)
         }
         return [
-            "\(tab1)\(head) \(accessControl) func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
+            "\(head) \(accessControl) func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
             "\(tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
             "\(tab1)}",
             ].joined(separator: newLine)
     }
     
     fileprivate func generateFromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
-        return storyboard.isInitial ? fromStoryboardForInitial(from: storyboard) : fromStoryboard(from: storyboard)
+        return storyboard.isInitial ? fromStoryboardForInitial(from: storyboard) : fromStoryboard(from: storyboard) 
     }
     
     fileprivate func fromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
