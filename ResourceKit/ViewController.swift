@@ -258,7 +258,7 @@ extension ViewController: Declaration {
         let head = "\(overrideOrEmpty) \(accessControl) class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
-                head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() {",
+                head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(className.name) {",
                 "   let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
                 "   let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
                 "   return viewController",
@@ -267,7 +267,7 @@ extension ViewController: Declaration {
         }
         
         return [
-            head + "instanceFrom\(storyboard.storyboardName)() {",
+            head + "instanceFrom\(storyboard.storyboardName)() -> \(className.name) {",
             "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
             "let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
             "return viewController",
@@ -281,7 +281,7 @@ extension ViewController: Declaration {
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [
-                head + "initialFrom\(storyboard.storyboardName)() {",
+                head + "initialFrom\(storyboard.storyboardName)() -> \(className.name) {",
                 "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
                 "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
                 "return viewController",
@@ -290,7 +290,7 @@ extension ViewController: Declaration {
         }
         
         return [
-            head + "initialViewController() {",
+            head + "initialViewController() -> \(className.name) {",
             "let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
             "let viewController = storyboard.instantiateInitialViewController() as! \(name)",
             "return viewController",
