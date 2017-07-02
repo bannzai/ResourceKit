@@ -104,7 +104,7 @@ do {
     let tableViewExtensionContent: String = [
         "\(accessControl) extension UITableView {",
         "\(tab1)\(accessControl) func register<X: Xib>(xib: X) -> Void where X.View: UITableViewCell {",
-        "\(tab2)register(xib.nib(), forCellWithReuseIdentifier: xib.name)",
+        "\(tab2)register(xib.nib(), forCellReuseIdentifier: xib.name)",
         "\(tab1)}",
         "    ",
         "\(tab1)\(accessControl) func register<X: Xib>(xibs: [X]) -> Void where X.View: UITableViewCell {",
@@ -112,7 +112,7 @@ do {
         "\(tab1)}",
         "    ",
         "\(tab2)\(accessControl) func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
-        "\(tab3)return dequeueReusableCell(withReuseIdentifier: xib.name, for: indexPath) as! X.View",
+        "\(tab3)return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
         "\(tab2)}",
         "}",
         ].joined(separator: newLine)
