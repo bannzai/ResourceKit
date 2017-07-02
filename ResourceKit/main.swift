@@ -176,16 +176,16 @@ do {
     let content = (
         Header
             + importsContent + newLine
-            + reusableProtocolContent
-            + xibProtocolContent
-            + tableViewExtensionContent
-            + collectionViewExtensionContent
-            + viewControllerContent
-            + tableViewCellContent
-            + collectionViewCellContent
-            + xibContent
-            + imageContent
-            + stringContent
+            + reusableProtocolContent + newLine
+            + xibProtocolContent + newLine
+            + tableViewExtensionContent + newLine
+            + collectionViewExtensionContent + newLine
+            + viewControllerContent + newLine
+            + tableViewCellContent + newLine
+            + collectionViewCellContent + newLine
+            + xibContent + newLine
+            + imageContent + newLine
+            + stringContent + newLine
     )
     
     func write(_ code: String, fileURL: URL) throws {
