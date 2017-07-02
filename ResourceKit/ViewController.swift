@@ -283,7 +283,7 @@ extension ViewController: Declaration {
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [
                 head + "initialFrom\(storyboard.storyboardName)() -> \(className.name) {",
-                "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+                "\(tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
                 "\(tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
                 "\(tab2)return viewController",
                 "\(tab1)}"
@@ -292,7 +292,7 @@ extension ViewController: Declaration {
         
         return [
             head + "initialViewController() -> \(className.name) {",
-            "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
+            "\(tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
             "\(tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
             "\(tab2)return viewController",
             "\(tab1)}"
