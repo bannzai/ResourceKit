@@ -87,10 +87,15 @@ do {
     
     let importsContent = imports().joined(separator: newLine)
     
-    let xibProtocolContent: String = [
+    let reusableProtocolContent: String = [
         "\(accessControl) protocol Xib {",
         "   associatedtype View",
         "   var name: String { get }",
+        "}",
+    ].joined(separator: newLine)
+    
+    let xibProtocolContent: String = [
+        "\(accessControl) protocol Xib: Reusable {",
         "   func nib() -> UINib",
         "   func view() -> View",
         "}",
@@ -106,7 +111,7 @@ do {
         "        xibs.forEach { register(xib: $0) }",
         "    }",
         "    ",
-        "    \(accessControl) func dequeueReusableCell<X: Xib>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
+        "    \(accessControl) func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
         "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
         "    }",
         "}",
@@ -122,7 +127,7 @@ do {
         "        xibs.forEach { register(xib: $0) }",
         "    }",
         "    ",
-        "    \(accessControl) func dequeueReusableCell<X: Xib>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
+        "    \(accessControl) func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
         "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
         "    }",
         "}",
