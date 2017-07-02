@@ -258,7 +258,7 @@ extension ViewController: Declaration {
         
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
         let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(tab1)\(overrideOrEmpty.isEmpty)\(accessControl) class func "
+        let head = "\(tab1)\(overrideOrEmpty)\(accessControl) class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(className.name) {",
