@@ -231,15 +231,16 @@ extension ViewController: Declaration {
     
     fileprivate func generatePerformSegue(from storyboard: ViewControllerInfoOfStoryboard, and segueIdentifier: String) -> String {
         let overrideOrEmpty = makeOverrideIfNeededForPerformSegue(from: storyboard) ?? ""
+        let head = "\(tab1)\(overrideOrEmpty)"
         if config.segue.addition {
             return [
-                "\(tab1)\(overrideOrEmpty) \(accessControl) func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
+                "\(tab1)\(head) \(accessControl) func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
                 "\(tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
                 "\(tab1)}",
             ].joined(separator: newLine)
         }
         return [
-            "\(tab1)\(overrideOrEmpty) \(accessControl) func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
+            "\(tab1)\(head) \(accessControl) func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
             "\(tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
             "\(tab1)}",
             ].joined(separator: newLine)
@@ -255,29 +256,29 @@ extension ViewController: Declaration {
         }
         
         let overrideOrEmpty = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard) ?? ""
-        let head = "\(overrideOrEmpty) \(accessControl) class func "
+        let head = "\(tab1)\(overrideOrEmpty) \(accessControl) class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(className.name) {",
-                "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                "\(tab1)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
-                "\(tab1)return viewController",
-                "}"
+                "\(tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+                "\(tab2)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
+                "\(tab2)return viewController",
+                "\(tab1)}"
             ].joined(separator: newLine)
         }
         
         return [
             head + "instanceFrom\(storyboard.storyboardName)() -> \(className.name) {",
-            "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-            "\(tab1)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
-            "\(tab1)return viewController",
-            "}",
+            "\(tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+            "\(tab2)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
+            "\(tab2)return viewController",
+            "\(tab1)}",
         ].joined(separator: newLine)
     }
     
     fileprivate func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         let overrideOrEmpty = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard) ?? ""
-        let head = "\(overrideOrEmpty) \(accessControl) class func "
+        let head = "\(tab1)\(overrideOrEmpty) \(accessControl) class func "
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [
@@ -285,7 +286,7 @@ extension ViewController: Declaration {
                 "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
                 "\(tab1)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
                 "\(tab1)return viewController",
-                "}"
+                "\(tab1)}"
                 ].joined(separator: newLine)
         }
         
@@ -294,7 +295,7 @@ extension ViewController: Declaration {
             "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
             "\(tab1)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
             "\(tab1)return viewController",
-            "}"
+            "\(tab1)}"
             ].joined(separator: newLine)
     }
 }
