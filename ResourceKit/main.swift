@@ -176,6 +176,7 @@ do {
     let content = (
         Header
             + importsContent + newLine
+            + reusableProtocolContent
             + xibProtocolContent
             + tableViewExtensionContent
             + collectionViewExtensionContent
