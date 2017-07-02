@@ -284,8 +284,8 @@ extension ViewController: Declaration {
             return [
                 head + "initialFrom\(storyboard.storyboardName)() -> \(className.name) {",
                 "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                "\(tab1)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
-                "\(tab1)return viewController",
+                "\(tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
+                "\(tab2)return viewController",
                 "\(tab1)}"
                 ].joined(separator: newLine)
         }
@@ -293,8 +293,8 @@ extension ViewController: Declaration {
         return [
             head + "initialViewController() -> \(className.name) {",
             "\(tab1)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
-            "\(tab1)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
-            "\(tab1)return viewController",
+            "\(tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
+            "\(tab2)return viewController",
             "\(tab1)}"
             ].joined(separator: newLine)
     }
