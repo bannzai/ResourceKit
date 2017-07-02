@@ -8,13 +8,20 @@
 
 import Foundation
 
-protocol Generattable {
-    associatedtype GenerateType
-    init(urls: [URL])
-    func generate() -> GenerateType
+protocol ImageGenerator: Declaration {
+    var begin: String { get }
+    var body: String { get }
+    var end: String { get }
+    init(urls: [URL]) 
 }
 
-struct Image: Generattable {
+extension ImageGenerator {
+    var declaration: String {
+        return begin + body + end
+    }
+}
+
+struct Image: ImageGenerator {
     let assets: Assets
     let resources: Resources
     
@@ -27,37 +34,33 @@ struct Image: Generattable {
         return "UIImage(named: \"\(withName)\")!"
     }
     
-    func generate() -> Extension {
-        if !config.image.assetCatalog && !config.image.projectResource {
-            return Extension(type: "UIImage")
+    var begin: String {
+        return "\(accessControl) extension UIImage {"
+    }
+    
+    var body: String {
+        guard
+            config.image.assetCatalog || config.image.projectResource
+            else {
+                return ""
         }
-        
         if !config.image.assetCatalog {
-            return Extension(
-                type: "UIImage",
-                structs: [resources.generate()]
-            )
+            return resources.declaration
         }
-        
         if !config.image.projectResource {
-            return Extension(
-                type: "UIImage",
-                structs: [assets.generate()]
-            )
+            return assets.declaration
         }
         
-        return Extension(
-            type: "UIImage",
-            structs: [
-                assets.generate(),
-                resources.generate()
-            ]
-        )
+        return assets.declaration + resources.declaration 
+    }
+    
+    var end: String {
+        return "}" + newLine
     }
 }
 
 extension Image {
-    struct Assets: Generattable {
+    struct Assets: ImageGenerator {
         let imageNames: [String]
         
         init(urls: [URL]) {
@@ -79,25 +82,23 @@ extension Image {
                 .flatMap { $0.deletingPathExtension().lastPathComponent }
         }
         
-        func generate() -> Struct {
-            return Struct(
-                name: "Asset",
-                lets: imageNames.flatMap {
-                    Let(
-                        isStatic: true,
-                        name: $0,
-                        type: "UIImage",
-                        value: Image.imageFunction($0)
-                    )
-                }
-            )
+        var begin: String {
+            return "\(accessControl) extension Asset {"
+        }
+        var body: String {
+            let body = imageNames
+                .flatMap { "\(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
+                .joined(separator: newLine)
+            return body
+        }
+        var end: String {
+            return "}" + newLine
         }
     }
-    
 }
 
 extension Image {
-    struct Resources: Generattable {
+    struct Resources: ImageGenerator {
         static let supportExtensions: Set<String> = [ "png", "jpg", "gif" ]
         let imageNames: [String]
         
@@ -117,18 +118,17 @@ extension Image {
             }
         }
         
-        func generate() -> Struct {
-            return Struct(
-                name: "Resource",
-                lets: imageNames.flatMap {
-                    Let(
-                        isStatic: true,
-                        name: $0,
-                        type: "UIImage",
-                        value: Image.imageFunction($0)
-                    )
-                }
-            )
+        var begin: String {
+            return "\(accessControl) extension Asset {"
+        }
+        var body: String {
+            let body = imageNames
+                .flatMap { "\(accessControl) static let \($0): UIImage = \(Image.imageFunction($0))" }
+                .joined(separator: newLine)
+            return body
+        }
+        var end: String {
+            return "}" + newLine
         }
     }
 }
