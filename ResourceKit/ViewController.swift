@@ -186,7 +186,7 @@ extension ViewController: Declaration {
             return ""
         }
         
-        let begin = "\(tab1)\(accessControl) struct Segue {" + newLine
+        let begin = "\(tab1)\(accessControl) struct Segue {" 
         let body = _seguesForGenerateStruct.flatMap {
             "\(tab2)\(accessControl) static let \($0.lowerFirst): String = \($0)"
             }.joined(separator: newLine)
