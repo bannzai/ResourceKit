@@ -28,7 +28,11 @@ class CollectionViewCell {
     }
 }
 
-extension TableViewCell {
+extension TableViewCell: Declaration {
+    var declaration: String {
+        let 
+    }
+    
     func generateExtension() -> Extension {
         return Extension (
             type: className,
