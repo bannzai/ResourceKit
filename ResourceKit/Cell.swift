@@ -10,7 +10,7 @@ import Foundation
 
 protocol ReusableResource: Declaration {
     var className: String { get }
-    var reusableIdentifiers: [String] { get }
+    var reusableIdentifiers: [String] { get set }
 }
 
 extension ReusableResource {
@@ -28,7 +28,7 @@ extension ReusableResource {
 
 class TableViewCell: ReusableResource {
     let className: String
-    private(set) var reusableIdentifiers: [String] = []
+    var reusableIdentifiers: [String] = []
     
     init(reusableIdentifier: String, className: String) {
         self.reusableIdentifiers.append(reusableIdentifier)
@@ -38,7 +38,7 @@ class TableViewCell: ReusableResource {
 
 class CollectionViewCell: ReusableResource {
     let className: String
-    private(set) var reusableIdentifiers: [String] = []
+    var reusableIdentifiers: [String] = []
     
     init(reusableIdentifier: String, className: String) {
         self.reusableIdentifiers.append(reusableIdentifier)
