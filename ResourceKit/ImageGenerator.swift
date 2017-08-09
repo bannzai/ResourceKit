@@ -119,7 +119,7 @@ extension Image {
         }
         
         var begin: String {
-            return "\(tab1)\(accessControl) struct Resources {"
+            return "\(tab1)\(accessControl) struct Resource {"
         }
         var body: String {
             let body = imageNames

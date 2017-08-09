@@ -96,23 +96,26 @@ struct ProjectResourceParser {
         }
         let results = regex.matches(in: content, options: [], range: NSMakeRange(0, content.characters.count))
         
-        return results.flatMap { (result) -> ViewController? in
-            if result.range.location != NSNotFound {
-                let matchingString = (content as NSString).substring(with: result.range) as String
-                let classes = matchingString
-                    .replacingOccurrences(of: "\\s*@interface", with: "", options: .regularExpression, range: nil)
-                    .replacingOccurrences(of: ".*class", with: "", options: .regularExpression, range: nil)
-                    .replacingOccurrences(of: "{", with: "")
-                    .replacingOccurrences(of: "}", with: "")
-                    .replacingOccurrences(of: " ", with: "")
-                    .replacingOccurrences(of: ":", with: " ")
-                    .components(separatedBy: " ")
-                    .filter { $0.hasSuffix(suffix) }
-                
-                
-                return try? ViewController (className: classes[0], superClassName: classes[1])
+        return results
+            .flatMap { (result) -> ViewController? in
+                if result.range.location != NSNotFound {
+                    let matchingString = (content as NSString).substring(with: result.range) as String
+                    let classes = matchingString
+                        .replacingOccurrences(of: "\\s*@interface", with: "", options: .regularExpression, range: nil)
+                        .replacingOccurrences(of: ".*class", with: "", options: .regularExpression, range: nil)
+                        .replacingOccurrences(of: "{", with: "")
+                        .replacingOccurrences(of: "}", with: "")
+                        .replacingOccurrences(of: " ", with: "")
+                        .replacingOccurrences(of: ":", with: " ")
+                        .components(separatedBy: " ")
+                        .filter { $0.hasSuffix(suffix) }
+                    
+                    
+                    return try? ViewController (className: classes[0], superClassName: classes[1])
+                }
+                return nil
             }
-            return nil }.first
+            .first
     }
     
     fileprivate func viewControllerInfoWith(_ paths: [URL], suffix: String, pattern: String) -> [ViewController] {

@@ -66,6 +66,8 @@ class ViewControllerInfoOfStoryboard {
     }
 }
 
+class SwiftViewController: ViewController {
+
 class ViewController {
     var storyboardInfos: [ViewControllerInfoOfStoryboard] = []
     let className: ResourceType
@@ -77,10 +79,16 @@ class ViewController {
         return self.superClass != nil
     }()
     
-    fileprivate lazy var superClass: ViewController? =
-        ProjectResource.sharedInstance.viewControllers
+    fileprivate lazy var superClass: ViewController? = ProjectResource
+        .sharedInstance
+        .viewControllers
         .filter ({ $0.className == self.superClassName })
         .first
+    
+    init(className: String, superClassName: String = "") throws {
+        self.className = try ResourceType(viewController: className)
+        self.superClassName = try ResourceType(viewController: superClassName)
+    }
     
     func needOverrideForStoryboard(_ storyboard: ViewControllerInfoOfStoryboard) -> Bool {
         if !hasSupeClass {
@@ -136,11 +144,6 @@ class ViewController {
     
     var name: String {
         return className.name
-    }
-    
-    init(className: String, superClassName: String = "") throws {
-        self.className = try ResourceType(viewController: className)
-        self.superClassName = try ResourceType(viewController: superClassName)
     }
     
 }
