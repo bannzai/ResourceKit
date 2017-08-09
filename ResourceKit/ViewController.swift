@@ -67,6 +67,8 @@ class ViewControllerInfoOfStoryboard {
 }
 
 class SwiftViewController: ViewController {
+    
+}
 
 class ViewController {
     var storyboardInfos: [ViewControllerInfoOfStoryboard] = []

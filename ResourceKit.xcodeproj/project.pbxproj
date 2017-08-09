@@ -28,6 +28,12 @@
 		9C8EB91B1CD84BD100E63A84 /* StoryboardParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */; };
 		9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */; };
 		9C8EB9211CD8553800E63A84 /* ImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB9201CD8553800E63A84 /* ImageGenerator.swift */; };
+		BA2455FD1F3B3D3200C383F4 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2455FC1F3B3D3200C383F4 /* ImageRepository.swift */; };
+		BA2455FF1F3B3D4000C383F4 /* ImageTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2455FE1F3B3D4000C383F4 /* ImageTranslator.swift */; };
+		BA2456021F3B3D4F00C383F4 /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2456011F3B3D4F00C383F4 /* Translator.swift */; };
+		BA2456041F3B3D6100C383F4 /* Output.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2456031F3B3D6100C383F4 /* Output.swift */; };
+		BA2456061F3B3DEE00C383F4 /* ImageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2456051F3B3DEE00C383F4 /* ImageEntity.swift */; };
+		BA2456081F3B3E2100C383F4 /* ImageOutputer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2456071F3B3E2100C383F4 /* ImageOutputer.swift */; };
 		BAB2EB8E1F09463E00607C22 /* AccessControlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2EB8D1F09463E00607C22 /* AccessControlType.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +72,12 @@
 		9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardParser.swift; sourceTree = "<group>"; };
 		9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibParser.swift; sourceTree = "<group>"; };
 		9C8EB9201CD8553800E63A84 /* ImageGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageGenerator.swift; sourceTree = "<group>"; };
+		BA2455FC1F3B3D3200C383F4 /* ImageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
+		BA2455FE1F3B3D4000C383F4 /* ImageTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTranslator.swift; sourceTree = "<group>"; };
+		BA2456011F3B3D4F00C383F4 /* Translator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translator.swift; sourceTree = "<group>"; };
+		BA2456031F3B3D6100C383F4 /* Output.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Output.swift; sourceTree = "<group>"; };
+		BA2456051F3B3DEE00C383F4 /* ImageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEntity.swift; sourceTree = "<group>"; };
+		BA2456071F3B3E2100C383F4 /* ImageOutputer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOutputer.swift; sourceTree = "<group>"; };
 		BAB2EB8D1F09463E00607C22 /* AccessControlType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessControlType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +112,8 @@
 		9C56AE531CC11A9600A38BCE /* ResourceKit */ = {
 			isa = PBXGroup;
 			children = (
+				BA2456001F3B3D4700C383F4 /* Core */,
+				BA2455F91F3B3D1F00C383F4 /* Image */,
 				9C8EB91F1CD8552500E63A84 /* Generaters */,
 				9C8EB91E1CD84BE900E63A84 /* Parsers */,
 				9C56AE541CC11A9600A38BCE /* main.swift */,
@@ -147,6 +161,26 @@
 				9C5990C91CD89073008884DA /* LocalizedStringGenerator.swift */,
 			);
 			name = Generaters;
+			sourceTree = "<group>";
+		};
+		BA2455F91F3B3D1F00C383F4 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				BA2455FC1F3B3D3200C383F4 /* ImageRepository.swift */,
+				BA2455FE1F3B3D4000C383F4 /* ImageTranslator.swift */,
+				BA2456071F3B3E2100C383F4 /* ImageOutputer.swift */,
+				BA2456051F3B3DEE00C383F4 /* ImageEntity.swift */,
+			);
+			name = Image;
+			sourceTree = "<group>";
+		};
+		BA2456001F3B3D4700C383F4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				BA2456011F3B3D4F00C383F4 /* Translator.swift */,
+				BA2456031F3B3D6100C383F4 /* Output.swift */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,8 +243,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C56AE741CC11CA800A38BCE /* ViewController.swift in Sources */,
+				BA2456081F3B3E2100C383F4 /* ImageOutputer.swift in Sources */,
 				9C0CC5A01D3237A700683AC6 /* Error.swift in Sources */,
 				9C8EB9211CD8553800E63A84 /* ImageGenerator.swift in Sources */,
+				BA2456021F3B3D4F00C383F4 /* Translator.swift in Sources */,
 				9C56AE6E1CC11CA800A38BCE /* Component.swift in Sources */,
 				9C56AE621CC11C8000A38BCE /* Serialization.swift in Sources */,
 				BAB2EB8E1F09463E00607C22 /* AccessControlType.swift in Sources */,
@@ -220,12 +256,16 @@
 				9C56AE611CC11C8000A38BCE /* PBXObject.swift in Sources */,
 				9C56AE631CC11C8000A38BCE /* XCProjectFile.swift in Sources */,
 				9C56AE751CC11CA800A38BCE /* Xib.swift in Sources */,
+				BA2456041F3B3D6100C383F4 /* Output.swift in Sources */,
 				9C5990CA1CD89073008884DA /* LocalizedStringGenerator.swift in Sources */,
+				BA2455FF1F3B3D4000C383F4 /* ImageTranslator.swift in Sources */,
+				BA2456061F3B3DEE00C383F4 /* ImageEntity.swift in Sources */,
 				9C8EB91B1CD84BD100E63A84 /* StoryboardParser.swift in Sources */,
 				9C56AE771CC11F9500A38BCE /* Resource.swift in Sources */,
 				9C56AE551CC11A9600A38BCE /* main.swift in Sources */,
 				9C56AE601CC11C8000A38BCE /* Extensions.swift in Sources */,
 				9C56AE711CC11CA800A38BCE /* Parser.swift in Sources */,
+				BA2455FD1F3B3D3200C383F4 /* ImageRepository.swift in Sources */,
 				9C56AE721CC11CA800A38BCE /* Project.swift in Sources */,
 				9C8EB9161CD84BBA00E63A84 /* ProjectParser.swift in Sources */,
 				9C56AE6F1CC11CA800A38BCE /* Helper.swift in Sources */,

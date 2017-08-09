@@ -11,6 +11,7 @@ import Foundation
 class ProjectResource {
     static let sharedInstance: ProjectResource = ProjectResource()
     fileprivate init() { }
+    var paths: [URL] = []
     var viewControllers: [ViewController] = []
     var tableViewCells: [TableViewCell] = []
     var collectionViewCells: [CollectionViewCell] = []

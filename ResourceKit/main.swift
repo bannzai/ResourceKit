@@ -76,6 +76,7 @@ do {
     let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
     let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget)
     let paths = parser.paths
+    ProjectResource.sharedInstance.paths = paths
     
     paths
         .filter { $0.pathExtension == "storyboard" }
@@ -163,6 +164,7 @@ do {
         xibContent = ""
     }
     
+    // TODO: next improve
     let imageContent = Image(urls: paths).declaration + newLine
     
     let stringContent: String
