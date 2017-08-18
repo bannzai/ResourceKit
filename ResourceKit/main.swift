@@ -164,8 +164,14 @@ do {
         xibContent = ""
     }
     
-    // TODO: next improve
-    let imageContent = Image(urls: paths).declaration + newLine
+    let imageContent = try ImageTranslator().translate(
+        for: (
+            assets: ImageAssetRepositoryImpl().load(),
+            resources: ImageResourcesRepositoryImpl().load())
+        )
+        .declaration
+    
+    //    let imageContent = Image.Resources(urls: paths).declaration + newLine + Image.Assets(urls: paths).dec
     
     let stringContent: String
     
