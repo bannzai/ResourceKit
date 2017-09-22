@@ -75,8 +75,7 @@ do {
     let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
     let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
     let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget)
-    let paths = parser.paths
-    ProjectResource.sharedInstance.paths = paths
+    let paths = ProjectResource.shared.paths
     
     paths
         .filter { $0.pathExtension == "storyboard" }
@@ -134,7 +133,7 @@ do {
         "}",
     ].joined(separator: newLine)
     
-    let viewControllerContent = ProjectResource.sharedInstance.viewControllers
+    let viewControllerContent = ProjectResource.shared.viewControllers
         .flatMap { $0.declaration }
         .joined(separator: newLine)
     
@@ -142,11 +141,11 @@ do {
     let collectionViewCellContent: String
     
     if config.reusable.identifier {
-        tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
+        tableViewCellContent = ProjectResource.shared.tableViewCells
             .flatMap { $0.declaration }
             .joined(separator: newLine)
         
-        collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
+        collectionViewCellContent = ProjectResource.shared.collectionViewCells
             .flatMap { $0.declaration }
             .joined(separator: newLine)
         
@@ -157,7 +156,7 @@ do {
     
     let xibContent: String
     if config.nib.xib {
-        xibContent = ProjectResource.sharedInstance.xibs
+        xibContent = ProjectResource.shared.xibs
             .flatMap { $0.declaration }
             .joined(separator: newLine)
     } else {
@@ -178,7 +177,7 @@ do {
     if config.string.localized {
         stringContent = try LocalizedStringTranslator()
             .translate(
-                for: LocalizedStringRepositoryImpl(urls: parser.localizablePaths).load()
+                for: LocalizedStringRepositoryImpl(urls: ProjectResource.shared.localizablePaths).load()
             )
             .declaration
     } else {

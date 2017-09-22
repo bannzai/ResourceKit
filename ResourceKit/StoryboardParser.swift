@@ -89,7 +89,7 @@ final class StoryboardParser: NSObject, Parsable {
         )
         
         ProjectResource
-            .sharedInstance
+            .shared
             .viewControllers
             .filter({ $0.name == viewControllerName })
             .first?
@@ -113,7 +113,7 @@ final class StoryboardParser: NSObject, Parsable {
         }
         
         ProjectResource
-            .sharedInstance
+            .shared
             .appendTableViewCell(
                 className,
                 reusableIdentifier: reusableIdentifier
@@ -135,7 +135,7 @@ final class StoryboardParser: NSObject, Parsable {
         }
         
         ProjectResource
-            .sharedInstance
+            .shared
             .appendCollectionViewCell(
                 className,
                 reusableIdentifier: reusableIdentifier

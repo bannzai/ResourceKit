@@ -16,7 +16,7 @@ struct ImageAssetRepositoryImpl: ImageAssetRepository {
     func load() -> Image.Assets {
         return Image.Assets(urls:
             ProjectResource
-            .sharedInstance
+            .shared
             .paths
         )
     }
@@ -30,7 +30,7 @@ struct ImageResourcesRepositoryImpl: ImageResourcesRepository {
     func load() -> Image.Resources {
         return Image.Resources(urls:
             ProjectResource
-                .sharedInstance
+                .shared
                 .paths
         )
     }

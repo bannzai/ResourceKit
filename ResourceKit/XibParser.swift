@@ -30,7 +30,7 @@ final class XibPerser: NSObject, Parsable {
         }
         
         ProjectResource
-            .sharedInstance
+            .shared
             .xibIdentifiers
             .append(_name)
         
@@ -64,7 +64,7 @@ final class XibPerser: NSObject, Parsable {
         
         isOnce = true
         ProjectResource
-            .sharedInstance
+            .shared
             .appendXibForView(
                 XibForView(
                     nibName: _name,

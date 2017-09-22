@@ -9,9 +9,13 @@
 import Foundation
 
 class ProjectResource {
-    static let sharedInstance: ProjectResource = ProjectResource()
+    static let shared: ProjectResource = ProjectResource()
+    
     fileprivate init() { }
+    
     var paths: [URL] = []
+    var localizablePaths: [URL] = []
+    
     var viewControllers: [ViewController] = []
     var tableViewCells: [TableViewCell] = []
     var collectionViewCells: [CollectionViewCell] = []

@@ -82,7 +82,7 @@ class ViewController {
     }()
     
     fileprivate lazy var superClass: ViewController? = ProjectResource
-        .sharedInstance
+        .shared
         .viewControllers
         .filter ({ $0.className == self.superClassName })
         .first

@@ -11,8 +11,6 @@ import Foundation
 
 struct ProjectResourceParser {
     fileprivate var projectFile: XCProjectFile
-    private(set) var paths: [URL] = []
-    var localizablePaths: [URL] = []
     
     init(xcodeURL: URL, target: String) throws {
         guard let projectFile = try? XCProjectFile(xcodeprojURL: xcodeURL) else {
@@ -25,8 +23,8 @@ struct ProjectResourceParser {
         }
         
         self.projectFile = projectFile
-        self.paths = generateFileRefPaths(_target).flatMap(Environment.pathFrom)
-        self.localizablePaths = generateLocalizablePaths(_target).flatMap(Environment.pathFrom)
+        ProjectResource.shared.paths = generateFileRefPaths(_target).flatMap(Environment.pathFrom)
+        ProjectResource.shared.localizablePaths = generateLocalizablePaths(_target).flatMap(Environment.pathFrom)
         
         setupSuffixViewControllers()
     }
@@ -56,7 +54,7 @@ struct ProjectResourceParser {
     fileprivate mutating func setupSuffixViewControllers() {
         func append(_ viewControllers: [ViewController]) {
             ProjectResource
-                .sharedInstance
+                .shared
                 .viewControllers
                 .append(
                     contentsOf: viewControllers
@@ -98,22 +96,23 @@ struct ProjectResourceParser {
         
         return results
             .flatMap { (result) -> ViewController? in
-                if result.range.location != NSNotFound {
-                    let matchingString = (content as NSString).substring(with: result.range) as String
-                    let classes = matchingString
-                        .replacingOccurrences(of: "\\s*@interface", with: "", options: .regularExpression, range: nil)
-                        .replacingOccurrences(of: ".*class", with: "", options: .regularExpression, range: nil)
-                        .replacingOccurrences(of: "{", with: "")
-                        .replacingOccurrences(of: "}", with: "")
-                        .replacingOccurrences(of: " ", with: "")
-                        .replacingOccurrences(of: ":", with: " ")
-                        .components(separatedBy: " ")
-                        .filter { $0.hasSuffix(suffix) }
-                    
-                    
-                    return try? ViewController (className: classes[0], superClassName: classes[1])
+                if result.range.location == NSNotFound {
+                    return nil
                 }
-                return nil
+                
+                let matchingString = (content as NSString).substring(with: result.range) as String
+                let classes = matchingString
+                    .replacingOccurrences(of: "\\s*@interface", with: "", options: .regularExpression, range: nil)
+                    .replacingOccurrences(of: ".*class", with: "", options: .regularExpression, range: nil)
+                    .replacingOccurrences(of: "{", with: "")
+                    .replacingOccurrences(of: "}", with: "")
+                    .replacingOccurrences(of: " ", with: "")
+                    .replacingOccurrences(of: ":", with: " ")
+                    .components(separatedBy: " ")
+                    .filter { $0.hasSuffix(suffix) }
+                
+                
+                return try? ViewController(className: classes[0], superClassName: classes[1])
             }
             .first
     }
@@ -125,13 +124,14 @@ struct ProjectResourceParser {
     }
     
     fileprivate func filterPaths(withExtension ex: String, suffixs: String...) -> [URL] {
-        return paths.filter { url in
+        return ProjectResource.shared.paths.filter { url in
             guard url.pathExtension == ex
                 else {
                     return false
             }
-            guard let fileName = Optional(url.deletingPathExtension().lastPathComponent)
-                , suffixs.contains(where: {fileName.hasSuffix($0)})  else {
+            guard let fileName = Optional(url.deletingPathExtension().lastPathComponent),
+                suffixs.contains(where: {fileName.hasSuffix($0)})
+                else {
                     return false
             }
             return true
