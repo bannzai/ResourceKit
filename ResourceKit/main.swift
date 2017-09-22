@@ -124,8 +124,6 @@ do {
         )
         .declaration
     
-    //    let imageContent = Image.Resources(urls: paths).declaration + newLine + Image.Assets(urls: paths).dec
-    
     let stringContent: String
     
     if config.string.localized {
