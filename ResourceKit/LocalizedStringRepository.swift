@@ -13,11 +13,8 @@ protocol LocalizedStringRepository {
 }
 
 struct LocalizedStringRepositoryImpl: LocalizedStringRepository {
+    let urls: [URL]
     func load() -> LocalizedString {
-        return LocalizedString(urls:
-            ProjectResource
-                .sharedInstance
-                .paths
-        )
+        return LocalizedString(urls: urls)
     }
 }

@@ -176,7 +176,11 @@ do {
     let stringContent: String
     
     if config.string.localized {
-        stringContent = LocalizedString(urls: parser.localizablePaths).declaration + newLine
+        stringContent = try LocalizedStringTranslator()
+            .translate(
+                for: LocalizedStringRepositoryImpl(urls: parser.localizablePaths).load()
+            )
+            .declaration
     } else {
         stringContent = ""
     }
