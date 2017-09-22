@@ -1,29 +1,19 @@
 //
-//  LocalizedStringGenerator.swift
+//  LocalizedStringOutputer.swift
 //  ResourceKit
 //
-//  Created by kingkong999yhirose on 2016/05/03.
-//  Copyright © 2016年 kingkong999yhirose. All rights reserved.
+//  Created by Yudai.Hirose on 2017/09/22.
+//  Copyright © 2017年 kingkong999yhirose. All rights reserved.
 //
 
 import Foundation
 
-struct LocalizedString: Declaration {
-    let localizableStrings:[String: String]
-    init(urls: [URL]) {
-        let files = urls.filter { $0.lastPathComponent == "Localizable.strings" }
-        
-        let maximumLocalizableStringPairs =
-            files.flatMap ({ NSDictionary(contentsOf: $0) })
-                .sorted (by: { $0.count > $1.count })
-                .first
-        
-        guard let localizableStrings = maximumLocalizableStringPairs as? [String: String] else {
-            self.localizableStrings = [:]
-            return
-        }
-        self.localizableStrings = localizableStrings
-    }
+protocol LocalizedStringOutputer: Output {
+    
+}
+
+struct LocalizedStringOutputerImpl: LocalizedStringOutputer {
+    let localizedStrings: [String: String]
     
     var declaration: String {
         return [
@@ -34,7 +24,9 @@ struct LocalizedString: Declaration {
             "}",
             ].joined(separator: newLine)
     }
-    
+}
+
+fileprivate extension LocalizedStringOutputerImpl {
     fileprivate func generateLocalizableConstants() -> [String] {
         func toConstantName(_ key: String) -> String {
             return key
@@ -42,7 +34,7 @@ struct LocalizedString: Declaration {
                 .replacingOccurrences(of: ",", with: "_", options: .regularExpression, range: nil)
             
         }
-        return localizableStrings.keys.flatMap {
+        return localizedStrings.keys.flatMap {
             return "\(tab2)\(accessControl) static let \(toConstantName($0)) = NSLocalizedString(\"\($0)\", comment: \"\")"
         }
     }

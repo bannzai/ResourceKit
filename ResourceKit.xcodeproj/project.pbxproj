@@ -22,11 +22,14 @@
 		9C56AE741CC11CA800A38BCE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE6B1CC11CA800A38BCE /* ViewController.swift */; };
 		9C56AE751CC11CA800A38BCE /* Xib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE6C1CC11CA800A38BCE /* Xib.swift */; };
 		9C56AE771CC11F9500A38BCE /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE761CC11F9500A38BCE /* Resource.swift */; };
-		9C5990CA1CD89073008884DA /* LocalizedStringGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5990C91CD89073008884DA /* LocalizedStringGenerator.swift */; };
 		9C5990EB1CDB5145008884DA /* ConfigParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5990EA1CDB5145008884DA /* ConfigParser.swift */; };
 		9C8EB9161CD84BBA00E63A84 /* ProjectParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB9151CD84BBA00E63A84 /* ProjectParser.swift */; };
 		9C8EB91B1CD84BD100E63A84 /* StoryboardParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */; };
 		9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */; };
+		BA1B67681F75520600AC7E31 /* LocalizedStringRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */; };
+		BA1B676A1F75521900AC7E31 /* LocalizedStringTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */; };
+		BA1B676E1F75522D00AC7E31 /* LocalizedStringEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */; };
+		BA1B67701F75523B00AC7E31 /* LocalizedStringOutputer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B676F1F75523B00AC7E31 /* LocalizedStringOutputer.swift */; };
 		BA2455FD1F3B3D3200C383F4 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2455FC1F3B3D3200C383F4 /* ImageRepository.swift */; };
 		BA2455FF1F3B3D4000C383F4 /* ImageTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2455FE1F3B3D4000C383F4 /* ImageTranslator.swift */; };
 		BA2456021F3B3D4F00C383F4 /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2456011F3B3D4F00C383F4 /* Translator.swift */; };
@@ -65,11 +68,14 @@
 		9C56AE6B1CC11CA800A38BCE /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9C56AE6C1CC11CA800A38BCE /* Xib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Xib.swift; sourceTree = "<group>"; };
 		9C56AE761CC11F9500A38BCE /* Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
-		9C5990C91CD89073008884DA /* LocalizedStringGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringGenerator.swift; sourceTree = "<group>"; };
 		9C5990EA1CDB5145008884DA /* ConfigParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigParser.swift; sourceTree = "<group>"; };
 		9C8EB9151CD84BBA00E63A84 /* ProjectParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectParser.swift; sourceTree = "<group>"; };
 		9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardParser.swift; sourceTree = "<group>"; };
 		9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibParser.swift; sourceTree = "<group>"; };
+		BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringRepository.swift; sourceTree = "<group>"; };
+		BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringTranslator.swift; sourceTree = "<group>"; };
+		BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringEntity.swift; sourceTree = "<group>"; };
+		BA1B676F1F75523B00AC7E31 /* LocalizedStringOutputer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringOutputer.swift; sourceTree = "<group>"; };
 		BA2455FC1F3B3D3200C383F4 /* ImageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		BA2455FE1F3B3D4000C383F4 /* ImageTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTranslator.swift; sourceTree = "<group>"; };
 		BA2456011F3B3D4F00C383F4 /* Translator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translator.swift; sourceTree = "<group>"; };
@@ -111,8 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				BA2456001F3B3D4700C383F4 /* Core */,
+				BA1B67661F7551E200AC7E31 /* LocalizedString */,
 				BA2455F91F3B3D1F00C383F4 /* Image */,
-				9C8EB91F1CD8552500E63A84 /* Generaters */,
 				9C8EB91E1CD84BE900E63A84 /* Parsers */,
 				9C56AE541CC11A9600A38BCE /* main.swift */,
 				9C56AE641CC11CA800A38BCE /* Cell.swift */,
@@ -152,12 +158,15 @@
 			name = Parsers;
 			sourceTree = "<group>";
 		};
-		9C8EB91F1CD8552500E63A84 /* Generaters */ = {
+		BA1B67661F7551E200AC7E31 /* LocalizedString */ = {
 			isa = PBXGroup;
 			children = (
-				9C5990C91CD89073008884DA /* LocalizedStringGenerator.swift */,
+				BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */,
+				BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */,
+				BA1B676F1F75523B00AC7E31 /* LocalizedStringOutputer.swift */,
+				BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */,
 			);
-			name = Generaters;
+			name = LocalizedString;
 			sourceTree = "<group>";
 		};
 		BA2455F91F3B3D1F00C383F4 /* Image */ = {
@@ -242,7 +251,9 @@
 				9C56AE741CC11CA800A38BCE /* ViewController.swift in Sources */,
 				BA2456081F3B3E2100C383F4 /* ImageOutputer.swift in Sources */,
 				9C0CC5A01D3237A700683AC6 /* Error.swift in Sources */,
+				BA1B676E1F75522D00AC7E31 /* LocalizedStringEntity.swift in Sources */,
 				BA2456021F3B3D4F00C383F4 /* Translator.swift in Sources */,
+				BA1B67681F75520600AC7E31 /* LocalizedStringRepository.swift in Sources */,
 				9C56AE6E1CC11CA800A38BCE /* Component.swift in Sources */,
 				9C56AE621CC11C8000A38BCE /* Serialization.swift in Sources */,
 				BAB2EB8E1F09463E00607C22 /* AccessControlType.swift in Sources */,
@@ -250,13 +261,14 @@
 				9C56AE6D1CC11CA800A38BCE /* Cell.swift in Sources */,
 				9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */,
 				9C56AE611CC11C8000A38BCE /* PBXObject.swift in Sources */,
+				BA1B676A1F75521900AC7E31 /* LocalizedStringTranslator.swift in Sources */,
 				9C56AE631CC11C8000A38BCE /* XCProjectFile.swift in Sources */,
 				9C56AE751CC11CA800A38BCE /* Xib.swift in Sources */,
 				BA2456041F3B3D6100C383F4 /* Output.swift in Sources */,
-				9C5990CA1CD89073008884DA /* LocalizedStringGenerator.swift in Sources */,
 				BA2455FF1F3B3D4000C383F4 /* ImageTranslator.swift in Sources */,
 				BA2456061F3B3DEE00C383F4 /* ImageEntity.swift in Sources */,
 				9C8EB91B1CD84BD100E63A84 /* StoryboardParser.swift in Sources */,
+				BA1B67701F75523B00AC7E31 /* LocalizedStringOutputer.swift in Sources */,
 				9C56AE771CC11F9500A38BCE /* Resource.swift in Sources */,
 				9C56AE551CC11A9600A38BCE /* main.swift in Sources */,
 				9C56AE601CC11C8000A38BCE /* Extensions.swift in Sources */,
