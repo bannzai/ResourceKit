@@ -52,11 +52,11 @@ do {
     
     paths
         .filter { $0.pathExtension == "storyboard" }
-        .forEach { let _ = try? StoryboardParser(url: $0) }
+        .forEach { try? StoryboardParserImpl(url: $0, writeResource: ProjectResource.shared).parse() }
     
     paths
         .filter { $0.pathExtension == "xib" }
-        .forEach { let _ = try? XibPerser(url: $0) }
+        .forEach { try? XibPerserImpl(url: $0, writeResource: ProjectResource.shared).parse() }
     
     let importsContent = ImportOutputImpl(writeUrl: writeUrl).declaration
     

@@ -8,14 +8,25 @@
 
 import Foundation
 
-final class StoryboardParser: NSObject, Parsable {
+protocol StoryboardParser: Parsable {
+    
+}
+
+final class StoryboardParserImpl: NSObject, StoryboardParser {
+    let url: URL
+    let resource: ProjectResource
+    
     fileprivate var name: String = ""
     fileprivate var initialViewControllerIdentifier: String?
     fileprivate var currentViewControllerInfoForSegue: ViewControllerInfoOfStoryboard?
     
-    init(url: URL) throws {
+    init(url: URL, writeResource resource: ProjectResource) throws {
+        self.url = url
+        self.resource = resource
         super.init()
-        
+    }
+    
+    func parse() throws {
         guard url.pathExtension == "storyboard" else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
@@ -75,8 +86,7 @@ final class StoryboardParser: NSObject, Parsable {
             storyboardIdentifier: storyboardIdentifier
         )
         
-        ProjectResource
-            .shared
+        resource
             .viewControllers
             .filter({ $0.name == viewControllerName })
             .first?
@@ -112,8 +122,7 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        ProjectResource
-            .shared
+        resource
             .appendTableViewCell(
                 className,
                 reusableIdentifier: reusableIdentifier
@@ -129,13 +138,11 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        
         guard let className = try? ResourceType(reusable: attributes["customClass"] ?? elementName).name else {
             return
         }
         
-        ProjectResource
-            .shared
+        resource
             .appendCollectionViewCell(
                 className,
                 reusableIdentifier: reusableIdentifier

@@ -20,7 +20,6 @@ class ProjectResource {
     var tableViewCells: [TableViewCell] = []
     var collectionViewCells: [CollectionViewCell] = []
     var xibs: [XibForView] = []
-    var xibIdentifiers = [String]()
     
     func appendTableViewCell(_ className: String, reusableIdentifier: String) {
         guard let cell = tableViewCells

@@ -9,7 +9,8 @@
 import Foundation
 
 protocol Parsable: XMLParserDelegate {
-    init(url: URL) throws
+    var resource: ProjectResource { get }
+    func parse() throws
 }
 
 
