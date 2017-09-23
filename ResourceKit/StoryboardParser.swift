@@ -14,13 +14,13 @@ protocol StoryboardParser: Parsable {
 
 final class StoryboardParserImpl: NSObject, StoryboardParser {
     let url: URL
-    let resource: ProjectResource
+    let resource: AppendableForStoryboard
     
     fileprivate var name: String = ""
     fileprivate var initialViewControllerIdentifier: String?
     fileprivate var currentViewControllerInfoForSegue: ViewControllerInfoOfStoryboard?
     
-    init(url: URL, writeResource resource: ProjectResource) throws {
+    init(url: URL, writeResource resource: AppendableForStoryboard) throws {
         self.url = url
         self.resource = resource
         super.init()
@@ -76,8 +76,11 @@ final class StoryboardParserImpl: NSObject, StoryboardParser {
             return
         }
         
-        let storyboardIdentifier = attributes["storyboardIdentifier"] ?? ""
-        let viewControllerName = try? ResourceType(viewController: attributes["customClass"] ?? elementName).name
+        guard let storyboardIdentifier = attributes["storyboardIdentifier"],
+            let viewControllerName = try? ResourceType(viewController: attributes["customClass"] ?? elementName).name else {
+                currentViewControllerInfoForSegue = nil
+                return
+        }
         
         let currentViewControllerInfo = ViewControllerInfoOfStoryboard (
             viewControllerId: viewControllerId,
@@ -87,11 +90,10 @@ final class StoryboardParserImpl: NSObject, StoryboardParser {
         )
         
         resource
-            .viewControllers
-            .filter({ $0.name == viewControllerName })
-            .first?
-            .storyboardInfos
-            .append(currentViewControllerInfo)
+            .appendViewControllerInfoReference(
+                viewControllerName,
+                viewControllerInfo: currentViewControllerInfo
+            )
         
         // store for extranctionForSegue(_:, elementName:)
         currentViewControllerInfoForSegue = currentViewControllerInfo

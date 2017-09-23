@@ -14,17 +14,17 @@ protocol XibParser: Parsable {
 
 final class XibPerserImpl: NSObject, XibParser {
     let url: URL
-    let resource: ProjectResource
+    let resource: AppendableForXibs
     
     fileprivate var name: String = ""
     // should parse for root view
-    // ResourceKit not support second xib view 
+    // ResourceKit not support second xib view
     fileprivate var isOnce: Bool = false
     fileprivate let ignoreCase = [
         "UIResponder"
     ]
     
-    init(url: URL, writeResource resource: ProjectResource) throws {
+    init(url: URL, writeResource resource: AppendableForXibs) throws {
         self.url = url
         self.resource = resource
         

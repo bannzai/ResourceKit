@@ -20,7 +20,18 @@ class ProjectResource {
     var tableViewCells: [TableViewCell] = []
     var collectionViewCells: [CollectionViewCell] = []
     var xibs: [XibForView] = []
-    
+   
+}
+
+extension ProjectResource: AppendableForXibs {
+    func appendXibForView(_ xib: XibForView) {
+        if xibs.contains(where: { $0.className == xib.className }) {
+            return
+        }
+        xibs.append(xib)
+    }}
+
+extension ProjectResource: AppendableForStoryboard {
     func appendTableViewCell(_ className: String, reusableIdentifier: String) {
         guard let cell = tableViewCells
             .filter ({ $0.className == className})
@@ -61,12 +72,11 @@ class ProjectResource {
         cell.reusableIdentifiers.append(reusableIdentifier)
     }
     
-    func appendXibForView(_ xib: XibForView) {
-        if xibs.contains(where: { $0.className == xib.className }) {
-            return
-        }
-        xibs.append(xib)
+    func appendViewControllerInfoReference(_ className: String, viewControllerInfo: ViewControllerInfoOfStoryboard) {
+        viewControllers
+            .filter({ $0.name == className })
+            .first?
+            .storyboardInfos
+            .append(viewControllerInfo)
     }
-    
 }
-
