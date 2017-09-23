@@ -46,32 +46,6 @@ do {
     let writeUrl: URL
     writeUrl = outputUrl.appendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
 
-    func imports() -> [String] {
-        
-        guard let content = try? String(contentsOf: writeUrl) else {
-            return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
-        }
-        let pattern = "\\s*import\\s+.+"
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .useUnixLineSeparators) else {
-            return ["import UIKit"]
-        }
-        let results = regex.matches(in: content, options: [], range: NSMakeRange(0, content.characters.count))
-        
-        if results.isEmpty {
-            return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
-        }
-        
-        return results.flatMap { (result) -> String? in
-            if result.range.location != NSNotFound {
-                let matchingString = (content as NSString).substring(with: result.range) as String
-                return matchingString
-                    .replacingOccurrences(of: "\n", with: "")
-            }
-            return nil
-        }
-    }
-    
-    
     let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
     let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
     let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget)
@@ -85,7 +59,7 @@ do {
         .filter { $0.pathExtension == "xib" }
         .forEach { let _ = try? XibPerser(url: $0) }
     
-    let importsContent = imports().joined(separator: newLine)
+    let importsContent = ImportOutputImpl(writeUrl: writeUrl).declaration
     
     let viewControllerContent = ProjectResource.shared.viewControllers
         .flatMap { $0.declaration }
