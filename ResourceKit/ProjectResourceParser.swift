@@ -8,11 +8,9 @@
 
 import Foundation
 
-
 struct ProjectResourceParser {
-    fileprivate var projectFile: XCProjectFile
     
-    init(xcodeURL: URL, target: String) throws {
+    init(xcodeURL: URL, target: String, writeResource resource: AppendableForPaths) throws {
         guard let projectFile = try? XCProjectFile(xcodeprojURL: xcodeURL) else {
             throw ResourceKitErrorType.xcodeProjectError(xcodeURL: xcodeURL, target: target, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
@@ -22,9 +20,8 @@ struct ProjectResourceParser {
             throw ResourceKitErrorType.xcodeProjectAllTargetError(xcodeURL: xcodeURL, target: target, allTargetName: "\(allTarget.flatMap { $0.name }.joined(separator: ", "))", errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
-        self.projectFile = projectFile
-        ProjectResource.shared.paths = generateFileRefPaths(_target).flatMap(Environment.pathFrom)
-        ProjectResource.shared.localizablePaths = generateLocalizablePaths(_target).flatMap(Environment.pathFrom)
+        resource.appendFileReferencePaths(urls: generateFileRefPaths(_target).flatMap(Environment.pathFrom))
+        resource.appendLocalizedPaths(urls: generateLocalizablePaths(_target).flatMap(Environment.pathFrom))
         
         setupSuffixViewControllers()
     }

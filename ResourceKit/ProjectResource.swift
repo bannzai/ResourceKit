@@ -13,13 +13,23 @@ class ProjectResource {
     
     fileprivate init() { }
     
-    var paths: [URL] = []
-    var localizablePaths: [URL] = []
+    fileprivate(set) var paths: [URL] = []
+    fileprivate(set) var localizablePaths: [URL] = []
     
     var viewControllers: [ViewController] = []
-    var tableViewCells: [TableViewCell] = []
-    var collectionViewCells: [CollectionViewCell] = []
-    var xibs: [XibForView] = []
+    fileprivate(set) var tableViewCells: [TableViewCell] = []
+    fileprivate(set) var collectionViewCells: [CollectionViewCell] = []
+    fileprivate(set) var xibs: [XibForView] = []
+}
+
+extension ProjectResource: AppendableForPaths {
+    func appendFileReferencePaths(urls: [URL]) {
+        paths.append(contentsOf: urls)
+    }
+    
+    func appendLocalizedPaths(urls: [URL]) {
+        localizablePaths.append(contentsOf: urls)
+    }
 }
 
 extension ProjectResource: AppendableForXibs {
@@ -28,7 +38,8 @@ extension ProjectResource: AppendableForXibs {
             return
         }
         xibs.append(xib)
-    }}
+    }
+}
 
 extension ProjectResource: AppendableForStoryboard {
     func appendTableViewCell(_ className: String, reusableIdentifier: String) {

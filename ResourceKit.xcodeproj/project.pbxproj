@@ -127,7 +127,7 @@
 				BA1B67711F75608B00AC7E31 /* Extensions */,
 				BA1B67661F7551E200AC7E31 /* LocalizedString */,
 				BA2455F91F3B3D1F00C383F4 /* Image */,
-				9C8EB91E1CD84BE900E63A84 /* Parsers */,
+				9C8EB91E1CD84BE900E63A84 /* Parser */,
 				9C56AE541CC11A9600A38BCE /* main.swift */,
 				9C56AE641CC11CA800A38BCE /* Cell.swift */,
 				9C0CC59F1D3237A700683AC6 /* Error.swift */,
@@ -153,7 +153,7 @@
 			name = Xcode;
 			sourceTree = "<group>";
 		};
-		9C8EB91E1CD84BE900E63A84 /* Parsers */ = {
+		9C8EB91E1CD84BE900E63A84 /* Parser */ = {
 			isa = PBXGroup;
 			children = (
 				9C56AE681CC11CA800A38BCE /* Parser.swift */,
@@ -161,7 +161,7 @@
 				9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */,
 				9C8EB9151CD84BBA00E63A84 /* ProjectResourceParser.swift */,
 			);
-			name = Parsers;
+			name = Parser;
 			sourceTree = "<group>";
 		};
 		BA1B67661F7551E200AC7E31 /* LocalizedString */ = {

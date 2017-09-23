@@ -8,11 +8,16 @@
 
 import Foundation
 
-protocol AppendableForXibs {
+protocol AppendableForPaths: class {
+    func appendFileReferencePaths(urls: [URL])
+    func appendLocalizedPaths(urls: [URL])
+}
+
+protocol AppendableForXibs: class {
     func appendXibForView(_ xib: XibForView)
 }
 
-protocol AppendableForStoryboard {
+protocol AppendableForStoryboard: class {
     func appendTableViewCell(_ className: String, reusableIdentifier: String)
     func appendCollectionViewCell(_ className: String, reusableIdentifier: String)
     func appendViewControllerInfoReference(_ className: String, viewControllerInfo: ViewControllerInfoOfStoryboard)
