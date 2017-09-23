@@ -11,7 +11,7 @@ import Foundation
 protocol Config {
     var segue: ConfigType.Segue { get }
     var image: ConfigType.Image { get }
-    var string: ConfigType.String { get }
+    var string: ConfigType.LoaclizedString { get }
     var viewController: ConfigType.ViewController { get }
     var nib: ConfigType.Nib { get }
     var reusable: ConfigType.Reusable { get }
@@ -21,7 +21,7 @@ protocol Config {
 struct ConfigImpl: Config {
     private(set) var segue: ConfigType.Segue = ConfigType.Segue()
     private(set) var image: ConfigType.Image = ConfigType.Image()
-    private(set) var string: ConfigType.String = ConfigType.String()
+    private(set) var string: ConfigType.LoaclizedString = ConfigType.LoaclizedString()
     private(set) var viewController: ConfigType.ViewController = ConfigType.ViewController()
     private(set) var nib: ConfigType.Nib = ConfigType.Nib()
     private(set) var reusable: ConfigType.Reusable = ConfigType.Reusable()
@@ -41,8 +41,8 @@ struct ConfigImpl: Config {
                     segue = ConfigType.Segue(value as? [String: Bool] ?? [:])
                 case .Image:
                     image = ConfigType.Image(value as? [String: Bool] ?? [:])
-                case .String:
-                    string = ConfigType.String(value as? [String: Bool] ?? [:])
+                case .LoaclizedString:
+                    string = ConfigType.LoaclizedString(value as? [String: Bool] ?? [:])
                 case .ViewController:
                     viewController = ConfigType.ViewController(value as? [String: Bool] ?? [:])
                 case .Nib:
@@ -59,7 +59,7 @@ struct ConfigType {
     enum Item: Swift.String {
         case Segue
         case Image
-        case String
+        case LoaclizedString
         case ViewController
         case Nib
         case Reusable
@@ -93,7 +93,7 @@ struct ConfigType {
         }
     }
     
-    struct String {
+    struct LoaclizedString {
         let localized: Bool
         
         init() {
