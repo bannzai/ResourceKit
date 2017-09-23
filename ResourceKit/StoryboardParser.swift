@@ -9,10 +9,9 @@
 import Foundation
 
 final class StoryboardParser: NSObject, Parsable {
-    fileprivate var _name: String = ""
-    fileprivate var _initialViewControllerIdentifier: String?
-    fileprivate var _viewControllerInfos: [ViewControllerInfoOfStoryboard] = []
-    fileprivate var _currentViewControllerInfo: ViewControllerInfoOfStoryboard?
+    fileprivate var name: String = ""
+    fileprivate var initialViewControllerIdentifier: String?
+    fileprivate var currentViewControllerInfoForSegue: ViewControllerInfoOfStoryboard?
     
     init(url: URL) throws {
         super.init()
@@ -21,9 +20,9 @@ final class StoryboardParser: NSObject, Parsable {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
-        _name = url.deletingPathExtension().lastPathComponent
+        name = url.deletingPathExtension().lastPathComponent
         // Don't create ipad resources
-        if _name.contains("~") { 
+        if name.contains("~") { 
             return
         }
         
@@ -36,7 +35,7 @@ final class StoryboardParser: NSObject, Parsable {
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "document" {
-            _initialViewControllerIdentifier = attributeDict["initialViewController"]
+            initialViewControllerIdentifier = attributeDict["initialViewController"]
             return
         }
         
@@ -57,18 +56,6 @@ final class StoryboardParser: NSObject, Parsable {
         }
     }
     
-    fileprivate func extranctionForSegue(_ attributes: [String: String], elementName: String) {
-        guard let segueIdentifier = attributes["identifier"] else {
-            return
-        }
-        
-        if !config.needGenerateSegue {
-            return
-        }
-        
-        _currentViewControllerInfo?.segues.append(segueIdentifier)
-    }
-    
     fileprivate func generateViewControllerResource(_ attributes: [String: String], elementName: String) {
         guard let viewControllerId = attributes["id"] else {
             return
@@ -83,8 +70,8 @@ final class StoryboardParser: NSObject, Parsable {
         
         let currentViewControllerInfo = ViewControllerInfoOfStoryboard (
             viewControllerId: viewControllerId,
-            storyboardName: _name,
-            initialViewControllerId: _initialViewControllerIdentifier,
+            storyboardName: name,
+            initialViewControllerId: initialViewControllerIdentifier,
             storyboardIdentifier: storyboardIdentifier
         )
         
@@ -96,7 +83,20 @@ final class StoryboardParser: NSObject, Parsable {
             .storyboardInfos
             .append(currentViewControllerInfo)
         
-        _currentViewControllerInfo = currentViewControllerInfo
+        // store for extranctionForSegue(_:, elementName:)
+        currentViewControllerInfoForSegue = currentViewControllerInfo
+    }
+    
+    fileprivate func extranctionForSegue(_ attributes: [String: String], elementName: String) {
+        guard let segueIdentifier = attributes["identifier"] else {
+            return
+        }
+        
+        if !config.needGenerateSegue {
+            return
+        }
+        
+        currentViewControllerInfoForSegue?.segues.append(segueIdentifier)
     }
     
     fileprivate func generateTableViewCells(_ attributes: [String: String], elementName: String) {
