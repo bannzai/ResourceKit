@@ -1,5 +1,5 @@
 //
-//  ConfigParser.swift
+//  ConfigType.swift
 //  ResourceKit
 //
 //  Created by kingkong999yhirose on 2016/05/05.
@@ -8,13 +8,23 @@
 
 import Foundation
 
-struct Config {
-    private(set) var segue: ConfigParser.Segue = ConfigParser.Segue()
-    private(set) var image: ConfigParser.Image = ConfigParser.Image()
-    private(set) var string: ConfigParser.String = ConfigParser.String()
-    private(set) var viewController: ConfigParser.ViewController = ConfigParser.ViewController()
-    private(set) var nib: ConfigParser.Nib = ConfigParser.Nib()
-    private(set) var reusable: ConfigParser.Reusable = ConfigParser.Reusable()
+protocol Config {
+    var segue: ConfigType.Segue { get }
+    var image: ConfigType.Image { get }
+    var string: ConfigType.String { get }
+    var viewController: ConfigType.ViewController { get }
+    var nib: ConfigType.Nib { get }
+    var reusable: ConfigType.Reusable { get }
+    var needGenerateSegue: Bool { get }
+}
+
+struct ConfigImpl: Config {
+    private(set) var segue: ConfigType.Segue = ConfigType.Segue()
+    private(set) var image: ConfigType.Image = ConfigType.Image()
+    private(set) var string: ConfigType.String = ConfigType.String()
+    private(set) var viewController: ConfigType.ViewController = ConfigType.ViewController()
+    private(set) var nib: ConfigType.Nib = ConfigType.Nib()
+    private(set) var reusable: ConfigType.Reusable = ConfigType.Reusable()
     
     var needGenerateSegue: Bool {
         return segue.addition || segue.standard
@@ -23,29 +33,29 @@ struct Config {
     init() {
         if let dictionary = NSDictionary(contentsOfFile: outputPath + "/ResourceKitConfig.plist") as? [String: AnyObject] {
             dictionary.forEach { (key: String , value: AnyObject) in
-                guard let item = ConfigParser.Item(rawValue: key) else {
+                guard let item = ConfigType.Item(rawValue: key) else {
                     return
                 }
                 switch item {
                 case .Segue:
-                    segue = ConfigParser.Segue(value as? [String: Bool] ?? [:])
+                    segue = ConfigType.Segue(value as? [String: Bool] ?? [:])
                 case .Image:
-                    image = ConfigParser.Image(value as? [String: Bool] ?? [:])
+                    image = ConfigType.Image(value as? [String: Bool] ?? [:])
                 case .String:
-                    string = ConfigParser.String(value as? [String: Bool] ?? [:])
+                    string = ConfigType.String(value as? [String: Bool] ?? [:])
                 case .ViewController:
-                    viewController = ConfigParser.ViewController(value as? [String: Bool] ?? [:])
+                    viewController = ConfigType.ViewController(value as? [String: Bool] ?? [:])
                 case .Nib:
-                    nib = ConfigParser.Nib(value as? [String: Bool] ?? [:])
+                    nib = ConfigType.Nib(value as? [String: Bool] ?? [:])
                 case .Reusable:
-                    reusable = ConfigParser.Reusable(value as? [String: Bool] ?? [:])
+                    reusable = ConfigType.Reusable(value as? [String: Bool] ?? [:])
                 }
             }
         }
     }
 }
 
-struct ConfigParser {
+struct ConfigType {
     enum Item: Swift.String {
         case Segue
         case Image

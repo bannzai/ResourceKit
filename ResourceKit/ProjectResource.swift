@@ -20,7 +20,6 @@ class ProjectResource {
     var tableViewCells: [TableViewCell] = []
     var collectionViewCells: [CollectionViewCell] = []
     var xibs: [XibForView] = []
-   
 }
 
 extension ProjectResource: AppendableForXibs {

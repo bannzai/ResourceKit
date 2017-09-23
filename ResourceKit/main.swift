@@ -36,7 +36,7 @@ if !debug {
 
 let debugOutputPath = env["DEBUG_OUTPUT_PATH"]
 let outputPath = debugOutputPath ?? extractGenerateDir() ?? Environment.SRCROOT.element
-let config: Config = Config()
+let config: Config = ConfigImpl()
 
 do {
     let outputUrl = URL(fileURLWithPath: outputPath)
@@ -59,7 +59,6 @@ do {
         .forEach { try? XibPerserImpl(url: $0, writeResource: ProjectResource.shared).parse() }
     
     let importsContent = ImportOutputImpl(writeUrl: writeUrl).declaration
-    
     let viewControllerContent = ProjectResource.shared.viewControllers
         .flatMap { $0.declaration }
         .joined(separator: newLine)
