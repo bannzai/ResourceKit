@@ -1,5 +1,5 @@
 //
-//  ConfigType.swift
+//  Config.swift
 //  ResourceKit
 //
 //  Created by kingkong999yhirose on 2016/05/05.
