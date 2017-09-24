@@ -12,8 +12,6 @@ private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let env = ProcessInfo().environment
 
 let debug = env["DEBUG"] != nil
-let defaultAccessControl: String = "public"
-let accessControl = defaultAccessControl
 
 private func extractGenerateDir() -> String? {
     return ProcessInfo
@@ -75,11 +73,11 @@ do {
     
     if config.reusable.identifier {
         tableViewCellContent = try ProjectResource.shared.tableViewCells
-            .flatMap { try ReusableTranslator(accessControl: accessControl).translate(for: $0).declaration }
+            .flatMap { try ReusableTranslator().translate(for: $0).declaration }
             .joined(separator: newLine)
         
         collectionViewCellContent = try ProjectResource.shared.collectionViewCells
-            .flatMap { try ReusableTranslator(accessControl: accessControl).translate(for: $0).declaration }
+            .flatMap { try ReusableTranslator().translate(for: $0).declaration }
             .joined(separator: newLine)
         
     } else {
@@ -90,7 +88,7 @@ do {
     let xibContent: String
     if config.nib.xib {
         xibContent = try ProjectResource.shared.xibs
-            .flatMap { try XibTranslator(accessControl: accessControl).translate(for: $0).declaration }
+            .flatMap { try XibTranslator().translate(for: $0).declaration }
             .joined(separator: newLine)
     } else {
         xibContent = ""

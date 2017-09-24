@@ -30,7 +30,7 @@ struct ImageOutputerImpl: ImageOutputer {
     }
     
     var begin: String {
-        return "\(accessControl) extension UIImage {" + newLine
+        return "extension UIImage {" + newLine
     }
     
     var body: String {
@@ -59,11 +59,11 @@ extension ImageOutputerImpl {
         let imageNames: [String]
         
         var begin: String {
-            return "\(tab1)\(accessControl) struct Asset {" 
+            return "\(tab1)struct Asset {" 
         }
         var body: String {
             let body = imageNames
-                .flatMap { "\(tab2)\(accessControl) static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
+                .flatMap { "\(tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
                 .joined(separator: newLine)
             return body + newLine
         }
@@ -78,11 +78,11 @@ extension ImageOutputerImpl {
         let imageNames: [String]
         
         var begin: String {
-            return "\(tab1)\(accessControl) struct Resource {"
+            return "\(tab1)struct Resource {"
         }
         var body: String {
             let body = imageNames
-                .flatMap { "\(tab2)\(accessControl) static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
+                .flatMap { "\(tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
                 .joined(separator: newLine)
             return body
         }

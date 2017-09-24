@@ -3,37 +3,37 @@
 // You can write custom imoprt XXXX logic
 import UIKit
 import SegueAddition
-public protocol Reusable {
+protocol Reusable {
    associatedtype View
    var name: String { get }
 }
-public protocol Xib: Reusable {
+protocol Xib: Reusable {
 	func nib() -> UINib
 	func view() -> View
 }
-public extension UITableView {
-	public func register<X: Xib>(xib: X) -> Void where X.View: UITableViewCell {
+extension UITableView {
+	func register<X: Xib>(xib: X) -> Void where X.View: UITableViewCell {
 		register(xib.nib(), forCellReuseIdentifier: xib.name)
 	}
     
-	public func register<X: Xib>(xibs: [X]) -> Void where X.View: UITableViewCell {
+	func register<X: Xib>(xibs: [X]) -> Void where X.View: UITableViewCell {
 		xibs.forEach { register(xib: $0) }
 	}
     
-		public func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {
+		func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {
 			return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View
 		}
 }
-public extension UICollectionView {
-	public func register<X: Xib>(xib: X) -> Void where X.View: UICollectionViewCell {
+extension UICollectionView {
+	func register<X: Xib>(xib: X) -> Void where X.View: UICollectionViewCell {
 		register(xib.nib(), forCellWithReuseIdentifier: xib.name)
 	}
     
-	public func register<X: Xib>(xibs: [X]) -> Void where X.View: UICollectionViewCell {
+	func register<X: Xib>(xibs: [X]) -> Void where X.View: UICollectionViewCell {
 		xibs.forEach { register(xib: $0) }
 	}
     
-	public func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {
+	func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {
 		return dequeueReusableCell(withReuseIdentifier: xib.name, for: indexPath) as! X.View
 	}
 }
@@ -46,18 +46,7 @@ public extension ViewController {
 	}
 
 
-	public class func initialViewController() -> ViewController {
-		let storyboard = UIStoryboard(name: "ViewController", bundle: nil) 
-		let viewController = storyboard.instantiateInitialViewController() as! ViewController
-		return viewController
-	}
-	 public func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
-		performSegue("ShowSecondTable", closure: closure)
-	}
 
-	public struct Segue {
-		public static let showSecondTable: String = "ShowSecondTable"
-	}
 }
 
 public extension TableViewController {
@@ -67,13 +56,9 @@ public extension TableViewController {
 		let viewController = storyboard.instantiateViewController(withIdentifier: "TableView") as! TableViewController
 		return viewController
 	}
-	 public func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
-		performSegue("ShowViewController", closure: closure)
-	}
 
-	public struct Segue {
-		public static let showViewController: String = "ShowViewController"
-	}
+
+
 }
 
 public extension OverrideViewController {
@@ -92,35 +77,9 @@ public extension OverrideViewController {
 	}
 
 
-	override public class func initialViewController() -> OverrideViewController {
-		let storyboard = UIStoryboard(name: "OverrideViewController", bundle: nil) 
-		let viewController = storyboard.instantiateInitialViewController() as! OverrideViewController
-		return viewController
-	}
-	override  public func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
-		performSegue("ShowSecondTable", closure: closure)
-	}
 
-	public struct Segue {
-		public static let showSecondTable: String = "ShowSecondTable"
-	}
 }
 
-public extension SecondTableViewController {
-
-	public class func initialViewController() -> SecondTableViewController {
-		let storyboard = UIStoryboard(name: "SecondTableViewController", bundle: nil) 
-		let viewController = storyboard.instantiateInitialViewController() as! SecondTableViewController
-		return viewController
-	}
-	 public func performSegueShowOverride(closure: ((UIStoryboardSegue) -> Void)? = nil) {
-		performSegue("ShowOverride", closure: closure)
-	}
-
-	public struct Segue {
-		public static let showOverride: String = "ShowOverride"
-	}
-}
 
 public extension CollectionViewController {
 
@@ -129,13 +88,9 @@ public extension CollectionViewController {
 		let viewController = storyboard.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
 		return viewController
 	}
-	 public func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
-		performSegue("ShowViewController", closure: closure)
-	}
 
-	public struct Segue {
-		public static let showViewController: String = "ShowViewController"
-	}
+
+
 }
 
 public extension SecondCollectionViewController {
@@ -150,42 +105,9 @@ public extension SecondCollectionViewController {
 
 }
 
-public extension ObjCOveerrideViewController {
-
-	override public class func initialViewController() -> ObjCOveerrideViewController {
-		let storyboard = UIStoryboard(name: "ObjCOverrideViewController", bundle: nil) 
-		let viewController = storyboard.instantiateInitialViewController() as! ObjCOveerrideViewController
-		return viewController
-	}
 
 
 
-}
-
-public extension ObjCViewController {
-
-	public class func initialViewController() -> ObjCViewController {
-		let storyboard = UIStoryboard(name: "ObjCViewController", bundle: nil) 
-		let viewController = storyboard.instantiateInitialViewController() as! ObjCViewController
-		return viewController
-	}
-
-
-
-}
-
-
-public extension UITabBarController {
-
-	public class func initialViewController() -> UITabBarController {
-		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
-		let viewController = storyboard.instantiateInitialViewController() as! UITabBarController
-		return viewController
-	}
-
-
-
-}
 
 
 
@@ -213,13 +135,13 @@ public extension UINavigationController {
 public extension SecondTableViewCell {
    public struct ReusableImpl: Reusable {
        public typealias View = SecondTableViewCell
-       public let name: String = "SecondTableViewCell"
+       public let name: String = "ReuseIdentifier"
    }
 }
 public extension SecondCollectionViewCell {
    public struct ReusableImpl: Reusable {
        public typealias View = SecondCollectionViewCell
-       public let name: String = "SecondCollectionViewCell"
+       public let name: String = "ReuseIdentifier"
    }
 }
 public extension TableViewCell {
@@ -284,12 +206,11 @@ public extension UIImage {
 		public static let ususio: UIImage = UIImage(named: "ususio")!
 
 	}
-	public struct Resources {
+	public struct Resource {
 		public static let swift_logo: UIImage = UIImage(named: "swift_logo")!
 	}
 
 }
-
 
 public extension String {
 	public struct Localized {
@@ -308,4 +229,3 @@ public extension String {
 		public static let hello_world_05 = NSLocalizedString("hello.world 05", comment: "")
 	}
 }
-

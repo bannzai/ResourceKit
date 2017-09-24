@@ -9,11 +9,9 @@
 import Foundation
 
 struct XibTranslator: Translator {
-    let accessControl: String
     
     func translate(for input: Xib) throws -> XibOutput {
         return XibOutputImpl(
-            accessControl: accessControl,
             nibName: input.nibName,
             className: input.className
         )

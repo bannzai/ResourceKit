@@ -51,7 +51,7 @@ fileprivate extension ViewControllerOutputImpl {
         defer {
             removeTemporary()
         }
-        let begin = "\(accessControl) extension \(name) {" + newLine
+        let begin = "extension \(name) {" + newLine
         let fromStoryboardFunctions = storyboardInfos.flatMap {
             self.generateFromStoryboardFunctions(from: $0)
             }.joined(separator: newLine)
@@ -75,9 +75,9 @@ fileprivate extension ViewControllerOutputImpl {
             return ""
         }
         
-        let begin = "\(tab1)\(accessControl) struct Segue {" 
+        let begin = "\(tab1)struct Segue {" 
         let body = seguesForGenerateStruct.flatMap {
-            "\(tab2)\(accessControl) static let \($0.lowerFirst): String = \"\($0)\""
+            "\(tab2)static let \($0.lowerFirst): String = \"\($0)\""
             }.joined(separator: newLine)
         let end = "\(tab1)}"
         return [begin, body, end].joined(separator: newLine)
@@ -124,13 +124,13 @@ fileprivate extension ViewControllerOutputImpl {
         let head = "\(tab1)\(overrideOrEmpty)"
         if config.segue.addition {
             return [
-                "\(head) \(accessControl) func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
+                "\(head)func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
                 "\(tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
                 "\(tab1)}",
                 ].joined(separator: newLine)
         }
         return [
-            "\(head) \(accessControl) func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
+            "\(head)func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
             "\(tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
             "\(tab1)}",
             ].joined(separator: newLine)
@@ -147,7 +147,7 @@ fileprivate extension ViewControllerOutputImpl {
         
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
         let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(tab1)\(overrideOrEmpty)\(accessControl) class func "
+        let head = "\(tab1)\(overrideOrEmpty)class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(name) {",
@@ -170,7 +170,7 @@ fileprivate extension ViewControllerOutputImpl {
     func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
         let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(tab1)\(overrideOrEmpty)\(accessControl) class func "
+        let head = "\(tab1)\(overrideOrEmpty)class func "
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [

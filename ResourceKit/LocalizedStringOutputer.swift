@@ -17,8 +17,8 @@ struct LocalizedStringOutputerImpl: LocalizedStringOutputer {
     
     var declaration: String {
         return [
-            "\(accessControl) extension String {",
-            "\(tab1)\(accessControl) struct Localized {",
+            "extension String {",
+            "\(tab1)struct Localized {",
             "\(generateLocalizableConstants().joined(separator: newLine))",
             "\(tab1)}",
             "}",
@@ -35,7 +35,7 @@ fileprivate extension LocalizedStringOutputerImpl {
             
         }
         return localizedStrings.keys.flatMap {
-            return "\(tab2)\(accessControl) static let \(toConstantName($0)) = NSLocalizedString(\"\($0)\", comment: \"\")"
+            return "\(tab2)static let \(toConstantName($0)) = NSLocalizedString(\"\($0)\", comment: \"\")"
         }
     }
 }

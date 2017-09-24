@@ -10,46 +10,46 @@ import Foundation
 
 struct ExtensionsOutputImpl {
     let reusableProtocolContent: String = [
-        "\(accessControl) protocol Reusable {",
+        "protocol Reusable {",
         "   associatedtype View",
         "   var name: String { get }",
         "}",
     ].joined(separator: newLine)
     
     let xibProtocolContent: String = [
-        "\(accessControl) protocol Xib: Reusable {",
+        "protocol Xib: Reusable {",
         "\(tab1)func nib() -> UINib",
         "\(tab1)func view() -> View",
         "}",
     ].joined(separator: newLine)
     
     let tableViewExtensionContent: String = [
-        "\(accessControl) extension UITableView {",
-        "\(tab1)\(accessControl) func register<X: Xib>(xib: X) -> Void where X.View: UITableViewCell {",
+        "extension UITableView {",
+        "\(tab1)func register<X: Xib>(xib: X) -> Void where X.View: UITableViewCell {",
         "\(tab2)register(xib.nib(), forCellReuseIdentifier: xib.name)",
         "\(tab1)}",
         "    ",
-        "\(tab1)\(accessControl) func register<X: Xib>(xibs: [X]) -> Void where X.View: UITableViewCell {",
+        "\(tab1)func register<X: Xib>(xibs: [X]) -> Void where X.View: UITableViewCell {",
         "\(tab2)xibs.forEach { register(xib: $0) }",
         "\(tab1)}",
         "    ",
-        "\(tab2)\(accessControl) func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
+        "\(tab2)func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
         "\(tab3)return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
         "\(tab2)}",
         "}",
         ].joined(separator: newLine)
     
     let collectionViewExtensionContent = [
-        "\(accessControl) extension UICollectionView {",
-        "\(tab1)\(accessControl) func register<X: Xib>(xib: X) -> Void where X.View: UICollectionViewCell {",
+        "extension UICollectionView {",
+        "\(tab1)func register<X: Xib>(xib: X) -> Void where X.View: UICollectionViewCell {",
         "\(tab2)register(xib.nib(), forCellWithReuseIdentifier: xib.name)",
         "\(tab1)}",
         "    ",
-        "\(tab1)\(accessControl) func register<X: Xib>(xibs: [X]) -> Void where X.View: UICollectionViewCell {",
+        "\(tab1)func register<X: Xib>(xibs: [X]) -> Void where X.View: UICollectionViewCell {",
         "\(tab2)xibs.forEach { register(xib: $0) }",
         "\(tab1)}",
         "    ",
-        "\(tab1)\(accessControl) func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
+        "\(tab1)func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
         "\(tab2)return dequeueReusableCell(withReuseIdentifier: xib.name, for: indexPath) as! X.View",
         "\(tab1)}",
         "}",
