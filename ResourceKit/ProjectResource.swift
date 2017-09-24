@@ -17,6 +17,7 @@ class ProjectResource {
     fileprivate(set) var localizablePaths: [URL] = []
     
     var viewControllers: [ViewController] = []
+    
     fileprivate(set) var tableViewCells: [TableViewCell] = []
     fileprivate(set) var collectionViewCells: [CollectionViewCell] = []
     fileprivate(set) var xibs: [XibForView] = []
