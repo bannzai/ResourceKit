@@ -36,15 +36,13 @@ class ViewController {
     let className: ResourceType
     let superClassName: ResourceType 
     
-    fileprivate lazy var hasSuperClass: Bool = {
-        return self.superClass != nil
-    }()
-    
-    fileprivate lazy var superClass: ViewController? = ProjectResource
-        .shared
-        .viewControllers
-        .filter ({ $0.className == self.superClassName })
-        .first
+    var superClass: ViewController? {
+        return ProjectResource
+            .shared
+            .viewControllers
+            .filter ({ $0.className == self.superClassName })
+            .first
+    }
     
     init(className: String, superClassName: String = "") throws {
         self.className = try ResourceType(viewController: className)

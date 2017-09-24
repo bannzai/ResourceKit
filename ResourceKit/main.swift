@@ -61,8 +61,13 @@ do {
         .forEach { try? XibPerserImpl(url: $0, writeResource: ProjectResource.shared).parse() }
     
     let importsContent = ImportOutputImpl(writeUrl: writeUrl).declaration
-    let viewControllerContent = ProjectResource.shared.viewControllers
-        .flatMap { $0.declaration }
+    
+    let viewControllerContent = try ProjectResource
+        .shared
+        .viewControllers
+        .map { (viewController) in
+            try ViewControllerTranslator().translate(for: viewController).declaration
+        }
         .joined(separator: newLine)
     
     let tableViewCellContent: String
