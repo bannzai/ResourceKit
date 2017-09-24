@@ -10,6 +10,7 @@ import Foundation
 
 struct ReusableTranslator: Translator {
     let accessControl: String
+    
     func translate(for input: ReusableResource) throws -> ReusableResourceOutput {
         return ReusableResourceOutputImpl(
             accessControl: accessControl,

@@ -8,19 +8,6 @@
 
 import Foundation
 
-enum ReusableResourceType: String {
-    case UITableViewCell
-    case UICollectionViewCell
-    
-    init?(name: String) {
-        switch name {
-        case "tableViewCell": self = .UITableViewCell
-        case "collectionViewCell": self = .UICollectionViewCell
-        default: return nil
-        }
-    }
-}
-
 final class XibForView: Declaration {
     let nibName: String
     let className: String

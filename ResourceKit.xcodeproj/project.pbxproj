@@ -27,6 +27,7 @@
 		9C8EB91B1CD84BD100E63A84 /* StoryboardParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */; };
 		9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */; };
 		BA0CC9711F77E7A7000829E4 /* ReusableTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9701F77E7A7000829E4 /* ReusableTranslator.swift */; };
+		BA0CC9731F77E9C9000829E4 /* ReusableResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9721F77E9C9000829E4 /* ReusableResourceType.swift */; };
 		BA1B67681F75520600AC7E31 /* LocalizedStringRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */; };
 		BA1B676A1F75521900AC7E31 /* LocalizedStringTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */; };
 		BA1B676E1F75522D00AC7E31 /* LocalizedStringEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */; };
@@ -83,6 +84,7 @@
 		9C8EB91A1CD84BD100E63A84 /* StoryboardParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardParser.swift; sourceTree = "<group>"; };
 		9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibParser.swift; sourceTree = "<group>"; };
 		BA0CC9701F77E7A7000829E4 /* ReusableTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableTranslator.swift; sourceTree = "<group>"; };
+		BA0CC9721F77E9C9000829E4 /* ReusableResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableResourceType.swift; sourceTree = "<group>"; };
 		BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringRepository.swift; sourceTree = "<group>"; };
 		BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringTranslator.swift; sourceTree = "<group>"; };
 		BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringEntity.swift; sourceTree = "<group>"; };
@@ -136,15 +138,14 @@
 		9C56AE531CC11A9600A38BCE /* ResourceKit */ = {
 			isa = PBXGroup;
 			children = (
+				BA2456001F3B3D4700C383F4 /* Core */,
 				BA1B67741F75DE6300AC7E31 /* Imports */,
 				BA1B67711F75608B00AC7E31 /* Extensions */,
 				BA1B67661F7551E200AC7E31 /* LocalizedString */,
 				BA2455F91F3B3D1F00C383F4 /* Image */,
 				9C8EB91E1CD84BE900E63A84 /* Parser */,
-				BA2456001F3B3D4700C383F4 /* Core */,
 				BA1B67811F775FB300AC7E31 /* Storyboard */,
 				9C56AE541CC11A9600A38BCE /* main.swift */,
-				9C0CC59F1D3237A700683AC6 /* Error.swift */,
 				9C56AE651CC11CA800A38BCE /* Component.swift */,
 				9C56AE661CC11CA800A38BCE /* Helper.swift */,
 				9C56AE6A1CC11CA800A38BCE /* Structure.swift */,
@@ -244,9 +245,10 @@
 		BA1B67851F775FEC00AC7E31 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				BA0CC9721F77E9C9000829E4 /* ReusableResourceType.swift */,
 				9C56AE641CC11CA800A38BCE /* ReusableResource.swift */,
-				BA1B678A1F77608A00AC7E31 /* ReusableResourceOutput.swift */,
 				BA0CC9701F77E7A7000829E4 /* ReusableTranslator.swift */,
+				BA1B678A1F77608A00AC7E31 /* ReusableResourceOutput.swift */,
 				BA1B67861F775FF700AC7E31 /* CollectionViewCell */,
 				BA1B67821F775FCD00AC7E31 /* TableViewCell */,
 			);
@@ -275,6 +277,7 @@
 		BA2456001F3B3D4700C383F4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				9C0CC59F1D3237A700683AC6 /* Error.swift */,
 				9C5990EA1CDB5145008884DA /* Config.swift */,
 				BA2456011F3B3D4F00C383F4 /* Translator.swift */,
 				BA2456031F3B3D6100C383F4 /* Output.swift */,
@@ -360,6 +363,7 @@
 				BA1B676A1F75521900AC7E31 /* LocalizedStringTranslator.swift in Sources */,
 				9C56AE631CC11C8000A38BCE /* XCProjectFile.swift in Sources */,
 				9C56AE751CC11CA800A38BCE /* Xib.swift in Sources */,
+				BA0CC9731F77E9C9000829E4 /* ReusableResourceType.swift in Sources */,
 				BA2456041F3B3D6100C383F4 /* Output.swift in Sources */,
 				BA2455FF1F3B3D4000C383F4 /* ImageTranslator.swift in Sources */,
 				BA2456061F3B3DEE00C383F4 /* ImageEntity.swift in Sources */,
