@@ -14,7 +14,7 @@ protocol AppendableForPaths: class {
 }
 
 protocol AppendableForXibs: class {
-    func appendXibForView(_ xib: XibForView)
+    func appendXib(_ xib: Xib)
 }
 
 protocol AppendableForStoryboard: class {

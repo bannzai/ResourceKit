@@ -75,8 +75,8 @@ final class XibPerserImpl: NSObject, XibParser {
         isOnce = true
         
         resource
-            .appendXibForView(
-                XibForView(
+            .appendXib(
+                Xib(
                     nibName: name,
                     className: className,
                     isFilesOwner: hasFilesOwner

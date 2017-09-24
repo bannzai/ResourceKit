@@ -89,8 +89,8 @@ do {
     
     let xibContent: String
     if config.nib.xib {
-        xibContent = ProjectResource.shared.xibs
-            .flatMap { $0.declaration }
+        xibContent = try ProjectResource.shared.xibs
+            .flatMap { try XibTranslator(accessControl: accessControl).translate(for: $0).declaration }
             .joined(separator: newLine)
     } else {
         xibContent = ""

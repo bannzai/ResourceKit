@@ -20,7 +20,7 @@ class ProjectResource {
     
     fileprivate(set) var tableViewCells: [TableViewCell] = []
     fileprivate(set) var collectionViewCells: [CollectionViewCell] = []
-    fileprivate(set) var xibs: [XibForView] = []
+    fileprivate(set) var xibs: [Xib] = []
 }
 
 extension ProjectResource: AppendableForPaths {
@@ -34,7 +34,7 @@ extension ProjectResource: AppendableForPaths {
 }
 
 extension ProjectResource: AppendableForXibs {
-    func appendXibForView(_ xib: XibForView) {
+    func appendXib(_ xib: Xib) {
         if xibs.contains(where: { $0.className == xib.className }) {
             return
         }

@@ -28,6 +28,8 @@
 		9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */; };
 		BA0CC9711F77E7A7000829E4 /* ReusableTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9701F77E7A7000829E4 /* ReusableTranslator.swift */; };
 		BA0CC9731F77E9C9000829E4 /* ReusableResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9721F77E9C9000829E4 /* ReusableResourceType.swift */; };
+		BA0CC9761F77EC2E000829E4 /* XibOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9751F77EC2E000829E4 /* XibOutput.swift */; };
+		BA0CC9781F77EC95000829E4 /* XibTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9771F77EC95000829E4 /* XibTranslator.swift */; };
 		BA1B67681F75520600AC7E31 /* LocalizedStringRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */; };
 		BA1B676A1F75521900AC7E31 /* LocalizedStringTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */; };
 		BA1B676E1F75522D00AC7E31 /* LocalizedStringEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */; };
@@ -85,6 +87,8 @@
 		9C8EB91C1CD84BDE00E63A84 /* XibParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibParser.swift; sourceTree = "<group>"; };
 		BA0CC9701F77E7A7000829E4 /* ReusableTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableTranslator.swift; sourceTree = "<group>"; };
 		BA0CC9721F77E9C9000829E4 /* ReusableResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableResourceType.swift; sourceTree = "<group>"; };
+		BA0CC9751F77EC2E000829E4 /* XibOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibOutput.swift; sourceTree = "<group>"; };
+		BA0CC9771F77EC95000829E4 /* XibTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibTranslator.swift; sourceTree = "<group>"; };
 		BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringRepository.swift; sourceTree = "<group>"; };
 		BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringTranslator.swift; sourceTree = "<group>"; };
 		BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringEntity.swift; sourceTree = "<group>"; };
@@ -145,13 +149,13 @@
 				BA2455F91F3B3D1F00C383F4 /* Image */,
 				9C8EB91E1CD84BE900E63A84 /* Parser */,
 				BA1B67811F775FB300AC7E31 /* Storyboard */,
+				BA0CC9741F77EA11000829E4 /* Xib */,
 				9C56AE541CC11A9600A38BCE /* main.swift */,
 				9C56AE651CC11CA800A38BCE /* Component.swift */,
 				9C56AE661CC11CA800A38BCE /* Helper.swift */,
 				9C56AE6A1CC11CA800A38BCE /* Structure.swift */,
 				BAB2EB8D1F09463E00607C22 /* AccessControlType.swift */,
 				9C56AE761CC11F9500A38BCE /* Resource.swift */,
-				9C56AE6C1CC11CA800A38BCE /* Xib.swift */,
 			);
 			path = ResourceKit;
 			sourceTree = "<group>";
@@ -176,6 +180,16 @@
 				9C8EB9151CD84BBA00E63A84 /* ProjectResourceParser.swift */,
 			);
 			name = Parser;
+			sourceTree = "<group>";
+		};
+		BA0CC9741F77EA11000829E4 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				9C56AE6C1CC11CA800A38BCE /* Xib.swift */,
+				BA0CC9751F77EC2E000829E4 /* XibOutput.swift */,
+				BA0CC9771F77EC95000829E4 /* XibTranslator.swift */,
+			);
+			name = Xib;
 			sourceTree = "<group>";
 		};
 		BA1B67661F7551E200AC7E31 /* LocalizedString */ = {
@@ -346,6 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C56AE741CC11CA800A38BCE /* ViewController.swift in Sources */,
+				BA0CC9761F77EC2E000829E4 /* XibOutput.swift in Sources */,
 				BA2456081F3B3E2100C383F4 /* ImageOutputer.swift in Sources */,
 				9C0CC5A01D3237A700683AC6 /* Error.swift in Sources */,
 				BA1B676E1F75522D00AC7E31 /* LocalizedStringEntity.swift in Sources */,
@@ -361,6 +376,7 @@
 				9C8EB91D1CD84BDE00E63A84 /* XibParser.swift in Sources */,
 				9C56AE611CC11C8000A38BCE /* PBXObject.swift in Sources */,
 				BA1B676A1F75521900AC7E31 /* LocalizedStringTranslator.swift in Sources */,
+				BA0CC9781F77EC95000829E4 /* XibTranslator.swift in Sources */,
 				9C56AE631CC11C8000A38BCE /* XCProjectFile.swift in Sources */,
 				9C56AE751CC11CA800A38BCE /* Xib.swift in Sources */,
 				BA0CC9731F77E9C9000829E4 /* ReusableResourceType.swift in Sources */,
