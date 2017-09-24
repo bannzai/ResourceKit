@@ -7,8 +7,10 @@
 //
 
 import Foundation
+
 private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let env = ProcessInfo().environment
+
 let debug = env["DEBUG"] != nil
 let defaultAccessControl: String = "public"
 let accessControl = defaultAccessControl

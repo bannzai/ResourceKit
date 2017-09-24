@@ -40,7 +40,7 @@ enum ResourceType: Equatable {
     }
     
     static func isViewControllerStandardType(_ elementName: String) -> Bool {
-        if let _ = ViewControllerResource(name: elementName) {
+        if let _ = ViewControllerResourceType(name: elementName) {
             return true
         }
         
@@ -61,7 +61,7 @@ enum ResourceType: Equatable {
     
     init(viewController: String) throws {
         if ResourceType.isViewControllerStandardType(viewController) {
-            guard let resource = ViewControllerResource(name: viewController) else {
+            guard let resource = ViewControllerResourceType(name: viewController) else {
                 throw ResourceKitErrorType.resourceParseError(name: viewController, errorInfo: ResourceKitErrorType.createErrorInfo())
             }
             self = .standard(resource.rawValue)

@@ -51,7 +51,7 @@ final class StoryboardParserImpl: NSObject, StoryboardParser {
         }
         
         if ResourceType.isViewControllerStandardType(elementName) {
-            generateViewControllerResource(attributeDict, elementName: elementName)
+            generateViewControllerResourceType(attributeDict, elementName: elementName)
         }
         
         if ResourceType.isSegue(elementName) {
@@ -67,7 +67,7 @@ final class StoryboardParserImpl: NSObject, StoryboardParser {
         }
     }
     
-    fileprivate func generateViewControllerResource(_ attributes: [String: String], elementName: String) {
+    fileprivate func generateViewControllerResourceType(_ attributes: [String: String], elementName: String) {
         guard let viewControllerId = attributes["id"] else {
             return
         }

@@ -78,7 +78,7 @@ struct ProjectResourceParser {
         }
         if config.viewController.instantiateStoryboardAny {
             append(
-                ViewControllerResource.standards().flatMap { try? ViewController(className: $0.rawValue) }
+                ViewControllerResourceType.standards().flatMap { try? ViewController(className: $0.rawValue) }
             )
         }
         
