@@ -56,11 +56,7 @@ extension ProjectResource: AppendableForStoryboard {
                 return
         }
         
-        if cell.reusableIdentifiers.contains(where: { $0 == reusableIdentifier }) {
-            return
-        }
-        
-        cell.reusableIdentifiers.append(reusableIdentifier)
+        cell.reusableIdentifiers.insert(reusableIdentifier)
     }
     
     func appendCollectionViewCell(_ className: String, reusableIdentifier: String) {
@@ -76,11 +72,7 @@ extension ProjectResource: AppendableForStoryboard {
                 return
         }
         
-        if cell.reusableIdentifiers.contains(where: { $0 == reusableIdentifier }) {
-            return
-        }
-        
-        cell.reusableIdentifiers.append(reusableIdentifier)
+        cell.reusableIdentifiers.insert(reusableIdentifier)
     }
     
     func appendViewControllerInfoReference(_ className: String, viewControllerInfo: ViewControllerInfoOfStoryboard) {

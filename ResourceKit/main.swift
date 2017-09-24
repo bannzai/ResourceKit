@@ -74,12 +74,12 @@ do {
     let collectionViewCellContent: String
     
     if config.reusable.identifier {
-        tableViewCellContent = ProjectResource.shared.tableViewCells
-            .flatMap { $0.declaration }
+        tableViewCellContent = try ProjectResource.shared.tableViewCells
+            .flatMap { try ReusableTranslator(accessControl: accessControl).translate(for: $0).declaration }
             .joined(separator: newLine)
         
-        collectionViewCellContent = ProjectResource.shared.collectionViewCells
-            .flatMap { $0.declaration }
+        collectionViewCellContent = try ProjectResource.shared.collectionViewCells
+            .flatMap { try ReusableTranslator(accessControl: accessControl).translate(for: $0).declaration }
             .joined(separator: newLine)
         
     } else {
