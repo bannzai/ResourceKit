@@ -14,7 +14,6 @@
 		9C56AE621CC11C8000A38BCE /* Serialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE5E1CC11C8000A38BCE /* Serialization.swift */; };
 		9C56AE631CC11C8000A38BCE /* XCProjectFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE5F1CC11C8000A38BCE /* XCProjectFile.swift */; };
 		9C56AE6D1CC11CA800A38BCE /* ReusableResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE641CC11CA800A38BCE /* ReusableResource.swift */; };
-		9C56AE6E1CC11CA800A38BCE /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE651CC11CA800A38BCE /* Component.swift */; };
 		9C56AE6F1CC11CA800A38BCE /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE661CC11CA800A38BCE /* Helper.swift */; };
 		9C56AE711CC11CA800A38BCE /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE681CC11CA800A38BCE /* Parser.swift */; };
 		9C56AE721CC11CA800A38BCE /* ProjectResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C56AE691CC11CA800A38BCE /* ProjectResource.swift */; };
@@ -29,6 +28,8 @@
 		BA0CC9731F77E9C9000829E4 /* ReusableResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9721F77E9C9000829E4 /* ReusableResourceType.swift */; };
 		BA0CC9761F77EC2E000829E4 /* XibOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9751F77EC2E000829E4 /* XibOutput.swift */; };
 		BA0CC9781F77EC95000829E4 /* XibTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9771F77EC95000829E4 /* XibTranslator.swift */; };
+		BA0CC97A1F77ED7E000829E4 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC9791F77ED7E000829E4 /* Environment.swift */; };
+		BA0CC97D1F77EDAA000829E4 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC97C1F77EDAA000829E4 /* Const.swift */; };
 		BA1B67681F75520600AC7E31 /* LocalizedStringRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */; };
 		BA1B676A1F75521900AC7E31 /* LocalizedStringTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */; };
 		BA1B676E1F75522D00AC7E31 /* LocalizedStringEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */; };
@@ -72,7 +73,6 @@
 		9C56AE5E1CC11C8000A38BCE /* Serialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Serialization.swift; path = Xcode.swift/Xcode/Xcode/Serialization.swift; sourceTree = "<group>"; };
 		9C56AE5F1CC11C8000A38BCE /* XCProjectFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCProjectFile.swift; path = Xcode.swift/Xcode/Xcode/XCProjectFile.swift; sourceTree = "<group>"; };
 		9C56AE641CC11CA800A38BCE /* ReusableResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableResource.swift; sourceTree = "<group>"; };
-		9C56AE651CC11CA800A38BCE /* Component.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		9C56AE661CC11CA800A38BCE /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		9C56AE681CC11CA800A38BCE /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		9C56AE691CC11CA800A38BCE /* ProjectResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectResource.swift; sourceTree = "<group>"; };
@@ -87,6 +87,8 @@
 		BA0CC9721F77E9C9000829E4 /* ReusableResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableResourceType.swift; sourceTree = "<group>"; };
 		BA0CC9751F77EC2E000829E4 /* XibOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibOutput.swift; sourceTree = "<group>"; };
 		BA0CC9771F77EC95000829E4 /* XibTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XibTranslator.swift; sourceTree = "<group>"; };
+		BA0CC9791F77ED7E000829E4 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		BA0CC97C1F77EDAA000829E4 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		BA1B67671F75520600AC7E31 /* LocalizedStringRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringRepository.swift; sourceTree = "<group>"; };
 		BA1B67691F75521900AC7E31 /* LocalizedStringTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringTranslator.swift; sourceTree = "<group>"; };
 		BA1B676D1F75522D00AC7E31 /* LocalizedStringEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStringEntity.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		9C56AE531CC11A9600A38BCE /* ResourceKit */ = {
 			isa = PBXGroup;
 			children = (
+				9C56AE541CC11A9600A38BCE /* main.swift */,
 				BA2456001F3B3D4700C383F4 /* Core */,
 				BA1B67741F75DE6300AC7E31 /* Imports */,
 				BA1B67711F75608B00AC7E31 /* Extensions */,
@@ -148,11 +151,6 @@
 				9C8EB91E1CD84BE900E63A84 /* Parser */,
 				BA1B67811F775FB300AC7E31 /* Storyboard */,
 				BA0CC9741F77EA11000829E4 /* Xib */,
-				9C56AE541CC11A9600A38BCE /* main.swift */,
-				9C56AE651CC11CA800A38BCE /* Component.swift */,
-				9C56AE661CC11CA800A38BCE /* Helper.swift */,
-				BAB2EB8D1F09463E00607C22 /* AccessControlType.swift */,
-				9C56AE761CC11F9500A38BCE /* Resource.swift */,
 			);
 			path = ResourceKit;
 			sourceTree = "<group>";
@@ -288,10 +286,15 @@
 		BA2456001F3B3D4700C383F4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BA0CC97C1F77EDAA000829E4 /* Const.swift */,
 				9C0CC59F1D3237A700683AC6 /* Error.swift */,
 				9C5990EA1CDB5145008884DA /* Config.swift */,
 				BA2456011F3B3D4F00C383F4 /* Translator.swift */,
 				BA2456031F3B3D6100C383F4 /* Output.swift */,
+				BAB2EB8D1F09463E00607C22 /* AccessControlType.swift */,
+				9C56AE761CC11F9500A38BCE /* Resource.swift */,
+				9C56AE661CC11CA800A38BCE /* Helper.swift */,
+				BA0CC9791F77ED7E000829E4 /* Environment.swift */,
 				BA1B67771F75EC5B00AC7E31 /* Resource */,
 			);
 			name = Core;
@@ -364,7 +367,6 @@
 				BA1B677E1F77445B00AC7E31 /* ViewControllerTranslator.swift in Sources */,
 				BA2456021F3B3D4F00C383F4 /* Translator.swift in Sources */,
 				BA1B67681F75520600AC7E31 /* LocalizedStringRepository.swift in Sources */,
-				9C56AE6E1CC11CA800A38BCE /* Component.swift in Sources */,
 				9C56AE621CC11C8000A38BCE /* Serialization.swift in Sources */,
 				BAB2EB8E1F09463E00607C22 /* AccessControlType.swift in Sources */,
 				BA1B67881F77600500AC7E31 /* CollectionViewCell.swift in Sources */,
@@ -377,6 +379,7 @@
 				9C56AE631CC11C8000A38BCE /* XCProjectFile.swift in Sources */,
 				9C56AE751CC11CA800A38BCE /* Xib.swift in Sources */,
 				BA0CC9731F77E9C9000829E4 /* ReusableResourceType.swift in Sources */,
+				BA0CC97D1F77EDAA000829E4 /* Const.swift in Sources */,
 				BA2456041F3B3D6100C383F4 /* Output.swift in Sources */,
 				BA2455FF1F3B3D4000C383F4 /* ImageTranslator.swift in Sources */,
 				BA2456061F3B3DEE00C383F4 /* ImageEntity.swift in Sources */,
@@ -389,6 +392,7 @@
 				9C56AE551CC11A9600A38BCE /* main.swift in Sources */,
 				9C56AE601CC11C8000A38BCE /* Extensions.swift in Sources */,
 				BA1B67731F75609C00AC7E31 /* ExtensionsOutput.swift in Sources */,
+				BA0CC97A1F77ED7E000829E4 /* Environment.swift in Sources */,
 				BA1B67761F75DE6F00AC7E31 /* ImportOutput.swift in Sources */,
 				BA1B67841F775FE500AC7E31 /* TableViewCell.swift in Sources */,
 				9C56AE711CC11CA800A38BCE /* Parser.swift in Sources */,
