@@ -46,7 +46,7 @@ struct ExtensionsOutputImpl {
         "\(tab1)}",
         "    ",
         "\(tab1)func register<X: XibProtocol>(xibs: [X]) -> Void where X.View: UICollectionViewCell {",
-        "\(tab2)xibs.forEach { register(XibProtocol: $0) }",
+        "\(tab2)xibs.forEach { register(xib: $0) }",
         "\(tab1)}",
         "    ",
         "\(tab1)func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
