@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ViewControllerInfoOfStoryboard {
+class ViewControllerInfoOfStoryboard {
     let viewControllerId: String
     let storyboardName: String
     let initialViewControllerId: String?
