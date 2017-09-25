@@ -10,14 +10,14 @@ import Foundation
 
 struct ExtensionsOutputImpl {
     let reusableProtocolContent: String = [
-        "protocol Reusable {",
+        "protocol ReusableProtocol {",
         "   associatedtype View",
         "   var name: String { get }",
         "}",
     ].joined(separator: newLine)
     
     let xibProtocolContent: String = [
-        "protocol XibProtocol: Reusable {",
+        "protocol XibProtocol: ReusableProtocol {",
         "\(tab1)func nib() -> UINib",
         "\(tab1)func view() -> View",
         "}",
@@ -33,8 +33,8 @@ struct ExtensionsOutputImpl {
         "\(tab2)xibs.forEach { register(xib: $0) }",
         "\(tab1)}",
         "    ",
-        "\(tab2)func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
-        "\(tab3)return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
+        "\(tab2)func dequeueReusableCell<R: ReusableProtocol>(with reusable: R, for indexPath: IndexPath) -> R.View where R.View: UITableViewCell {",
+        "\(tab3)return dequeueReusableCell(withIdentifier: reusable.name, for: indexPath) as! R.View",
         "\(tab2)}",
         "}",
         ].joined(separator: newLine)
@@ -49,8 +49,8 @@ struct ExtensionsOutputImpl {
         "\(tab2)xibs.forEach { register(xib: $0) }",
         "\(tab1)}",
         "    ",
-        "\(tab1)func dequeueReusableCell<X: Reusable>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
-        "\(tab2)return dequeueReusableCell(withReuseIdentifier: xib.name, for: indexPath) as! X.View",
+        "\(tab1)func dequeueReusableCell<R: ReusableProtocol>(with reusable: R, for indexPath: IndexPath) -> R.View where R.View: UICollectionViewCell {",
+        "\(tab2)return dequeueReusableCell(withReuseIdentifier: reusable.name, for: indexPath) as! R.View",
         "\(tab1)}",
         "}",
     ].joined(separator: newLine)

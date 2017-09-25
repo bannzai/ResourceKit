@@ -25,7 +25,7 @@ struct ReusableResourceOutputImpl: ReusableResourceOutput {
         
         return [
             "extension \(className) {",
-            "   struct ReusableImpl: Reusable {",
+            "   struct Reusable: ReusableProtocol {",
             "       typealias View = \(className)",
             "\(names)",
             "   }",
