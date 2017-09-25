@@ -8,22 +8,32 @@
 
 import Foundation
 
-final class StoryboardParser: NSObject, Parsable {
-    fileprivate var _name: String = ""
-    fileprivate var _initialViewControllerIdentifier: String?
-    fileprivate var _viewControllerInfos: [ViewControllerInfoOfStoryboard] = []
-    fileprivate var _currentViewControllerInfo: ViewControllerInfoOfStoryboard?
+protocol StoryboardParser: Parsable {
     
-    init(url: URL) throws {
+}
+
+final class StoryboardParserImpl: NSObject, StoryboardParser {
+    let url: URL
+    let resource: AppendableForStoryboard
+    
+    fileprivate var name: String = ""
+    fileprivate var initialViewControllerIdentifier: String?
+    fileprivate var currentViewControllerInfoForSegue: ViewControllerInfoOfStoryboard?
+    
+    init(url: URL, writeResource resource: AppendableForStoryboard) throws {
+        self.url = url
+        self.resource = resource
         super.init()
-        
+    }
+    
+    func parse() throws {
         guard url.pathExtension == "storyboard" else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
-        _name = url.deletingPathExtension().lastPathComponent
+        name = url.deletingPathExtension().lastPathComponent
         // Don't create ipad resources
-        if _name.contains("~") { 
+        if name.contains("~") { 
             return
         }
         
@@ -36,12 +46,12 @@ final class StoryboardParser: NSObject, Parsable {
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "document" {
-            _initialViewControllerIdentifier = attributeDict["initialViewController"]
+            initialViewControllerIdentifier = attributeDict["initialViewController"]
             return
         }
         
         if ResourceType.isViewControllerStandardType(elementName) {
-            generateViewControllerResource(attributeDict, elementName: elementName)
+            generateViewControllerResourceType(attributeDict, elementName: elementName)
         }
         
         if ResourceType.isSegue(elementName) {
@@ -57,19 +67,7 @@ final class StoryboardParser: NSObject, Parsable {
         }
     }
     
-    fileprivate func extranctionForSegue(_ attributes: [String: String], elementName: String) {
-        guard let segueIdentifier = attributes["identifier"] else {
-            return
-        }
-        
-        if !config.needGenerateSegue {
-            return
-        }
-        
-        _currentViewControllerInfo?.segues.append(segueIdentifier)
-    }
-    
-    fileprivate func generateViewControllerResource(_ attributes: [String: String], elementName: String) {
+    fileprivate func generateViewControllerResourceType(_ attributes: [String: String], elementName: String) {
         guard let viewControllerId = attributes["id"] else {
             return
         }
@@ -79,24 +77,35 @@ final class StoryboardParser: NSObject, Parsable {
         }
         
         let storyboardIdentifier = attributes["storyboardIdentifier"] ?? ""
-        let viewControllerName = try? ResourceType(viewController: attributes["customClass"] ?? elementName).name
+        let viewControllerName = try? ResourceType(viewController: attributes["customClass"] ?? elementName).name 
         
         let currentViewControllerInfo = ViewControllerInfoOfStoryboard (
             viewControllerId: viewControllerId,
-            storyboardName: _name,
-            initialViewControllerId: _initialViewControllerIdentifier,
+            storyboardName: name,
+            initialViewControllerId: initialViewControllerIdentifier,
             storyboardIdentifier: storyboardIdentifier
         )
         
-        ProjectResource
-            .sharedInstance
-            .viewControllers
-            .filter({ $0.name == viewControllerName })
-            .first?
-            .storyboardInfos
-            .append(currentViewControllerInfo)
+        resource
+            .appendViewControllerInfoReference(
+                viewControllerName,
+                viewControllerInfo: currentViewControllerInfo
+            )
         
-        _currentViewControllerInfo = currentViewControllerInfo
+        // store for extranctionForSegue(_:, elementName:)
+        currentViewControllerInfoForSegue = currentViewControllerInfo
+    }
+    
+    fileprivate func extranctionForSegue(_ attributes: [String: String], elementName: String) {
+        guard let segueIdentifier = attributes["identifier"] else {
+            return
+        }
+        
+        if !config.needGenerateSegue {
+            return
+        }
+        
+        currentViewControllerInfoForSegue?.segues.append(segueIdentifier)
     }
     
     fileprivate func generateTableViewCells(_ attributes: [String: String], elementName: String) {
@@ -112,8 +121,7 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        ProjectResource
-            .sharedInstance
+        resource
             .appendTableViewCell(
                 className,
                 reusableIdentifier: reusableIdentifier
@@ -129,13 +137,11 @@ final class StoryboardParser: NSObject, Parsable {
             return
         }
         
-        
         guard let className = try? ResourceType(reusable: attributes["customClass"] ?? elementName).name else {
             return
         }
         
-        ProjectResource
-            .sharedInstance
+        resource
             .appendCollectionViewCell(
                 className,
                 reusableIdentifier: reusableIdentifier

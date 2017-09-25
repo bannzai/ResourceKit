@@ -7,10 +7,11 @@
 //
 
 import Foundation
+
 private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let env = ProcessInfo().environment
+
 let debug = env["DEBUG"] != nil
-let defaultAccessControl: String = "public"
 
 private func extractGenerateDir() -> String? {
     return ProcessInfo
@@ -35,115 +36,51 @@ if !debug {
 
 let debugOutputPath = env["DEBUG_OUTPUT_PATH"]
 let outputPath = debugOutputPath ?? extractGenerateDir() ?? Environment.SRCROOT.element
-let config: Config = Config()
+let config: Config = ConfigImpl()
 
 do {
     let outputUrl = URL(fileURLWithPath: outputPath)
     var resourceValue: AnyObject?
     try (outputUrl as NSURL).getResourceValue(&resourceValue, forKey: URLResourceKey.isDirectoryKey)
     
-    let writeUrl: URL
-    writeUrl = outputUrl.appendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
+    let writeUrl: URL = outputUrl.appendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
 
-    func imports() -> [String] {
-        
-        guard let content = try? String(contentsOf: writeUrl) else {
-            return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
-        }
-        let pattern = "\\s*import\\s+.+"
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .useUnixLineSeparators) else {
-            return ["import UIKit"]
-        }
-        let results = regex.matches(in: content, options: [], range: NSMakeRange(0, content.characters.count))
-        
-        if results.isEmpty {
-            return config.segue.addition ? ["import UIKit", "import SegueAddition"] : ["import UIKit"]
-        }
-        
-        return results.flatMap { (result) -> String? in
-            if result.range.location != NSNotFound {
-                let matchingString = (content as NSString).substring(with: result.range) as String
-                return matchingString
-                    .replacingOccurrences(of: "\n", with: "")
-            }
-            return nil
-        }
-    }
-    
-    
     let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
     let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
-    let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget)
-    let paths = parser.paths.filter { $0.pathExtension != nil }
+    let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget, writeResource: ProjectResource.shared)
+    let paths = ProjectResource.shared.paths
     
     paths
         .filter { $0.pathExtension == "storyboard" }
-        .forEach { let _ = try? StoryboardParser(url: $0) }
+        .forEach { try? StoryboardParserImpl(url: $0, writeResource: ProjectResource.shared).parse() }
     
     paths
         .filter { $0.pathExtension == "xib" }
-        .forEach { let _ = try? XibPerser(url: $0) }
+        .forEach { try? XibPerserImpl(url: $0, writeResource: ProjectResource.shared).parse() }
     
-    let importsContent = imports().joined(separator: newLine)
+    let importsContent = ImportOutputImpl(writeUrl: writeUrl).declaration
     
-    let xibProtocolContent: String = [
-        "\(defaultAccessControl) protocol XibProtocol {",
-        "   associatedtype View",
-        "   var name: String { get }",
-        "   func nib() -> UINib",
-        "}",
-    ].joined(separator: newLine)
-    
-    let tableViewExtensionContent: String = [
-        "\(defaultAccessControl) extension UITableView {",
-        "    \(defaultAccessControl) func register<X: XibProtocol>(xib: X) -> Void where X.View: UITableViewCell {",
-        "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
-        "    }",
-        "    ",
-        "    \(defaultAccessControl) func register<X: XibProtocol>(xibs: [X]) -> Void where X.View: UITableViewCell {",
-        "        xibs.forEach { register(xib: $0) }",
-        "    }",
-        "    ",
-        "    \(defaultAccessControl) func dequeueReusableCell<X: XibProtocol>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UITableViewCell {",
-        "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
-        "    }",
-        "}",
-        ].joined(separator: newLine)
-    
-    let collectionViewExtensionContent = [
-        "\(defaultAccessControl) extension UICollectionView {",
-        "    \(defaultAccessControl) func register<X: XibProtocol>(xib: X) -> Void where X.View: UICollectionViewCell {",
-        "        register(xib.nib(), forCellReuseIdentifier: xib.name)",
-        "    }",
-        "    ",
-        "    \(defaultAccessControl) func register<X: XibProtocol>(xibs: [X]) -> Void where X.View: UICollectionViewCell {",
-        "        xibs.forEach { register(xib: $0) }",
-        "    }",
-        "    ",
-        "    \(defaultAccessControl) func dequeueReusableCell<X: XibProtocol>(with xib: X, for indexPath: IndexPath) -> X.View where X.View: UICollectionViewCell {",
-        "        return dequeueReusableCell(withIdentifier: xib.name, for: indexPath) as! X.View",
-        "    }",
-        "}",
-    ].joined(separator: newLine)
-    
-    let viewControllerContent = ProjectResource.sharedInstance.viewControllers
-        .flatMap { $0.generateExtensionIfNeeded() }
-        .flatMap { $0.declaration }
+    let viewControllerContent = try ProjectResource
+        .shared
+        .viewControllers
+        .map { (viewController) in
+            try ViewControllerTranslator().translate(for: viewController).declaration 
+        }
         .joined(separator: newLine)
     
     let tableViewCellContent: String
     let collectionViewCellContent: String
     
     if config.reusable.identifier {
-        tableViewCellContent = ProjectResource.sharedInstance.tableViewCells
-            .flatMap { $0.generateExtension() }
-            .flatMap { $0.declaration }
+        tableViewCellContent = try ProjectResource.shared.tableViewCells
+            .flatMap { try ReusableTranslator().translate(for: $0).declaration + newLine }
             .joined(separator: newLine)
+            .appendNewLineIfNotEmpty()
         
-        collectionViewCellContent = ProjectResource.sharedInstance.collectionViewCells
-            .flatMap { $0.generateExtension() }
-            .flatMap { $0.declaration }
+        collectionViewCellContent = try ProjectResource.shared.collectionViewCells
+            .flatMap { try ReusableTranslator().translate(for: $0).declaration + newLine }
             .joined(separator: newLine)
+            .appendNewLineIfNotEmpty()
         
     } else {
         tableViewCellContent = ""
@@ -152,19 +89,29 @@ do {
     
     let xibContent: String
     if config.nib.xib {
-        xibContent = ProjectResource.sharedInstance.xibs
-            .flatMap { $0.generateExtension() }
-            .flatMap { $0.declaration }
+        xibContent = try ProjectResource.shared.xibs
+            .flatMap { try XibTranslator().translate(for: $0).declaration }
             .joined(separator: newLine)
+            .appendNewLineIfNotEmpty()
     } else {
         xibContent = ""
     }
     
-    let imageContent = Image(urls: paths).generate().declaration + newLine
+    let imageContent = try ImageTranslator().translate(
+        for: (
+            assets: ImageAssetRepositoryImpl().load(),
+            resources: ImageResourcesRepositoryImpl().load())
+        )
+        .declaration
     
     let stringContent: String
+    
     if config.string.localized {
-        stringContent = LocalizedString(urls: parser.localizablePaths).generate().declaration + newLine
+        stringContent = try LocalizedStringTranslator()
+            .translate(
+                for: LocalizedStringRepositoryImpl(urls: ProjectResource.shared.localizablePaths).load()
+            )
+            .declaration
     } else {
         stringContent = ""
     }
@@ -172,15 +119,16 @@ do {
     let content = (
         Header
             + importsContent + newLine
-            + xibProtocolContent
-            + tableViewExtensionContent
-            + collectionViewExtensionContent
-            + viewControllerContent
-            + tableViewCellContent
-            + collectionViewCellContent
-            + xibContent
-            + imageContent
-            + stringContent
+            + ExtensionsOutputImpl().reusableProtocolContent + newLine + newLine
+            + ExtensionsOutputImpl().xibProtocolContent + newLine + newLine
+            + ExtensionsOutputImpl().tableViewExtensionContent + newLine + newLine
+            + ExtensionsOutputImpl().collectionViewExtensionContent + newLine + newLine
+            + viewControllerContent + newLine
+            + tableViewCellContent + newLine
+            + collectionViewCellContent + newLine
+            + xibContent + newLine
+            + imageContent + newLine
+            + stringContent + newLine
     )
     
     func write(_ code: String, fileURL: URL) throws {

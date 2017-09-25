@@ -26,10 +26,10 @@ class XibTests: XCTestCase {
     }
     
     func testName() {
-        XCTAssertTrue(CustomView.Xib().name == "CustomView")
+        XCTAssertTrue(CustomView.Xib.name == "CustomView")
     }
     
     func testView() {
-        XCTAssertTrue(CustomView.Xib().view().isMember(of: CustomView.classForCoder()))
+        XCTAssertTrue(CustomView.Xib.view().isMember(of: CustomView.classForCoder()))
     }
 }

@@ -8,35 +8,44 @@
 
 import Foundation
 
-final class XibPerser: NSObject, Parsable {
-    fileprivate var _name: String = ""
+protocol XibParser: Parsable {
+    
+}
+
+final class XibPerserImpl: NSObject, XibParser {
+    let url: URL
+    let resource: AppendableForXibs
+    
+    fileprivate var name: String = ""
+    // should parse for root view
+    // ResourceKit not support second xib view
     fileprivate var isOnce: Bool = false
     fileprivate let ignoreCase = [
         "UIResponder"
     ]
     
-    init(url: URL) throws {
-        super.init()
+    init(url: URL, writeResource resource: AppendableForXibs) throws {
+        self.url = url
+        self.resource = resource
         
+        super.init()
+    }
+    
+    func parse() throws {
         guard url.pathExtension == "xib" else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
     
-    
-        _name = url.deletingPathExtension().lastPathComponent
+        name = url.deletingPathExtension().lastPathComponent
         // Don't create ipad resources
-        if _name.contains("~") {
+        if name.contains("~") {
             return
         }
-        
-        ProjectResource
-            .sharedInstance
-            .xibIdentifiers
-            .append(_name)
         
         guard let parser = XMLParser(contentsOf: url) else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
+        
         parser.delegate = self
         parser.parse()
     }
@@ -53,6 +62,7 @@ final class XibPerser: NSObject, Parsable {
         guard let className = attributes["customClass"] else {
             return
         }
+        
         if ignoreCase.contains(className) {
             return
         }
@@ -63,11 +73,11 @@ final class XibPerser: NSObject, Parsable {
         }
         
         isOnce = true
-        ProjectResource
-            .sharedInstance
-            .appendXibForView(
-                XibForView(
-                    name: _name,
+        
+        resource
+            .appendXib(
+                Xib(
+                    nibName: name,
                     className: className,
                     isFilesOwner: hasFilesOwner
                 )

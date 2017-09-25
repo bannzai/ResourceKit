@@ -15,4 +15,12 @@ extension String {
     var lowerFirst: String {
         return first.lowercased() + String(characters.dropFirst())
     }
+    
+    func appendNewLineIfNotEmpty() -> String {
+        if isEmpty {
+            return ""
+        }
+        
+        return self + newLine
+    }
 }

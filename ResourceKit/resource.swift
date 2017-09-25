@@ -18,7 +18,7 @@ enum ResourceType: Equatable {
     }
     
     static func isTableViewCell(_ elementName: String) -> Bool {
-        if let reusable = ReusableResource(name: elementName)
+        if let reusable = ReusableResourceType(name: elementName)
         , reusable == .UITableViewCell {
             return true
         }
@@ -27,7 +27,7 @@ enum ResourceType: Equatable {
     }
     
     static func isCollectionViewCell(_ elementName: String) -> Bool {
-        if let reusable = ReusableResource(name: elementName)
+        if let reusable = ReusableResourceType(name: elementName)
         , reusable == .UICollectionViewCell {
             return true
         }
@@ -40,7 +40,7 @@ enum ResourceType: Equatable {
     }
     
     static func isViewControllerStandardType(_ elementName: String) -> Bool {
-        if let _ = ViewControllerResource(name: elementName) {
+        if let _ = ViewControllerResourceType(name: elementName) {
             return true
         }
         
@@ -49,7 +49,7 @@ enum ResourceType: Equatable {
     
     init(reusable: String) throws {
         if ResourceType.isReusableStandardType(reusable) {
-            guard let resource = ReusableResource(name: reusable) else {
+            guard let resource = ReusableResourceType(name: reusable) else {
                 throw ResourceKitErrorType.resourceParseError(name: reusable, errorInfo: ResourceKitErrorType.createErrorInfo())
             }
             self = .standard(resource.rawValue)
@@ -61,7 +61,7 @@ enum ResourceType: Equatable {
     
     init(viewController: String) throws {
         if ResourceType.isViewControllerStandardType(viewController) {
-            guard let resource = ViewControllerResource(name: viewController) else {
+            guard let resource = ViewControllerResourceType(name: viewController) else {
                 throw ResourceKitErrorType.resourceParseError(name: viewController, errorInfo: ResourceKitErrorType.createErrorInfo())
             }
             self = .standard(resource.rawValue)

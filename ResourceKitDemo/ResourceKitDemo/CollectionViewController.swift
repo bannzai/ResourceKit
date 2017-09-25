@@ -32,7 +32,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView?.register(CollectionViewCell.Xib())
+        collectionView?.register(xib: CollectionViewCell.Xib.self)
         collectionView?.reloadData()
     }
 
@@ -54,7 +54,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.Xib().name, for: indexPath) as! CollectionViewCell // TODO: Support Generics Type
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.Xib.name, for: indexPath) as! CollectionViewCell // TODO: Support Generics Type
         cell.setupWith(shoyus[indexPath.item]) // TODO: Support UIImage Name
         return cell
     }

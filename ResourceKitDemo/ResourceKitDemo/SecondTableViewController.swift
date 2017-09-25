@@ -29,7 +29,7 @@ class SecondTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SecondTableViewCell.Reusable.ReuseIdentifier, for: indexPath) as! SecondTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SecondTableViewCell.Reusable.name, for: indexPath) as! SecondTableViewCell
         cell.label.text = "Second"
         return cell
     }
