@@ -30,7 +30,7 @@ struct ImageOutputerImpl: ImageOutputer {
     }
     
     var begin: String {
-        return "extension UIImage {" + newLine
+        return "extension UIImage {"
     }
     
     var body: String {
@@ -46,7 +46,9 @@ struct ImageOutputerImpl: ImageOutputer {
             return assetsOutputer.declaration
         }
         
-        return assetsOutputer.declaration + resourcesOutputer.declaration
+        return assetsOutputer.declaration
+            + newLine
+            + resourcesOutputer.declaration
     }
     
     var end: String {
@@ -65,7 +67,7 @@ extension ImageOutputerImpl {
             let body = imageNames
                 .flatMap { "\(tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
                 .joined(separator: newLine)
-            return body + newLine
+            return body 
         }
         var end: String {
             return "\(tab1)}" + newLine

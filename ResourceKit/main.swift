@@ -64,7 +64,7 @@ do {
         .shared
         .viewControllers
         .map { (viewController) in
-            try ViewControllerTranslator().translate(for: viewController).declaration
+            try ViewControllerTranslator().translate(for: viewController).declaration 
         }
         .joined(separator: newLine)
     
@@ -73,11 +73,11 @@ do {
     
     if config.reusable.identifier {
         tableViewCellContent = try ProjectResource.shared.tableViewCells
-            .flatMap { try ReusableTranslator().translate(for: $0).declaration }
+            .flatMap { try ReusableTranslator().translate(for: $0).declaration + newLine }
             .joined(separator: newLine)
         
         collectionViewCellContent = try ProjectResource.shared.collectionViewCells
-            .flatMap { try ReusableTranslator().translate(for: $0).declaration }
+            .flatMap { try ReusableTranslator().translate(for: $0).declaration + newLine }
             .joined(separator: newLine)
         
     } else {

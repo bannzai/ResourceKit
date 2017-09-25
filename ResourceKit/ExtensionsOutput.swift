@@ -33,9 +33,9 @@ struct ExtensionsOutputImpl {
         "\(tab2)xibs.forEach { register(xib: $0) }",
         "\(tab1)}",
         "    ",
-        "\(tab2)func dequeueReusableCell<R: ReusableProtocol>(with reusable: R.Type, for indexPath: IndexPath) -> R.View where R.View: UITableViewCell {",
-        "\(tab3)return dequeueReusableCell(withIdentifier: reusable.name, for: indexPath) as! R.View",
-        "\(tab2)}",
+        "\(tab1)func dequeueReusableCell<R: ReusableProtocol>(with reusable: R.Type, for indexPath: IndexPath) -> R.View where R.View: UITableViewCell {",
+        "\(tab2)return dequeueReusableCell(withIdentifier: reusable.name, for: indexPath) as! R.View",
+        "\(tab1)}",
         "}",
         ].joined(separator: newLine)
     

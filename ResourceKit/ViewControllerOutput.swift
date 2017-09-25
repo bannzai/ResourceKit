@@ -51,18 +51,17 @@ fileprivate extension ViewControllerOutputImpl {
         defer {
             removeTemporary()
         }
-        let begin = "extension \(name) {" + newLine
+        let begin = "extension \(name) {"
         let fromStoryboardFunctions = storyboardInfos
             .flatMap {
-                generateFromStoryboardFunctions(from: $0)
+                generateFromStoryboardFunctions(from: $0).appendNewLineIfNotEmpty()
             }
-            .joined(separator: newLine)
+            .joined()
         let segueStruct = generateForSegueStruct()
-        let body = fromStoryboardFunctions + newLine + segueStruct
-        let end = "}" +  newLine
+        let body = fromStoryboardFunctions.appendNewLineIfNotEmpty() + segueStruct
+        let end = "}"
         
-        return [begin, body, end].joined(separator: newLine)
-        
+        return [begin, body, end].joined(separator: newLine).appendNewLineIfNotEmpty()
     }
     
     mutating func removeTemporary() {
@@ -77,12 +76,14 @@ fileprivate extension ViewControllerOutputImpl {
             return ""
         }
         
-        let begin = "\(tab1)struct Segue {" 
-        let body = seguesForGenerateStruct.flatMap {
-            "\(tab2)static let \($0.lowerFirst): String = \"\($0)\""
-            }.joined(separator: newLine)
+        let begin = "\(tab1)struct Segue {" + newLine
+        let body: String = seguesForGenerateStruct
+            .flatMap {
+                "\(tab2)static let \($0.lowerFirst): String = \"\($0)\"" + newLine
+            }
+            .joined()
         let end = "\(tab1)}"
-        return [begin, body, end].joined(separator: newLine)
+        return [begin, body, end].joined()
     }
     
     mutating func generateFromStoryboardFunctions(from storyboard: ViewControllerInfoOfStoryboard) -> String {
@@ -92,18 +93,25 @@ fileprivate extension ViewControllerOutputImpl {
         }
         
         if !config.viewController.instantiateStoryboardAny {
-            return generatePerformSegues(from: storyboard) + newLine
+            return generatePerformSegues(from: storyboard)
         }
         
         if !config.needGenerateSegue {
-            return generateFromStoryboard(from: storyboard) + newLine
+            return generateFromStoryboard(from: storyboard)
         }
         
-        return generateFromStoryboard(from: storyboard) + newLine + generatePerformSegues(from: storyboard) + newLine
+        return generateFromStoryboard(from: storyboard)
+            .appendNewLineIfNotEmpty()
+            .appendNewLineIfNotEmpty()
+            + generatePerformSegues(from: storyboard)
     }
     
     mutating func generatePerformSegues(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         if !config.needGenerateSegue {
+            return ""
+        }
+        
+        if storyboard.segues.isEmpty {
             return ""
         }
         
@@ -129,13 +137,15 @@ fileprivate extension ViewControllerOutputImpl {
                 "\(head)func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
                 "\(tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
                 "\(tab1)}",
-                ].joined(separator: newLine)
+                ]
+                .joined(separator: newLine)
         }
         return [
             "\(head)func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
             "\(tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
             "\(tab1)}",
-            ].joined(separator: newLine)
+            ]
+            .joined(separator: newLine)
     }
     
     mutating func generateFromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
@@ -157,7 +167,8 @@ fileprivate extension ViewControllerOutputImpl {
                 "\(tab2)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
                 "\(tab2)return viewController",
                 "\(tab1)}"
-                ].joined(separator: newLine)
+                ]
+                .joined(separator: newLine)
         }
         
         return [
@@ -166,7 +177,8 @@ fileprivate extension ViewControllerOutputImpl {
             "\(tab2)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
             "\(tab2)return viewController",
             "\(tab1)}",
-            ].joined(separator: newLine)
+            ]
+            .joined(separator: newLine)
     }
     
     func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
@@ -181,7 +193,8 @@ fileprivate extension ViewControllerOutputImpl {
                 "\(tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
                 "\(tab2)return viewController",
                 "\(tab1)}"
-                ].joined(separator: newLine)
+                ]
+                .joined(separator: newLine)
         }
         
         return [
@@ -190,7 +203,8 @@ fileprivate extension ViewControllerOutputImpl {
             "\(tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
             "\(tab2)return viewController",
             "\(tab1)}"
-            ].joined(separator: newLine)
+            ]
+            .joined(separator: newLine)
     }
     
     func needOverrideForStoryboard(_ storyboard: ViewControllerInfoOfStoryboard) -> Bool {
