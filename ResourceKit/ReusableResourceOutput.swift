@@ -19,7 +19,7 @@ struct ReusableResourceOutputImpl: ReusableResourceOutput {
     var declaration: String {
         let names = reusableIdentifers
             .map {
-                return "       let name: String = \"\($0)\""
+                return "       static let name: String = \"\($0)\""
             }
             .joined(separator: newLine)
         
