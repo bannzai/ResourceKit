@@ -19,7 +19,7 @@ struct XibOutputImpl: XibOutput {
     var declaration: String {
         return [
             "extension \(className) {",
-            "\(tab1)struct XibImpl: Xib {",
+            "\(tab1)struct Xib: XibProtocol {",
             "\(tab2)typealias View = \(className)",
             "\(tab2)let name: String = \"\(className)\"",
             "       ",
