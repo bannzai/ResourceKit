@@ -75,7 +75,7 @@ extension ProjectResource: AppendableForStoryboard {
         cell.reusableIdentifiers.insert(reusableIdentifier)
     }
     
-    func appendViewControllerInfoReference(_ className: String, viewControllerInfo: ViewControllerInfoOfStoryboard) {
+    func appendViewControllerInfoReference(_ className: String?, viewControllerInfo: ViewControllerInfoOfStoryboard) {
         viewControllers
             .filter({ $0.name == className })
             .first?

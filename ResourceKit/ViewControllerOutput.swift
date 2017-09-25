@@ -52,9 +52,11 @@ fileprivate extension ViewControllerOutputImpl {
             removeTemporary()
         }
         let begin = "extension \(name) {" + newLine
-        let fromStoryboardFunctions = storyboardInfos.flatMap {
-            self.generateFromStoryboardFunctions(from: $0)
-            }.joined(separator: newLine)
+        let fromStoryboardFunctions = storyboardInfos
+            .flatMap {
+                generateFromStoryboardFunctions(from: $0)
+            }
+            .joined(separator: newLine)
         let segueStruct = generateForSegueStruct()
         let body = fromStoryboardFunctions + newLine + segueStruct
         let end = "}" +  newLine

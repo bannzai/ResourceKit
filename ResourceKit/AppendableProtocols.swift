@@ -20,5 +20,5 @@ protocol AppendableForXibs: class {
 protocol AppendableForStoryboard: class {
     func appendTableViewCell(_ className: String, reusableIdentifier: String)
     func appendCollectionViewCell(_ className: String, reusableIdentifier: String)
-    func appendViewControllerInfoReference(_ className: String, viewControllerInfo: ViewControllerInfoOfStoryboard)
+    func appendViewControllerInfoReference(_ className: String?, viewControllerInfo: ViewControllerInfoOfStoryboard)
 }

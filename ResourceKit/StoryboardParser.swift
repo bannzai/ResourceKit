@@ -76,11 +76,8 @@ final class StoryboardParserImpl: NSObject, StoryboardParser {
             return
         }
         
-        guard let storyboardIdentifier = attributes["storyboardIdentifier"],
-            let viewControllerName = try? ResourceType(viewController: attributes["customClass"] ?? elementName).name else {
-                currentViewControllerInfoForSegue = nil
-                return
-        }
+        let storyboardIdentifier = attributes["storyboardIdentifier"] ?? ""
+        let viewControllerName = try? ResourceType(viewController: attributes["customClass"] ?? elementName).name 
         
         let currentViewControllerInfo = ViewControllerInfoOfStoryboard (
             viewControllerId: viewControllerId,
