@@ -13,13 +13,14 @@ protocol ViewControllerOutput: Output {
 }
 
 struct ViewControllerOutputImpl: ViewControllerOutput {
-    fileprivate var seguesForGenerateStruct: [String] = []
-    
     let name: String
     let storyboardInfos: [ViewControllerInfoOfStoryboard]
     let hasSuperClass: Bool
     let superClassStoryboardInfos: [ViewControllerInfoOfStoryboard]
     fileprivate(set) var declaration: String = ""
+    var seguesForGenerateStruct: [String] {
+        return storyboardInfos.flatMap { $0.segues }
+    }
     
     init(
         name: String,
@@ -34,12 +35,11 @@ struct ViewControllerOutputImpl: ViewControllerOutput {
         
         self.declaration = generateDeclarationIfStoryboardInfoExists()
     }
-    
 }
 
 // MARK: - Private
 fileprivate extension ViewControllerOutputImpl {
-    mutating func generateDeclarationIfStoryboardInfoExists() -> String {
+    func generateDeclarationIfStoryboardInfoExists() -> String {
         if storyboardInfos.isEmpty {
             return ""
         }
@@ -47,25 +47,30 @@ fileprivate extension ViewControllerOutputImpl {
         return generateDeclaration()
     }
     
-    mutating func generateDeclaration() -> String {
-        defer {
-            removeTemporary()
-        }
-        let begin = "extension \(name) {"
-        let fromStoryboardFunctions = storyboardInfos
+    func generateDeclaration() -> String {
+        let begin = "extension \(name) {" + newLine
+        let viewControllerAndPerformSegueFunctions = storyboardInfos
             .flatMap {
-                generateFromStoryboardFunctions(from: $0).appendNewLineIfNotEmpty()
+                let viewControllerFunctions = generateForInsitantiateViewController(from: $0)
+                let performSeguesFunctions = generateForPerformSegue(from: $0)
+                
+                if viewControllerFunctions.isEmpty {
+                    return performSeguesFunctions.appendNewLineIfNotEmpty()
+                }
+                
+                if performSeguesFunctions.isEmpty {
+                    return viewControllerFunctions.appendNewLineIfNotEmpty()
+                }
+                
+                return viewControllerFunctions.appendNewLineIfNotEmpty().appendNewLineIfNotEmpty()
+                    + performSeguesFunctions.appendNewLineIfNotEmpty().appendNewLineIfNotEmpty()
             }
             .joined()
         let segueStruct = generateForSegueStruct()
-        let body = fromStoryboardFunctions.appendNewLineIfNotEmpty() + segueStruct
-        let end = "}"
+        let body = viewControllerAndPerformSegueFunctions + segueStruct.appendNewLineIfNotEmpty()
+        let end = "}" + newLine
         
-        return [begin, body, end].joined(separator: newLine).appendNewLineIfNotEmpty()
-    }
-    
-    mutating func removeTemporary() {
-        seguesForGenerateStruct.removeAll()
+        return [begin, body, end].joined().appendNewLineIfNotEmpty()
     }
     
     func generateForSegueStruct() -> String {
@@ -76,37 +81,33 @@ fileprivate extension ViewControllerOutputImpl {
             return ""
         }
         
-        let begin = "\(tab1)struct Segue {" + newLine
+        let begin = "\(tab1)struct Segue {"
         let body: String = seguesForGenerateStruct
             .flatMap {
-                "\(tab2)static let \($0.lowerFirst): String = \"\($0)\"" + newLine
+                "\(tab2)static let \($0.lowerFirst): String = \"\($0)\""
             }
             .joined()
         let end = "\(tab1)}"
-        return [begin, body, end].joined()
+        return [begin, body, end].joined(separator: newLine)
     }
     
-    mutating func generateFromStoryboardFunctions(from storyboard: ViewControllerInfoOfStoryboard) -> String {
-        if !config.viewController.instantiateStoryboardAny &&
-            !config.needGenerateSegue {
+    func generateForInsitantiateViewController(from storyboard: ViewControllerInfoOfStoryboard) -> String {
+        if !config.viewController.instantiateStoryboardAny {
             return ""
         }
         
-        if !config.viewController.instantiateStoryboardAny {
-            return generatePerformSegues(from: storyboard)
-        }
-        
-        if !config.needGenerateSegue {
-            return generateFromStoryboard(from: storyboard)
-        }
-        
-        return generateFromStoryboard(from: storyboard)
-            .appendNewLineIfNotEmpty()
-            .appendNewLineIfNotEmpty()
-            + generatePerformSegues(from: storyboard)
+        return storyboard.isInitial ? fromStoryboardForInitial(from: storyboard) : fromStoryboard(from: storyboard)
     }
     
-    mutating func generatePerformSegues(from storyboard: ViewControllerInfoOfStoryboard) -> String {
+    func generateForPerformSegue(from storyboard: ViewControllerInfoOfStoryboard) -> String {
+        if !config.needGenerateSegue {
+            return ""
+        }
+        
+        return generatePerformSegues(from: storyboard)
+    }
+    
+    func generatePerformSegues(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         if !config.needGenerateSegue {
             return ""
         }
@@ -115,17 +116,15 @@ fileprivate extension ViewControllerOutputImpl {
             return ""
         }
         
-        return storyboard
-            .segues
+        if seguesForGenerateStruct.isEmpty {
+            return ""
+        }
+        
+        return seguesForGenerateStruct
             .flatMap {
-                generatePerformSegueAndTemporarySave(storyboard, segueIdentifier: $0)
+                generatePerformSegue(from: storyboard, and: $0)
             }
-            .joined(separator: newLine)
-    }
-    
-    mutating func generatePerformSegueAndTemporarySave(_ storyboard: ViewControllerInfoOfStoryboard, segueIdentifier: String) -> String {
-        seguesForGenerateStruct.append(segueIdentifier)
-        return generatePerformSegue(from: storyboard, and: segueIdentifier)
+            .joined()
     }
     
     func generatePerformSegue(from storyboard: ViewControllerInfoOfStoryboard, and segueIdentifier: String) -> String {
@@ -148,11 +147,7 @@ fileprivate extension ViewControllerOutputImpl {
             .joined(separator: newLine)
     }
     
-    mutating func generateFromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
-        return storyboard.isInitial ? fromStoryboardForInitial(from: storyboard) : fromStoryboard(from: storyboard)
-    }
-    
-    mutating func fromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
+    func fromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         if storyboard.storyboardIdentifier.isEmpty {
             return ""
         }

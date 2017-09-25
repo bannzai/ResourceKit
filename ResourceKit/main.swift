@@ -75,10 +75,12 @@ do {
         tableViewCellContent = try ProjectResource.shared.tableViewCells
             .flatMap { try ReusableTranslator().translate(for: $0).declaration + newLine }
             .joined(separator: newLine)
+            .appendNewLineIfNotEmpty()
         
         collectionViewCellContent = try ProjectResource.shared.collectionViewCells
             .flatMap { try ReusableTranslator().translate(for: $0).declaration + newLine }
             .joined(separator: newLine)
+            .appendNewLineIfNotEmpty()
         
     } else {
         tableViewCellContent = ""
@@ -90,6 +92,7 @@ do {
         xibContent = try ProjectResource.shared.xibs
             .flatMap { try XibTranslator().translate(for: $0).declaration }
             .joined(separator: newLine)
+            .appendNewLineIfNotEmpty()
     } else {
         xibContent = ""
     }
@@ -116,10 +119,10 @@ do {
     let content = (
         Header
             + importsContent + newLine
-            + ExtensionsOutputImpl().reusableProtocolContent + newLine
-            + ExtensionsOutputImpl().xibProtocolContent + newLine
-            + ExtensionsOutputImpl().tableViewExtensionContent + newLine
-            + ExtensionsOutputImpl().collectionViewExtensionContent + newLine
+            + ExtensionsOutputImpl().reusableProtocolContent + newLine + newLine
+            + ExtensionsOutputImpl().xibProtocolContent + newLine + newLine
+            + ExtensionsOutputImpl().tableViewExtensionContent + newLine + newLine
+            + ExtensionsOutputImpl().collectionViewExtensionContent + newLine + newLine
             + viewControllerContent + newLine
             + tableViewCellContent + newLine
             + collectionViewCellContent + newLine
