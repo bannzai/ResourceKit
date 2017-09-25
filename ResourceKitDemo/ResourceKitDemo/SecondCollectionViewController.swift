@@ -29,7 +29,7 @@ class SecondCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCollectionViewCell.Reusable.ReuseIdentifier, for: indexPath) as! SecondCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCollectionViewCell.Reusable.name, for: indexPath) as! SecondCollectionViewCell
         cell.label.text = "\(indexPath.item)"
         return cell
     }

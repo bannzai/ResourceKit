@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(CustomView.Xib().view())
+        view.addSubview(CustomView.Xib.view())
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

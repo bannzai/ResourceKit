@@ -26,7 +26,7 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(TableViewCell.Xib())
+        tableView.register(xib: TableViewCell.Xib.self)
         tableView.reloadData()
     }
 
@@ -42,7 +42,7 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.Xib().name, for: indexPath) // TODO: Support Generics Type
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.Xib.name, for: indexPath) // TODO: Support Generics Type
         cell.textLabel?.text = localized[indexPath.row]
         return cell
     }
