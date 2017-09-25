@@ -76,7 +76,7 @@ CocoaPods is the recommended way of installation, as this avoids including any b
  - [x] Cocoapods support.  
  - [x] Images support.  
  - [x] LocaliazedString Support.  
- - [ ] Adjust indent.
+ - [x] Adjust indent.
  - [x] Collaboration [SegueAddition](https://github.com/bannzai/SegueAddition).
  - [x] User Chose Generate Resource Support.  
 
@@ -89,3 +89,4 @@ And build again, but It's left `import CustomView`!
 
 ## License
 [ResourceKit](https://github.com/bannzai/ResourceKit) is released under the MIT license. See LICENSE.txt for details.
+
