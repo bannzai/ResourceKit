@@ -5,7 +5,6 @@
 //  Created by Hirose.Yudai on 2016/01/27.
 //  Copyright © 2016年 Hirose.Yudai. All rights reserved.
 //
-
 import Foundation
 
 private let RESOURCE_FILENAME = "Resource.generated.swift"
@@ -44,7 +43,7 @@ do {
     try (outputUrl as NSURL).getResourceValue(&resourceValue, forKey: URLResourceKey.isDirectoryKey)
     
     let writeUrl: URL = outputUrl.appendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
-
+    
     let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
     let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
     let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget, writeResource: ProjectResource.shared)
@@ -64,7 +63,7 @@ do {
         .shared
         .viewControllers
         .map { (viewController) in
-            try ViewControllerTranslator().translate(for: viewController).declaration 
+            try ViewControllerTranslator().translate(for: viewController).declaration
         }
         .joined(separator: newLine)
     
