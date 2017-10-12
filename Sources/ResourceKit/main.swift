@@ -6,6 +6,7 @@
 //  Copyright © 2016年 Hirose.Yudai. All rights reserved.
 //
 import Foundation
+import XcodeProject
 
 private let RESOURCE_FILENAME = "Resource.generated.swift"
 private let env = ProcessInfo().environment

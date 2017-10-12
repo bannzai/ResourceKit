@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import XcodeProject
 
 struct ProjectResourceParser {
     
     init(xcodeURL: URL, target: String, writeResource resource: AppendableForPaths) throws {
-        guard let projectFile = try? XCProjectFile(xcodeprojURL: xcodeURL) else {
+        guard let projectFile = try? XcodeProject(for: xcodeURL) else {
             throw ResourceKitErrorType.xcodeProjectError(xcodeURL: xcodeURL, target: target, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
@@ -26,27 +27,27 @@ struct ProjectResourceParser {
         setupSuffixViewControllers()
     }
     
-    fileprivate func generateLocalizablePaths(_ target: PBXNativeTarget) -> [Path] {
+    fileprivate func generateLocalizablePaths(_ target: PBX.NativeTarget) -> [PathComponent] {
         let resourcesFileRefs = target.buildPhases
-            .flatMap { $0 as? PBXResourcesBuildPhase }
+            .flatMap { $0 as? PBX.ResourcesBuildPhase }
             .flatMap { $0.files }
             .map { $0.fileRef }
         
         let localizablePaths = resourcesFileRefs
-            .flatMap { $0 as? PBXVariantGroup }
+            .flatMap { $0 as? PBX.VariantGroup }
             .flatMap { $0.fileRefs }
             .map { $0.fullPath }
         
         return localizablePaths
     }
     
-    fileprivate func generateFileRefPaths(_ target: PBXNativeTarget) -> [Path] {
+    fileprivate func generateFileRefPaths(_ target: PBX.NativeTarget) -> [PathComponent] {
         return target.buildPhases
             .flatMap { $0.files }
             .flatMap { $0.fileRef }
-            .flatMap { $0 as? PBXFileReference }
+            .flatMap { $0 as? PBX.FileReference }
             .flatMap { $0.fullPath }
-    }
+    } 
     
     fileprivate mutating func setupSuffixViewControllers() {
         func append(_ viewControllers: [ViewController]) {

@@ -47,13 +47,13 @@ extension ViewController {
 		let viewController = storyboard.instantiateViewController(withIdentifier: "BaseInstance") as! ViewController
 		return viewController
 	}
-	class func initialViewController() -> ViewController {
+	@objc class func initialViewController() -> ViewController {
 		let storyboard = UIStoryboard(name: "ViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ViewController
 		return viewController
 	}
 
-	func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowSecondTable", closure: closure)
 	}
 
@@ -160,7 +160,7 @@ extension ObjCOveerrideViewController {
 
 
 extension ObjCViewController {
-	class func initialViewController() -> ObjCViewController {
+	@objc class func initialViewController() -> ObjCViewController {
 		let storyboard = UIStoryboard(name: "ObjCViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ObjCViewController
 		return viewController
