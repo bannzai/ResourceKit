@@ -11,7 +11,7 @@ import XcodeProject
 
 extension Environment {
     var element: String {
-        if debug {
+        if ResourceKitConfig.Debug.isDebug {
             return ProcessInfo.processInfo.environment["DEBUG_" + self.rawValue]!
         }
         guard let element = ProcessInfo.processInfo.environment[self.rawValue] else {

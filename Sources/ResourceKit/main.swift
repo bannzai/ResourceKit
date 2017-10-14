@@ -8,11 +8,6 @@
 import Foundation
 import XcodeProject
 
-private let RESOURCE_FILENAME = "Resource.generated.swift"
-private let env = ProcessInfo().environment
-
-let debug = env["DEBUG"] != nil
-
 private func extractGenerateDir() -> String? {
     return ProcessInfo
         .processInfo
@@ -26,7 +21,7 @@ private func extractGenerateDir() -> String? {
         .last
 }
 
-if !debug {
+if !ResourceKitConfig.Debug.isDebug {
     do {
         try Environment.verifyUseEnvironment()
     } catch {
@@ -34,8 +29,7 @@ if !debug {
     }
 }
 
-let debugOutputPath = env["DEBUG_OUTPUT_PATH"]
-let outputPath = debugOutputPath ?? extractGenerateDir() ?? Environment.SRCROOT.element
+let outputPath = ResourceKitConfig.Debug.outputPath ?? extractGenerateDir() ?? Environment.SRCROOT.element
 let config: Config = ConfigImpl()
 
 do {
@@ -43,13 +37,13 @@ do {
     var resourceValue: AnyObject?
     try (outputUrl as NSURL).getResourceValue(&resourceValue, forKey: URLResourceKey.isDirectoryKey)
     
-    let writeUrl: URL = outputUrl.appendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
+    let writeUrl: URL = outputUrl.appendingPathComponent(ResourceKitConfig.outputFileName, isDirectory: false)
     
-    let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
+    let projectFilePath = ResourceKitConfig.Debug.projectFilePath != nil ? URL(fileURLWithPath: ResourceKitConfig.Debug.projectFilePath!) : Environment.PROJECT_FILE_PATH.path
     guard let pbxprojectPath = URL(string: projectFilePath.absoluteString + "project.pbxproj") else {
         throw ResourceKitErrorType.xcodeProjectError(xcodeURL: projectFilePath, target: "Unknown", errorInfo: "Can't find project.pbxproj")
     }
-    let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
+    let projectTarget = ResourceKitConfig.Debug.projectTarget ?? Environment.TARGET_NAME.element
     let parser = try ProjectResourceParser(xcodeURL: pbxprojectPath, target: projectTarget, writeResource: ProjectResource.shared)
     let paths = ProjectResource.shared.paths
     
