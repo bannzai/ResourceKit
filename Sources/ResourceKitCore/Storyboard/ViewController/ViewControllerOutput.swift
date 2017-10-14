@@ -17,6 +17,8 @@ struct ViewControllerOutputImpl: ViewControllerOutput {
     let storyboardInfos: [ViewControllerInfoOfStoryboard]
     let hasSuperClass: Bool
     let superClassStoryboardInfos: [ViewControllerInfoOfStoryboard]
+    let config: Config
+    
     fileprivate(set) var declaration: String = ""
     var seguesForGenerateStruct: [String] {
         return storyboardInfos.flatMap { $0.segues }
@@ -26,12 +28,14 @@ struct ViewControllerOutputImpl: ViewControllerOutput {
         name: String,
         storyboardInfos: [ViewControllerInfoOfStoryboard],
         hasSuperClass: Bool,
-        superClassStoryboardInfos: [ViewControllerInfoOfStoryboard]
+        superClassStoryboardInfos: [ViewControllerInfoOfStoryboard],
+        config: Config
         ) {
         self.name = name
         self.storyboardInfos = storyboardInfos
         self.hasSuperClass = hasSuperClass
         self.superClassStoryboardInfos = superClassStoryboardInfos
+        self.config = config
         
         self.declaration = generateDeclarationIfStoryboardInfoExists()
     }

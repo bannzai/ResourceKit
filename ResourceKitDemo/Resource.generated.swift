@@ -47,13 +47,13 @@ extension ViewController {
 		let viewController = storyboard.instantiateViewController(withIdentifier: "BaseInstance") as! ViewController
 		return viewController
 	}
-	@objc class func initialViewController() -> ViewController {
+	class func initialViewController() -> ViewController {
 		let storyboard = UIStoryboard(name: "ViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ViewController
 		return viewController
 	}
 
-	@objc func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowSecondTable", closure: closure)
 	}
 
@@ -91,13 +91,13 @@ extension OverrideViewController {
 		let viewController = storyboard.instantiateViewController(withIdentifier: "OverrideInstance") as! OverrideViewController
 		return viewController
 	}
-	override class func initialViewController() -> OverrideViewController {
+	@objc override class func initialViewController() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "OverrideViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! OverrideViewController
 		return viewController
 	}
 
-	override func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc override func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowSecondTable", closure: closure)
 	}
 
@@ -151,7 +151,7 @@ extension SecondCollectionViewController {
 
 
 extension ObjCOveerrideViewController {
-	override class func initialViewController() -> ObjCOveerrideViewController {
+	@objc override class func initialViewController() -> ObjCOveerrideViewController {
 		let storyboard = UIStoryboard(name: "ObjCOverrideViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ObjCOveerrideViewController
 		return viewController
@@ -160,7 +160,7 @@ extension ObjCOveerrideViewController {
 
 
 extension ObjCViewController {
-	@objc class func initialViewController() -> ObjCViewController {
+	class func initialViewController() -> ObjCViewController {
 		let storyboard = UIStoryboard(name: "ObjCViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ObjCViewController
 		return viewController

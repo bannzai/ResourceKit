@@ -8,19 +8,6 @@
 import Foundation
 import XcodeProject
 
-private func extractGenerateDir() -> String? {
-    return ProcessInfo
-        .processInfo
-        .arguments
-        .flatMap { arg in
-            guard let range = arg.range(of: "-p ") else {
-                return nil
-            }
-            return arg.substring(from: range.upperBound)
-        }
-        .last
-}
-
 if !ResourceKitConfig.Debug.isDebug {
     do {
         try Environment.verifyUseEnvironment()
@@ -29,7 +16,7 @@ if !ResourceKitConfig.Debug.isDebug {
     }
 }
 
-let outputPath = ResourceKitConfig.Debug.outputPath ?? extractGenerateDir() ?? Environment.SRCROOT.element
+let outputPath = ResourceKitConfig.outputPath
 let config: Config = ConfigImpl()
 
 do {
@@ -61,7 +48,7 @@ do {
         .shared
         .viewControllers
         .map { (viewController) in
-            try ViewControllerTranslator().translate(for: viewController).declaration
+            try ViewControllerTranslator(config: config).translate(for: viewController).declaration
         }
         .joined(separator: newLine)
     

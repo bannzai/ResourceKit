@@ -43,21 +43,6 @@ extension Environment {
         }
     }
     
-    // TODO: remove
-    // Tmp
-    public static var elements: [Environment] {
-        // all elements
-        return [
-            PROJECT_FILE_PATH,
-            TARGET_NAME,
-            BUILT_PRODUCTS_DIR,
-            DEVELOPER_DIR,
-            SDKROOT,
-            SOURCE_ROOT,
-            SRCROOT
-        ]
-    }
-    
     static func verifyUseEnvironment() throws {
         if let empty = elements.filter ({ ProcessInfo.processInfo.environment[$0.rawValue] == nil }).first {
             throw ResourceKitErrorType.environmentError(environmentKey: empty.rawValue, errorInfo: ResourceKitErrorType.createErrorInfo())

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import XcodeProject
 
 struct ResourceKitConfig {
     static let outputFileName = "Resource.generated.swift"
@@ -15,5 +16,9 @@ struct ResourceKitConfig {
         static let outputPath: String? = ProcessInfo.processInfo.environment["DEBUG_OUTPUT_PATH"]
         static let projectTarget: String? = ProcessInfo.processInfo.environment["DEBUG_TARGET_NAME"]
         static let projectFilePath: String? = ProcessInfo.processInfo.environment["DEBUG_PROJECT_FILE_PATH"]
+    }
+    
+    static var outputPath: String {
+        return Debug.outputPath ?? Environment.SRCROOT.element
     }
 }

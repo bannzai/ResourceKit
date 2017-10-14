@@ -9,12 +9,14 @@
 import Foundation
 
 struct ViewControllerTranslator: Translator {
+    let config: Config
     func translate(for input: ViewController) throws -> ViewControllerOutput {
         return ViewControllerOutputImpl(
             name: input.name,
             storyboardInfos: input.storyboardInfos,
             hasSuperClass: input.superClass != nil,
-            superClassStoryboardInfos: input.superClass?.storyboardInfos ?? []
+            superClassStoryboardInfos: input.superClass?.storyboardInfos ?? [],
+            config: Config
         )
     }
 }
