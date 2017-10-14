@@ -46,8 +46,11 @@ do {
     let writeUrl: URL = outputUrl.appendingPathComponent(RESOURCE_FILENAME, isDirectory: false)
     
     let projectFilePath = env["DEBUG_PROJECT_FILE_PATH"] != nil ? URL(fileURLWithPath: env["DEBUG_PROJECT_FILE_PATH"]!) : Environment.PROJECT_FILE_PATH.path
+    guard let pbxprojectPath = URL(string: projectFilePath.absoluteString + "project.pbxproj") else {
+        throw ResourceKitErrorType.xcodeProjectError(xcodeURL: projectFilePath, target: "Unknown", errorInfo: "Can't find project.pbxproj")
+    }
     let projectTarget = env["DEBUG_TARGET_NAME"] ?? Environment.TARGET_NAME.element
-    let parser = try ProjectResourceParser(xcodeURL: projectFilePath, target: projectTarget, writeResource: ProjectResource.shared)
+    let parser = try ProjectResourceParser(xcodeURL: pbxprojectPath, target: projectTarget, writeResource: ProjectResource.shared)
     let paths = ProjectResource.shared.paths
     
     paths

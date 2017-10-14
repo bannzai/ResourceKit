@@ -133,14 +133,14 @@ fileprivate extension ViewControllerOutputImpl {
         let head = "\(tab1)\(overrideOrEmpty)"
         if config.segue.addition {
             return [
-                "\(head)func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
+                "\(head)@objc func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
                 "\(tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
                 "\(tab1)}",
                 ]
                 .joined(separator: newLine)
         }
         return [
-            "\(head)func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
+            "\(head)@objc func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
             "\(tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
             "\(tab1)}",
             ]
@@ -179,7 +179,7 @@ fileprivate extension ViewControllerOutputImpl {
     func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
         let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(tab1)\(overrideOrEmpty)class func "
+        let head = "\(tab1)@objc\(overrideOrEmpty)class func "
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [
