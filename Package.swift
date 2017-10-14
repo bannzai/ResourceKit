@@ -8,7 +8,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .Package(url: "git@github.com:bannzai/XcodeProject.git", "0.1.0"),
+        .Package(url: "git@github.com:bannzai/XcodeProject.git", "0.1.1"),
     ]
 )
 
