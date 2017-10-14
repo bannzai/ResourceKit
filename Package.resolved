@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "SwiftyJSON",
-        "repositoryURL": "https://github.com/SwiftyJSON/SwiftyJSON.git",
-        "state": {
-          "branch": null,
-          "revision": "dadbfcffd5f51e2b488a26e83f188d96755e5393",
-          "version": "3.1.4"
-        }
-      },
-      {
         "package": "XcodeProject",
         "repositoryURL": "git@github.com:bannzai/XcodeProject.git",
         "state": {
