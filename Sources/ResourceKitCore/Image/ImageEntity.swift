@@ -54,8 +54,7 @@ extension Image {
             imageNames = urls
                 .filter { Resources.supportExtensions.contains($0.pathExtension) }
                 .flatMap { $0.deletingPathExtension().lastPathComponent }
-                .flatMap { element -> String? in
-                    let name = String(element)
+                .flatMap { (name: String) -> String? in
                     // find @2x, @3x pattern
                     let pattern = "@[0-9]x"
                     let regex = try? NSRegularExpression(pattern: pattern, options: .useUnixLineSeparators)
