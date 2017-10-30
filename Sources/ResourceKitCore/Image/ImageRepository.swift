@@ -8,12 +8,13 @@
 
 import Foundation
 
-protocol ImageAssetRepository {
+public protocol ImageAssetRepository {
     func load() -> Image.Assets
 }
 
-struct ImageAssetRepositoryImpl: ImageAssetRepository {
-    func load() -> Image.Assets {
+public struct ImageAssetRepositoryImpl: ImageAssetRepository {
+    public init() { }
+    public func load() -> Image.Assets {
         return Image.Assets(urls:
             ProjectResource
             .shared
@@ -22,12 +23,13 @@ struct ImageAssetRepositoryImpl: ImageAssetRepository {
     }
 }
 
-protocol ImageResourcesRepository {
+public protocol ImageResourcesRepository {
     func load() -> Image.Resources
 }
 
-struct ImageResourcesRepositoryImpl: ImageResourcesRepository {
-    func load() -> Image.Resources {
+public struct ImageResourcesRepositoryImpl: ImageResourcesRepository {
+    public init() { }
+    public func load() -> Image.Resources {
         return Image.Resources(urls:
             ProjectResource
                 .shared

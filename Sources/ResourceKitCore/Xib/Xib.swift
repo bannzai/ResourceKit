@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Xib {
+public struct Xib {
     let nibName: String
     let className: String
     let isFilesOwner: Bool

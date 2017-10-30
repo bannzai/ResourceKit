@@ -9,7 +9,7 @@
 import Foundation
 
 
-enum ResourceKitErrorType: Error {
+public enum ResourceKitErrorType: Error {
     case spcifiedPathError(path: String, errorInfo: String)
     case environmentError(environmentKey: String, errorInfo: String)
     case configError(configType: String, errorInfo: String)
@@ -20,7 +20,7 @@ enum ResourceKitErrorType: Error {
     case writeError(path: String, code: String, errorInfo: String)
     
     
-    func description() -> String {
+    public func description() -> String {
         switch self {
         case .spcifiedPathError(let path, let errorInfo):
             return "path: \(path), errorInfo: \(errorInfo)"

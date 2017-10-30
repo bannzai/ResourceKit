@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LocalizedString {
+public struct LocalizedString {
     let localizableStrings:[String: String]
     init(urls: [URL]) {
         let files = urls.filter { $0.lastPathComponent == "Localizable.strings" }

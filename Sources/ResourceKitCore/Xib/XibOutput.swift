@@ -8,31 +8,31 @@
 
 import Foundation
 
-protocol XibOutput: Output {
+public protocol XibOutput: Output {
     
 }
 
-struct XibOutputImpl: XibOutput {
+public struct XibOutputImpl: XibOutput {
     let nibName: String
     let className: String
     
-    var declaration: String {
+    public var declaration: String {
         return [
             "extension \(className) {",
-            "\(tab1)struct Xib: XibProtocol {",
-            "\(tab2)typealias View = \(className)",
-            "\(tab2)static let name: String = \"\(className)\"",
+            "\(Const.tab1)struct Xib: XibProtocol {",
+            "\(Const.tab2)typealias View = \(className)",
+            "\(Const.tab2)static let name: String = \"\(className)\"",
             "       ",
-            "\(tab2)static func nib() -> UINib {",
-            "\(tab3)return UINib(nibName: \"\(nibName)\", bundle: Bundle(for: \(className).classForCoder()))",
-            "\(tab2)}",
+            "\(Const.tab2)static func nib() -> UINib {",
+            "\(Const.tab3)return UINib(nibName: \"\(nibName)\", bundle: Bundle(for: \(className).classForCoder()))",
+            "\(Const.tab2)}",
             "",
-            "\(tab2)static func view() -> \(className) {",
-            "\(tab3)return nib().instantiate(withOwner: nil, options: nil)[0] as! \(className)",
-            "\(tab2)}",
+            "\(Const.tab2)static func view() -> \(className) {",
+            "\(Const.tab3)return nib().instantiate(withOwner: nil, options: nil)[0] as! \(className)",
+            "\(Const.tab2)}",
             "",
-            "\(tab1)}",
+            "\(Const.tab1)}",
             "}",
-            ].joined(separator: newLine)
+            ].joined(separator: Const.newLine)
     }
 }

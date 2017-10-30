@@ -16,11 +16,11 @@ extension String {
         return first.lowercased() + String(characters.dropFirst())
     }
     
-    func appendNewLineIfNotEmpty() -> String {
+    public func appendNewLineIfNotEmpty() -> String {
         if isEmpty {
             return ""
         }
         
-        return self + newLine
+        return self + Const.newLine
     }
 }

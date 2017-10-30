@@ -8,13 +8,18 @@
 
 import Foundation
 
-protocol LocalizedStringRepository {
+public protocol LocalizedStringRepository {
     func load() -> LocalizedString
 }
 
-struct LocalizedStringRepositoryImpl: LocalizedStringRepository {
-    let urls: [URL]
-    func load() -> LocalizedString {
+public struct LocalizedStringRepositoryImpl: LocalizedStringRepository {
+    public let urls: [URL]
+    public init(
+        urls: [URL]
+        ) {
+        self.urls = urls
+    }
+    public func load() -> LocalizedString {
         return LocalizedString(urls: urls)
     }
 }

@@ -7,6 +7,7 @@
 //
 import Foundation
 import XcodeProject
+import ResourceKitCore
 
 if !ResourceKitConfig.Debug.isDebug {
     do {
@@ -17,7 +18,7 @@ if !ResourceKitConfig.Debug.isDebug {
 }
 
 let outputPath = ResourceKitConfig.outputPath
-let config: Config = ConfigImpl()
+let config: Config = ConfigImpl(outputPath: outputPath)
 
 do {
     let outputUrl = URL(fileURLWithPath: outputPath)
@@ -31,18 +32,18 @@ do {
         throw ResourceKitErrorType.xcodeProjectError(xcodeURL: projectFilePath, target: "Unknown", errorInfo: "Can't find project.pbxproj")
     }
     let projectTarget = ResourceKitConfig.Debug.projectTarget ?? Environment.TARGET_NAME.element
-    let parser = try ProjectResourceParser(xcodeURL: pbxprojectPath, target: projectTarget, writeResource: ProjectResource.shared)
+    let parser = try ProjectResourceParser(xcodeURL: pbxprojectPath, target: projectTarget, writeResource: ProjectResource.shared, config: config)
     let paths = ProjectResource.shared.paths
     
     paths
         .filter { $0.pathExtension == "storyboard" }
-        .forEach { try? StoryboardParserImpl(url: $0, writeResource: ProjectResource.shared).parse() }
+        .forEach { try? StoryboardParserImpl(url: $0, writeResource: ProjectResource.shared, config: config).parse() }
     
     paths
         .filter { $0.pathExtension == "xib" }
         .forEach { try? XibPerserImpl(url: $0, writeResource: ProjectResource.shared).parse() }
     
-    let importsContent = ImportOutputImpl(writeUrl: writeUrl).declaration
+    let importsContent = ImportOutputImpl(writeUrl: writeUrl, config: config).declaration
     
     let viewControllerContent = try ProjectResource
         .shared
@@ -50,20 +51,20 @@ do {
         .map { (viewController) in
             try ViewControllerTranslator(config: config).translate(for: viewController).declaration
         }
-        .joined(separator: newLine)
+        .joined(separator: Const.newLine)
     
     let tableViewCellContent: String
     let collectionViewCellContent: String
     
     if config.reusable.identifier {
         tableViewCellContent = try ProjectResource.shared.tableViewCells
-            .flatMap { try ReusableTranslator().translate(for: $0).declaration + newLine }
-            .joined(separator: newLine)
+            .flatMap { try ReusableTranslator().translate(for: $0).declaration + Const.newLine }
+            .joined(separator: Const.newLine)
             .appendNewLineIfNotEmpty()
         
         collectionViewCellContent = try ProjectResource.shared.collectionViewCells
-            .flatMap { try ReusableTranslator().translate(for: $0).declaration + newLine }
-            .joined(separator: newLine)
+            .flatMap { try ReusableTranslator().translate(for: $0).declaration + Const.newLine }
+            .joined(separator: Const.newLine)
             .appendNewLineIfNotEmpty()
         
     } else {
@@ -75,13 +76,13 @@ do {
     if config.nib.xib {
         xibContent = try ProjectResource.shared.xibs
             .flatMap { try XibTranslator().translate(for: $0).declaration }
-            .joined(separator: newLine)
+            .joined(separator: Const.newLine)
             .appendNewLineIfNotEmpty()
     } else {
         xibContent = ""
     }
     
-    let imageContent = try ImageTranslator().translate(
+    let imageContent = try ImageTranslator(config: config).translate(
         for: (
             assets: ImageAssetRepositoryImpl().load(),
             resources: ImageResourcesRepositoryImpl().load())
@@ -101,18 +102,18 @@ do {
     }
     
     let content = (
-        Header
-            + importsContent + newLine
-            + ExtensionsOutputImpl().reusableProtocolContent + newLine + newLine
-            + ExtensionsOutputImpl().xibProtocolContent + newLine + newLine
-            + ExtensionsOutputImpl().tableViewExtensionContent + newLine + newLine
-            + ExtensionsOutputImpl().collectionViewExtensionContent + newLine + newLine
-            + viewControllerContent + newLine
-            + tableViewCellContent + newLine
-            + collectionViewCellContent + newLine
-            + xibContent + newLine
-            + imageContent + newLine
-            + stringContent + newLine
+        Const.Header
+            + importsContent + Const.newLine
+            + ExtensionsOutputImpl().reusableProtocolContent + Const.newLine + Const.newLine
+            + ExtensionsOutputImpl().xibProtocolContent + Const.newLine + Const.newLine
+            + ExtensionsOutputImpl().tableViewExtensionContent + Const.newLine + Const.newLine
+            + ExtensionsOutputImpl().collectionViewExtensionContent + Const.newLine + Const.newLine
+            + viewControllerContent + Const.newLine
+            + tableViewCellContent + Const.newLine
+            + collectionViewCellContent + Const.newLine
+            + xibContent + Const.newLine
+            + imageContent + Const.newLine
+            + stringContent + Const.newLine
     )
     
     func write(_ code: String, fileURL: URL) throws {

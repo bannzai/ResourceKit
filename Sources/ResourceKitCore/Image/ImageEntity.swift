@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Image {
+public struct Image {
 //    let assets: Assets
 //    let resources: Resources
 //    
@@ -19,7 +19,7 @@ struct Image {
 }
 
 extension Image {
-    struct Assets {
+    public struct Assets {
         let imageNames: [String]
         
         init(urls: [URL]) {
@@ -46,7 +46,7 @@ extension Image {
 }
 
 extension Image {
-    struct Resources {
+    public struct Resources {
         static let supportExtensions: Set<String> = [ "png", "jpg", "gif" ]
         let imageNames: [String]
         
@@ -54,7 +54,8 @@ extension Image {
             imageNames = urls
                 .filter { Resources.supportExtensions.contains($0.pathExtension) }
                 .flatMap { $0.deletingPathExtension().lastPathComponent }
-                .flatMap { name -> String? in
+                .flatMap { element -> String? in
+                    let name = String(element)
                     // find @2x, @3x pattern
                     let pattern = "@[0-9]x"
                     let regex = try? NSRegularExpression(pattern: pattern, options: .useUnixLineSeparators)

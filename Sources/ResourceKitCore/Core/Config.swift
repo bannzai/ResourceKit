@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Config {
+public protocol Config {
     var segue: ConfigType.Segue { get }
     var image: ConfigType.Image { get }
     var string: ConfigType.LoaclizedString { get }
@@ -18,19 +18,19 @@ protocol Config {
     var needGenerateSegue: Bool { get }
 }
 
-struct ConfigImpl: Config {
-    private(set) var segue: ConfigType.Segue = ConfigType.Segue()
-    private(set) var image: ConfigType.Image = ConfigType.Image()
-    private(set) var string: ConfigType.LoaclizedString = ConfigType.LoaclizedString()
-    private(set) var viewController: ConfigType.ViewController = ConfigType.ViewController()
-    private(set) var nib: ConfigType.Nib = ConfigType.Nib()
-    private(set) var reusable: ConfigType.Reusable = ConfigType.Reusable()
+public struct ConfigImpl: Config {
+    public private(set) var segue: ConfigType.Segue = ConfigType.Segue()
+    public private(set) var image: ConfigType.Image = ConfigType.Image()
+    public private(set) var string: ConfigType.LoaclizedString = ConfigType.LoaclizedString()
+    public private(set) var viewController: ConfigType.ViewController = ConfigType.ViewController()
+    public private(set) var nib: ConfigType.Nib = ConfigType.Nib()
+    public private(set) var reusable: ConfigType.Reusable = ConfigType.Reusable()
     
-    var needGenerateSegue: Bool {
+    public var needGenerateSegue: Bool {
         return segue.addition || segue.standard
     }
     
-    init() {
+    public init(outputPath: String) {
         if let dictionary = NSDictionary(contentsOfFile: outputPath + "/ResourceKitConfig.plist") as? [String: AnyObject] {
             dictionary.forEach { (key: String , value: AnyObject) in
                 guard let item = ConfigType.Item(rawValue: key) else {
@@ -55,8 +55,8 @@ struct ConfigImpl: Config {
     }
 }
 
-struct ConfigType {
-    enum Item: Swift.String {
+public struct ConfigType {
+    public enum Item: Swift.String {
         case Segue
         case Image
         case LoaclizedString
@@ -65,7 +65,7 @@ struct ConfigType {
         case Reusable
     }
     
-    struct Segue {
+    public struct Segue {
         let standard: Bool
         let addition: Bool
         
@@ -79,7 +79,7 @@ struct ConfigType {
         }
     }
     
-    struct Image {
+    public struct Image {
         let assetCatalog: Bool
         let projectResource: Bool
         
@@ -93,8 +93,8 @@ struct ConfigType {
         }
     }
     
-    struct LoaclizedString {
-        let localized: Bool
+    public struct LoaclizedString {
+        public let localized: Bool
         
         init() {
             localized = true
@@ -104,7 +104,7 @@ struct ConfigType {
         }
     }
     
-    struct ViewController {
+    public struct ViewController {
         let instantiateStoryboardForSwift: Bool
         let instantiateStoryboardForObjC: Bool
         
@@ -122,8 +122,8 @@ struct ConfigType {
         }
     }
     
-    struct Nib {
-        let xib: Bool
+    public struct Nib {
+        public let xib: Bool
         
         init() {
             xib = true
@@ -133,8 +133,8 @@ struct ConfigType {
         }
     }
     
-    struct Reusable {
-        let identifier: Bool
+    public struct Reusable {
+        public let identifier: Bool
         
         init() {
             identifier = true

@@ -8,9 +8,9 @@
 
 import Foundation
 
-class CollectionViewCell: ReusableResource {
-    let className: String
-    var reusableIdentifiers: Set<String> = []
+public class CollectionViewCell: ReusableResource {
+    public let className: String
+    public var reusableIdentifiers: Set<String> = []
     
     init(reusableIdentifier: String, className: String) {
         self.reusableIdentifiers.insert(reusableIdentifier)

@@ -8,15 +8,20 @@
 
 import Foundation
 
-struct ViewControllerTranslator: Translator {
-    let config: Config
-    func translate(for input: ViewController) throws -> ViewControllerOutput {
+public struct ViewControllerTranslator: Translator {
+    public let config: Config
+    public init(
+        config: Config
+        ) {
+        self.config = config
+    }
+    public func translate(for input: ViewController) throws -> ViewControllerOutput {
         return ViewControllerOutputImpl(
             name: input.name,
             storyboardInfos: input.storyboardInfos,
             hasSuperClass: input.superClass != nil,
             superClassStoryboardInfos: input.superClass?.storyboardInfos ?? [],
-            config: Config
+            config: config
         )
     }
 }

@@ -8,21 +8,21 @@
 
 import Foundation
 
-protocol LocalizedStringOutputer: Output {
+public protocol LocalizedStringOutputer: Output {
     
 }
 
-struct LocalizedStringOutputerImpl: LocalizedStringOutputer {
+public struct LocalizedStringOutputerImpl: LocalizedStringOutputer {
     let localizedStrings: [String: String]
     
-    var declaration: String {
+    public var declaration: String {
         return [
             "extension String {",
-            "\(tab1)struct Localized {",
-            "\(generateLocalizableConstants().joined(separator: newLine))",
-            "\(tab1)}",
+            "\(Const.tab1)struct Localized {",
+            "\(generateLocalizableConstants().joined(separator: Const.newLine))",
+            "\(Const.tab1)}",
             "}",
-            ].joined(separator: newLine)
+            ].joined(separator: Const.newLine)
     }
 }
 
@@ -35,7 +35,7 @@ fileprivate extension LocalizedStringOutputerImpl {
             
         }
         return localizedStrings.keys.flatMap {
-            return "\(tab2)static let \(toConstantName($0)) = NSLocalizedString(\"\($0)\", comment: \"\")"
+            return "\(Const.tab2)static let \(toConstantName($0)) = NSLocalizedString(\"\($0)\", comment: \"\")"
         }
     }
 }

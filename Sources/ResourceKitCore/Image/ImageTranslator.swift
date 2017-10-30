@@ -8,26 +8,37 @@
 
 import Foundation
 
-struct ImageTranslator: Translator {
-    typealias Input = (assets: Image.Assets, resources: Image.Resources)
-    typealias Output = ImageOutputer
+public struct ImageTranslator: Translator {
+    public typealias Input = (assets: Image.Assets, resources: Image.Resources)
+    public typealias Output = ImageOutputer
     
-    func translate(for input: Input) throws -> Output {
+    let config: Config
+
+    public init(
+        config: Config
+        ) {
+        self.config = config
+    }
+    
+    public func translate(for input: Input) throws -> Output {
         return ImageOutputerImpl(
             assetsOutputer: try ImageAssetsTranslator().translate(for: input.assets),
-            resourcesOutputer: try ImageeResourcesTranslator().translate(for: input.resources)
+            resourcesOutputer: try ImageeResourcesTranslator().translate(for: input.resources),
+            config: config
         )
     }
 }
 
-struct ImageAssetsTranslator: Translator {
-    func translate(for input: Image.Assets) throws -> ImageOutputer {
+public struct ImageAssetsTranslator: Translator {
+    public init() { }
+    public func translate(for input: Image.Assets) throws -> ImageOutputer {
         return ImageOutputerImpl.AssetsOutputer(imageNames: input.imageNames)
     }
 }
 
-struct ImageeResourcesTranslator: Translator {
-    func translate(for input: Image.Resources) throws -> ImageOutputer {
+public struct ImageeResourcesTranslator: Translator {
+    public init() { }
+    public func translate(for input: Image.Resources) throws -> ImageOutputer {
         return ImageOutputerImpl.ResourcesOutputer(imageNames: input.imageNames)
     }
 }

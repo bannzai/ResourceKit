@@ -8,33 +8,33 @@
 
 import Foundation
 
-class ProjectResource {
-    static let shared: ProjectResource = ProjectResource()
+public class ProjectResource {
+    public static let shared: ProjectResource = ProjectResource()
     
     fileprivate init() { }
     
-    fileprivate(set) var paths: [URL] = []
-    fileprivate(set) var localizablePaths: [URL] = []
+    public fileprivate(set) var paths: [URL] = []
+    public fileprivate(set) var localizablePaths: [URL] = []
     
-    var viewControllers: [ViewController] = []
+    public var viewControllers: [ViewController] = []
     
-    fileprivate(set) var tableViewCells: [TableViewCell] = []
-    fileprivate(set) var collectionViewCells: [CollectionViewCell] = []
-    fileprivate(set) var xibs: [Xib] = []
+    public fileprivate(set) var tableViewCells: [TableViewCell] = []
+    public fileprivate(set) var collectionViewCells: [CollectionViewCell] = []
+    public fileprivate(set) var xibs: [Xib] = []
 }
 
 extension ProjectResource: AppendableForPaths {
-    func appendFileReferencePaths(urls: [URL]) {
+    public func appendFileReferencePaths(urls: [URL]) {
         paths.append(contentsOf: urls)
     }
     
-    func appendLocalizedPaths(urls: [URL]) {
+    public func appendLocalizedPaths(urls: [URL]) {
         localizablePaths.append(contentsOf: urls)
     }
 }
 
 extension ProjectResource: AppendableForXibs {
-    func appendXib(_ xib: Xib) {
+    public func appendXib(_ xib: Xib) {
         if xibs.contains(where: { $0.className == xib.className }) {
             return
         }
@@ -43,7 +43,7 @@ extension ProjectResource: AppendableForXibs {
 }
 
 extension ProjectResource: AppendableForStoryboard {
-    func appendTableViewCell(_ className: String, reusableIdentifier: String) {
+    public func appendTableViewCell(_ className: String, reusableIdentifier: String) {
         guard let cell = tableViewCells
             .filter ({ $0.className == className})
             .first else {
@@ -59,7 +59,7 @@ extension ProjectResource: AppendableForStoryboard {
         cell.reusableIdentifiers.insert(reusableIdentifier)
     }
     
-    func appendCollectionViewCell(_ className: String, reusableIdentifier: String) {
+    public func appendCollectionViewCell(_ className: String, reusableIdentifier: String) {
         guard let cell = collectionViewCells
             .filter ({ $0.className == className})
             .first else {
@@ -75,7 +75,7 @@ extension ProjectResource: AppendableForStoryboard {
         cell.reusableIdentifiers.insert(reusableIdentifier)
     }
     
-    func appendViewControllerInfoReference(_ className: String?, viewControllerInfo: ViewControllerInfoOfStoryboard) {
+    public func appendViewControllerInfoReference(_ className: String?, viewControllerInfo: ViewControllerInfoOfStoryboard) {
         viewControllers
             .filter({ $0.name == className })
             .first?

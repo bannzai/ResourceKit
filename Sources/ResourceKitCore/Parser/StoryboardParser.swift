@@ -8,25 +8,27 @@
 
 import Foundation
 
-protocol StoryboardParser: Parsable {
+public protocol StoryboardParser: Parsable {
     
 }
 
-final class StoryboardParserImpl: NSObject, StoryboardParser {
+public final class StoryboardParserImpl: NSObject, StoryboardParser {
     let url: URL
     let resource: AppendableForStoryboard
     
     fileprivate var name: String = ""
     fileprivate var initialViewControllerIdentifier: String?
     fileprivate var currentViewControllerInfoForSegue: ViewControllerInfoOfStoryboard?
+    let config: Config
     
-    init(url: URL, writeResource resource: AppendableForStoryboard) throws {
+    public init(url: URL, writeResource resource: AppendableForStoryboard, config: Config) throws {
         self.url = url
         self.resource = resource
+        self.config = config
         super.init()
     }
     
-    func parse() throws {
+    public func parse() throws {
         guard url.pathExtension == "storyboard" else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
@@ -44,7 +46,7 @@ final class StoryboardParserImpl: NSObject, StoryboardParser {
         parser.parse()
     }
     
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+    public func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "document" {
             initialViewControllerIdentifier = attributeDict["initialViewController"]
             return

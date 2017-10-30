@@ -8,18 +8,18 @@
 
 import Foundation
 
-protocol ViewControllerOutput: Output {
+public protocol ViewControllerOutput: Output {
     
 }
 
-struct ViewControllerOutputImpl: ViewControllerOutput {
+public struct ViewControllerOutputImpl: ViewControllerOutput {
     let name: String
     let storyboardInfos: [ViewControllerInfoOfStoryboard]
     let hasSuperClass: Bool
     let superClassStoryboardInfos: [ViewControllerInfoOfStoryboard]
     let config: Config
     
-    fileprivate(set) var declaration: String = ""
+    public fileprivate(set) var declaration: String = ""
     var seguesForGenerateStruct: [String] {
         return storyboardInfos.flatMap { $0.segues }
     }
@@ -52,7 +52,7 @@ fileprivate extension ViewControllerOutputImpl {
     }
     
     func generateDeclaration() -> String {
-        let begin = "extension \(name) {" + newLine
+        let begin = "extension \(name) {" + Const.newLine
         let viewControllerAndPerformSegueFunctions = storyboardInfos
             .flatMap {
                 let viewControllerFunctions = generateForInsitantiateViewController(from: $0)
@@ -72,7 +72,7 @@ fileprivate extension ViewControllerOutputImpl {
             .joined()
         let segueStruct = generateForSegueStruct()
         let body = viewControllerAndPerformSegueFunctions + segueStruct.appendNewLineIfNotEmpty()
-        let end = "}" + newLine
+        let end = "}" + Const.newLine
         
         return [begin, body, end].joined().appendNewLineIfNotEmpty()
     }
@@ -85,14 +85,14 @@ fileprivate extension ViewControllerOutputImpl {
             return ""
         }
         
-        let begin = "\(tab1)struct Segue {"
+        let begin = "\(Const.tab1)struct Segue {"
         let body: String = seguesForGenerateStruct
             .flatMap {
-                "\(tab2)static let \($0.lowerFirst): String = \"\($0)\""
+                "\(Const.tab2)static let \($0.lowerFirst): String = \"\($0)\""
             }
             .joined()
-        let end = "\(tab1)}"
-        return [begin, body, end].joined(separator: newLine)
+        let end = "\(Const.tab1)}"
+        return [begin, body, end].joined(separator: Const.newLine)
     }
     
     func generateForInsitantiateViewController(from storyboard: ViewControllerInfoOfStoryboard) -> String {
@@ -134,21 +134,21 @@ fileprivate extension ViewControllerOutputImpl {
     func generatePerformSegue(from storyboard: ViewControllerInfoOfStoryboard, and segueIdentifier: String) -> String {
         let overrideOrNil = makeOverrideIfNeededForPerformSegue(from: storyboard)
         let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(tab1)\(overrideOrEmpty)"
+        let head = "\(Const.tab1)\(overrideOrEmpty)"
         if config.segue.addition {
             return [
                 "\(head)func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
-                "\(tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
-                "\(tab1)}",
+                "\(Const.tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
+                "\(Const.tab1)}",
                 ]
-                .joined(separator: newLine)
+                .joined(separator: Const.newLine)
         }
         return [
             "\(head)func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
-            "\(tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
-            "\(tab1)}",
+            "\(Const.tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
+            "\(Const.tab1)}",
             ]
-            .joined(separator: newLine)
+            .joined(separator: Const.newLine)
     }
     
     func fromStoryboard(from storyboard: ViewControllerInfoOfStoryboard) -> String {
@@ -158,52 +158,52 @@ fileprivate extension ViewControllerOutputImpl {
         
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
         let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(tab1)\(overrideOrEmpty)class func "
+        let head = "\(Const.tab1)\(overrideOrEmpty)class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(name) {",
-                "\(tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                "\(tab2)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
-                "\(tab2)return viewController",
-                "\(tab1)}"
+                "\(Const.tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+                "\(Const.tab2)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
+                "\(Const.tab2)return viewController",
+                "\(Const.tab1)}"
                 ]
-                .joined(separator: newLine)
+                .joined(separator: Const.newLine)
         }
         
         return [
             head + "instanceFrom\(storyboard.storyboardName)() -> \(name) {",
-            "\(tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-            "\(tab2)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
-            "\(tab2)return viewController",
-            "\(tab1)}",
+            "\(Const.tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+            "\(Const.tab2)let viewController = storyboard.instantiateViewController(withIdentifier: \"\(storyboard.storyboardIdentifier)\") as! \(name)",
+            "\(Const.tab2)return viewController",
+            "\(Const.tab1)}",
             ]
-            .joined(separator: newLine)
+            .joined(separator: Const.newLine)
     }
     
     func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
         let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(tab1)\(overrideOrEmpty)class func "
+        let head = "\(Const.tab1)\(overrideOrEmpty)class func "
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [
                 head + "initialFrom\(storyboard.storyboardName)() -> \(name) {",
-                "\(tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
-                "\(tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
-                "\(tab2)return viewController",
-                "\(tab1)}"
+                "\(Const.tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ",
+                "\(Const.tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
+                "\(Const.tab2)return viewController",
+                "\(Const.tab1)}"
                 ]
-                .joined(separator: newLine)
+                .joined(separator: Const.newLine)
         }
         
         return [
             head + "initialViewController() -> \(name) {",
-            "\(tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
-            "\(tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
-            "\(tab2)return viewController",
-            "\(tab1)}"
+            "\(Const.tab2)let storyboard = UIStoryboard(name: \"\(storyboard.storyboardName)\", bundle: nil) ", 
+            "\(Const.tab2)let viewController = storyboard.instantiateInitialViewController() as! \(name)",
+            "\(Const.tab2)return viewController",
+            "\(Const.tab1)}"
             ]
-            .joined(separator: newLine)
+            .joined(separator: Const.newLine)
     }
     
     func needOverrideForStoryboard(_ storyboard: ViewControllerInfoOfStoryboard) -> Bool {

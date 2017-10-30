@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct XibTranslator: Translator {
-    
-    func translate(for input: Xib) throws -> XibOutput {
+public struct XibTranslator: Translator {
+    public init() { }
+    public func translate(for input: Xib) throws -> XibOutput {
         return XibOutputImpl(
             nibName: input.nibName,
             className: input.className

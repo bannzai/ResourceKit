@@ -10,7 +10,7 @@ import Foundation
 import XcodeProject
 
 extension Environment {
-    var element: String {
+    public var element: String {
         if ResourceKitConfig.Debug.isDebug {
             return ProcessInfo.processInfo.environment["DEBUG_" + self.rawValue]!
         }
@@ -28,11 +28,11 @@ extension Environment {
         return element
     }
     
-    var path: URL {
+    public var path: URL {
         return URL(fileURLWithPath: element)
     }
     
-    static func pathFrom(_ path: PathComponent) -> URL {
+    public static func pathFrom(_ path: PathComponent) -> URL {
         switch path {
         case .simple(let absolutePath):
             return URL(fileURLWithPath: absolutePath)
@@ -43,7 +43,7 @@ extension Environment {
         }
     }
     
-    static func verifyUseEnvironment() throws {
+    public static func verifyUseEnvironment() throws {
         if let empty = elements.filter ({ ProcessInfo.processInfo.environment[$0.rawValue] == nil }).first {
             throw ResourceKitErrorType.environmentError(environmentKey: empty.rawValue, errorInfo: ResourceKitErrorType.createErrorInfo())
         }

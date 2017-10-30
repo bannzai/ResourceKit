@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ViewControllerInfoOfStoryboard {
+public class ViewControllerInfoOfStoryboard {
     let viewControllerId: String
     let storyboardName: String
     let initialViewControllerId: String?
@@ -31,7 +31,7 @@ class ViewControllerInfoOfStoryboard {
     }
 }
 
-class ViewController {
+public class ViewController {
     var storyboardInfos: [ViewControllerInfoOfStoryboard] = []
     let className: ResourceType
     let superClassName: ResourceType 

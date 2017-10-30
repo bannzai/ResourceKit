@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol Output {
+public protocol Output {
     var declaration: String { get }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ReusableResource {
+public protocol ReusableResource {
     var className: String { get }
     var reusableIdentifiers: Set<String> { get set }
 }

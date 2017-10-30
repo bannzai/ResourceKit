@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Parsable: XMLParserDelegate {
+public protocol Parsable: XMLParserDelegate {
     func parse() throws
 }
 

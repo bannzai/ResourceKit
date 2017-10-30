@@ -8,20 +8,20 @@
 
 import Foundation
 
-protocol ReusableResourceOutput: Output {
+public protocol ReusableResourceOutput: Output {
     
 }
 
-struct ReusableResourceOutputImpl: ReusableResourceOutput {
+public struct ReusableResourceOutputImpl: ReusableResourceOutput {
     let className: String
     let reusableIdentifers: Set<String>
     
-    var declaration: String {
+    public var declaration: String {
         let names = reusableIdentifers
             .map {
                 return "       static let name: String = \"\($0)\""
             }
-            .joined(separator: newLine)
+            .joined(separator: Const.newLine)
         
         return [
             "extension \(className) {",
@@ -30,6 +30,6 @@ struct ReusableResourceOutputImpl: ReusableResourceOutput {
             "\(names)",
             "   }",
             "}",
-        ].joined(separator: newLine)
+        ].joined(separator: Const.newLine)
     }
 }

@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct LocalizedStringTranslator: Translator {
-    func translate(for input: LocalizedString) throws -> LocalizedStringOutputer {
+public struct LocalizedStringTranslator: Translator {
+    public init() { }
+    public func translate(for input: LocalizedString) throws -> LocalizedStringOutputer {
         return LocalizedStringOutputerImpl(localizedStrings: input.localizableStrings)
     }
 }

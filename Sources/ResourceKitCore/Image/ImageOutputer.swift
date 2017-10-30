@@ -9,31 +9,32 @@
 import Foundation
 
 
-protocol ImageOutputer: Output {
+public protocol ImageOutputer: Output {
     var begin: String { get }
     var body: String { get }
     var end: String { get }
 }
 
-extension ImageOutputer {
+public extension ImageOutputer {
     var declaration: String {
-        return [begin, body, end].joined(separator: newLine)
+        return [begin, body, end].joined(separator: Const.newLine)
     }
 }
 
-struct ImageOutputerImpl: ImageOutputer {
+public struct ImageOutputerImpl: ImageOutputer {
     let assetsOutputer: ImageOutputer
-    let resourcesOutputer: ImageOutputer 
+    let resourcesOutputer: ImageOutputer
+    let config: Config
     
     static func imageFunction(_ withName: String) -> String {
         return "UIImage(named: \"\(withName)\")!"
     }
     
-    var begin: String {
+    public var begin: String {
         return "extension UIImage {"
     }
     
-    var body: String {
+    public var body: String {
         guard
             config.image.assetCatalog || config.image.projectResource
             else {
@@ -47,49 +48,49 @@ struct ImageOutputerImpl: ImageOutputer {
         }
         
         return assetsOutputer.declaration
-            + newLine
+            + Const.newLine
             + resourcesOutputer.declaration
     }
     
-    var end: String {
-        return "}" + newLine
+    public var end: String {
+        return "}" + Const.newLine
     }
 }
 
 extension ImageOutputerImpl {
-    struct AssetsOutputer: ImageOutputer {
+    public struct AssetsOutputer: ImageOutputer {
         let imageNames: [String]
         
-        var begin: String {
-            return "\(tab1)struct Asset {" 
+        public var begin: String {
+            return "\(Const.tab1)struct Asset {" 
         }
-        var body: String {
+        public var body: String {
             let body = imageNames
-                .flatMap { "\(tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
-                .joined(separator: newLine)
+                .flatMap { "\(Const.tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
+                .joined(separator: Const.newLine)
             return body 
         }
-        var end: String {
-            return "\(tab1)}" + newLine
+        public var end: String {
+            return "\(Const.tab1)}" + Const.newLine
         }
     }
 }
 
 extension ImageOutputerImpl {
-    struct ResourcesOutputer: ImageOutputer {
+    public struct ResourcesOutputer: ImageOutputer {
         let imageNames: [String]
         
-        var begin: String {
-            return "\(tab1)struct Resource {"
+        public var begin: String {
+            return "\(Const.tab1)struct Resource {"
         }
-        var body: String {
+        public var body: String {
             let body = imageNames
-                .flatMap { "\(tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
-                .joined(separator: newLine)
+                .flatMap { "\(Const.tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
+                .joined(separator: Const.newLine)
             return body
         }
-        var end: String {
-            return "\(tab1)}" + newLine
+        public var end: String {
+            return "\(Const.tab1)}" + Const.newLine
         }
     }
 }

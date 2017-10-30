@@ -9,9 +9,11 @@
 import Foundation
 import XcodeProject
 
-struct ProjectResourceParser {
+public struct ProjectResourceParser {
     
-    init(xcodeURL: URL, target: String, writeResource resource: AppendableForPaths) throws {
+    let config: Config
+    
+    public init(xcodeURL: URL, target: String, writeResource resource: AppendableForPaths, config: Config) throws {
         guard let projectFile = try? XcodeProject(for: xcodeURL) else {
             throw ResourceKitErrorType.xcodeProjectError(xcodeURL: xcodeURL, target: target, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
@@ -21,6 +23,7 @@ struct ProjectResourceParser {
             throw ResourceKitErrorType.xcodeProjectAllTargetError(xcodeURL: xcodeURL, target: target, allTargetName: "\(allTarget.flatMap { $0.name }.joined(separator: ", "))", errorInfo: ResourceKitErrorType.createErrorInfo())
         }
         
+        self.config = config
         resource.appendFileReferencePaths(urls: generateFileRefPaths(_target).flatMap(Environment.pathFrom))
         resource.appendLocalizedPaths(urls: generateLocalizablePaths(_target).flatMap(Environment.pathFrom))
         

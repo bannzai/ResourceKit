@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol XibParser: Parsable {
+public protocol XibParser: Parsable {
     
 }
 
-final class XibPerserImpl: NSObject, XibParser {
+public class XibPerserImpl: NSObject, XibParser {
     let url: URL
     let resource: AppendableForXibs
     
@@ -24,14 +24,14 @@ final class XibPerserImpl: NSObject, XibParser {
         "UIResponder"
     ]
     
-    init(url: URL, writeResource resource: AppendableForXibs) throws {
+    public init(url: URL, writeResource resource: AppendableForXibs) throws {
         self.url = url
         self.resource = resource
         
         super.init()
     }
     
-    func parse() throws {
+    public func parse() throws {
         guard url.pathExtension == "xib" else {
             throw ResourceKitErrorType.spcifiedPathError(path: url.absoluteString, errorInfo: ResourceKitErrorType.createErrorInfo())
         }
@@ -50,7 +50,7 @@ final class XibPerserImpl: NSObject, XibParser {
         parser.parse()
     }
     
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+    public func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         generateXibs(attributeDict, elementName: elementName)
     }
     

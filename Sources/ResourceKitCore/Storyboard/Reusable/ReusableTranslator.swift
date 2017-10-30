@@ -8,8 +8,9 @@
 
 import Foundation
 
-struct ReusableTranslator: Translator {
-    func translate(for input: ReusableResource) throws -> ReusableResourceOutput {
+public struct ReusableTranslator: Translator {
+    public init() { }
+    public func translate(for input: ReusableResource) throws -> ReusableResourceOutput {
         return ReusableResourceOutputImpl(
             className: input.className,
             reusableIdentifers: input.reusableIdentifiers

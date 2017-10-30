@@ -8,17 +8,16 @@
 import Foundation
 import XcodeProject
 
-struct ResourceKitConfig {
-    static let outputFileName = "Resource.generated.swift"
-    
-    struct Debug {
-        static let isDebug: Bool = ProcessInfo.processInfo.environment["DEBUG"] != nil
-        static let outputPath: String? = ProcessInfo.processInfo.environment["DEBUG_OUTPUT_PATH"]
-        static let projectTarget: String? = ProcessInfo.processInfo.environment["DEBUG_TARGET_NAME"]
-        static let projectFilePath: String? = ProcessInfo.processInfo.environment["DEBUG_PROJECT_FILE_PATH"]
-    }
-    
-    static var outputPath: String {
+public struct ResourceKitConfig {
+    public static let outputFileName = "Resource.generated.swift"
+    public static var outputPath: String {
         return Debug.outputPath ?? Environment.SRCROOT.element
+    }
+
+    public struct Debug {
+        public static let isDebug: Bool = ProcessInfo.processInfo.environment["DEBUG"] != nil
+        public static let outputPath: String? = ProcessInfo.processInfo.environment["DEBUG_OUTPUT_PATH"]
+        public static let projectTarget: String? = ProcessInfo.processInfo.environment["DEBUG_TARGET_NAME"]
+        public static let projectFilePath: String? = ProcessInfo.processInfo.environment["DEBUG_PROJECT_FILE_PATH"]
     }
 }

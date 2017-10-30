@@ -8,12 +8,21 @@
 
 import Foundation
 
-protocol ImportOutput: Output {
+public protocol ImportOutput: Output {
     
 }
 
-struct ImportOutputImpl: ImportOutput {
-    let writeUrl: URL
+public struct ImportOutputImpl: ImportOutput {
+    public let writeUrl: URL
+    public let config: Config
+    
+    public init(
+        writeUrl: URL,
+        config: Config
+        ) {
+        self.writeUrl = writeUrl
+        self.config = config
+    }
     
     func imports() -> [String] {
         guard let content = try? String(contentsOf: writeUrl) else {
@@ -39,7 +48,7 @@ struct ImportOutputImpl: ImportOutput {
         }
     }
 
-    var declaration: String {
-        return imports().joined(separator: newLine)
+    public var declaration: String {
+        return imports().joined(separator: Const.newLine)
     }
 }
