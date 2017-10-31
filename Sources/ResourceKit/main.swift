@@ -49,9 +49,9 @@ do {
         .shared
         .viewControllers
         .map { (viewController) in
-            try ViewControllerTranslator(config: config).translate(for: viewController).declaration
+            try ViewControllerTranslator(config: config, viewControllers: ProjectResource.shared.viewControllers).translate(for: viewController).declaration
         }
-        .joined(separator: Const.newLine)
+        .joined()
     
     let tableViewCellContent: String
     let collectionViewCellContent: String

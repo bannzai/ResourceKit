@@ -133,8 +133,8 @@ fileprivate extension ViewControllerOutputImpl {
     
     func generatePerformSegue(from storyboard: ViewControllerInfoOfStoryboard, and segueIdentifier: String) -> String {
         let overrideOrNil = makeOverrideIfNeededForPerformSegue(from: storyboard)
-        let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(Const.tab1)\(overrideOrEmpty)"
+        let overrideOrObjC = overrideOrNil == nil ? "@objc " : overrideOrNil! + " "
+        let head = "\(Const.tab1)\(overrideOrObjC)"
         if config.segue.addition {
             return [
                 "\(head)func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
@@ -157,8 +157,8 @@ fileprivate extension ViewControllerOutputImpl {
         }
         
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
-        let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(Const.tab1)\(overrideOrEmpty)class func "
+        let overrideOrObjC = overrideOrNil == nil ? "@objc " : overrideOrNil! + " "
+        let head = "\(Const.tab1)\(overrideOrObjC)class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(name) {",
@@ -182,8 +182,8 @@ fileprivate extension ViewControllerOutputImpl {
     
     func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
-        let overrideOrEmpty = overrideOrNil == nil ? "" : overrideOrNil! + " "
-        let head = "\(Const.tab1)\(overrideOrEmpty)class func "
+        let overrideOrObjC = overrideOrNil == nil ? "@objc " : overrideOrNil! + " "
+        let head = "\(Const.tab1)\(overrideOrObjC)class func "
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [
@@ -243,11 +243,11 @@ fileprivate extension ViewControllerOutputImpl {
     }
     
     func makeOverrideIfNeededForFromStoryboardFunction(from storyboard: ViewControllerInfoOfStoryboard) -> String? {
-        return needOverrideForStoryboard(storyboard) ? "@objc override" : nil
+        return needOverrideForStoryboard(storyboard) ? "override" : nil
     }
 
     func makeOverrideIfNeededForPerformSegue(from storyboard: ViewControllerInfoOfStoryboard) -> String? {
-        return needOverrideForSegue(storyboard) ? "@objc override" : nil
+        return needOverrideForSegue(storyboard) ? "override" : nil
     }
     
 }

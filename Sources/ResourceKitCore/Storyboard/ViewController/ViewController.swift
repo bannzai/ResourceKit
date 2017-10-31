@@ -36,14 +36,6 @@ public class ViewController {
     let className: ResourceType
     let superClassName: ResourceType 
     
-    var superClass: ViewController? {
-        return ProjectResource
-            .shared
-            .viewControllers
-            .filter ({ $0.className == self.superClassName })
-            .first
-    }
-    
     init(className: String, superClassName: String = "") throws {
         self.className = try ResourceType(viewController: className)
         self.superClassName = try ResourceType(viewController: superClassName)
