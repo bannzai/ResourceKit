@@ -78,7 +78,7 @@ let cell nib.instantiate(withOwner: nil, options: nil)[0] as! TableViewCell
 
 _Use ResourceKit_
 ```swift
-let customView = CustomView.Xib().view()
+let customView = CustomView.Xib.view()
 ```
 #### for tableview or collectionview
 _standard_
@@ -92,7 +92,7 @@ let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ReusableIdenti
 
 _Use ResourceKit_
 ```swift
-collectionView?.registerNib(CollectionViewCell.Xib())
+collectionView?.registerNib(xib: CollectionViewCell.Xib.self)
 
 let cell = collectionView.dequeueReusableCellWithReuseIdentifier(CollectionViewCell.Xib().name, forIndexPath: indexPath) as! CollectionViewCell
 ```

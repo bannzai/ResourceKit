@@ -38,7 +38,7 @@ let viewController = ViewController.instanceFromStoryboard() // <- viewControlle
 performSegueOpen() // <- can write to use autocomplete.
 
 // Nib
-let cell = TableViewCell.Xib().view() // <- easy get instance.
+let cell = TableViewCell.Xib.view() // <- easy get instance.
 ```
 
 
