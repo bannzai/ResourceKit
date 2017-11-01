@@ -52,10 +52,8 @@ ResouceKit supports resource types.
  - [Segues](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md#use-segue-any-uiviewcontroller-sub-class)
  - [Nibs](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md#nib)
  - [Reusables](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md#reusalbes)
-
- #### TODO:
- - Images
- - LocalizedStrings
+ - [Images](https://github.com/xcodeswift/xcproj/blob/master/Sources/xcproj/PBXProj%2BHelpers.swift#L122)
+ - [LocalizedStrings](https://github.com/bannzai/ResourceKit/blob/master/Documents/Examples.md#localizedstring)
 
 ## Installation
 CocoaPods is the recommended way of installation, as this avoids including any binary files into your project.
