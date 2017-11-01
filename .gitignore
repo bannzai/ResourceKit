@@ -2,4 +2,6 @@
 Pods/**
 *.xcodeproj/project.xcworkspace
 *.xcworkspace
+*.xcodeproj
+/.build
 

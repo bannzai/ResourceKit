@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "XcodeProject",
+        "repositoryURL": "https://github.com/bannzai/XcodeProject.git",
+        "state": {
+          "branch": null,
+          "revision": "8a4100c6da99fcb0633bb32f1b86facd6c04997d",
+          "version": "0.1.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

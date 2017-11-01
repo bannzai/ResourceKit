@@ -31,9 +31,9 @@ class ResourceKitDemoUITests: XCTestCase {
     func testCollection_Custom_SecondCollection_SecondCustom_SecondCollection() {
         let app = XCUIApplication()
         app.tabBars.children(matching: .button).matching(identifier: "Item").element(boundBy: 1).tap()
-        app.collectionViews.images["ninniku"].tap()
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .collectionView).element.tap()
         app.buttons["SecondCollectionViewController"].tap()
-        app.collectionViews.cells.staticTexts["52"].tap()
+        app.collectionViews/*@START_MENU_TOKEN@*/.staticTexts["52"]/*[[".cells.staticTexts[\"52\"]",".staticTexts[\"52\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         app.buttons["SecondCollectionViewController"].tap()
     }
     

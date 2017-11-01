@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E317D878089BB8C29F510BD /* Pods_ResourceKitDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42ECABC3CD68CECF2DEA35C1 /* Pods_ResourceKitDemoUITests.framework */; };
+		16BF0D52F26D308C97329D0F /* Pods_ResourceKitDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894C2DB0B279F957D6F9FBC7 /* Pods_ResourceKitDemo.framework */; };
 		67DD1B6022172292FC5BD038 /* Pods_ResourceKitDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E73B6DBB5A5AC6ACBE6D64B0 /* Pods_ResourceKitDemoTests.framework */; };
 		9C5990DB1CD89756008884DA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C5990DD1CD89756008884DA /* Localizable.strings */; };
 		9C5990E21CD9DFE9008884DA /* ResourceKit in Resources */ = {isa = PBXBuildFile; fileRef = 9C5990E11CD9DFE9008884DA /* ResourceKit */; };
@@ -136,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAFB6F7C1E3C4BC200415630 /* Pods_ResourceKitDemo.framework in Frameworks */,
+				16BF0D52F26D308C97329D0F /* Pods_ResourceKitDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,7 +304,7 @@
 			buildConfigurationList = 9C8D69531CBA98DA006F7A40 /* Build configuration list for PBXNativeTarget "ResourceKitDemo" */;
 			buildPhases = (
 				72A1CA6E287AC4C6AD4FED10 /* [CP] Check Pods Manifest.lock */,
-				BAFB6F7D1E3C627400415630 /* ShellScript */,
+				BA716DED1F8FCC28001AAD63 /* ShellScript */,
 				9C8D69271CBA98DA006F7A40 /* Sources */,
 				9C8D69281CBA98DA006F7A40 /* Frameworks */,
 				9C8D69291CBA98DA006F7A40 /* Resources */,
@@ -372,16 +374,16 @@
 				TargetAttributes = {
 					9C8D692A1CBA98DA006F7A40 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0900;
 					};
 					9C8D693E1CBA98DA006F7A40 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0900;
 						TestTargetID = 9C8D692A1CBA98DA006F7A40;
 					};
 					9C8D69491CBA98DA006F7A40 = {
 						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0900;
 						TestTargetID = 9C8D692A1CBA98DA006F7A40;
 					};
 				};
@@ -508,9 +510,9 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ResourceKitDemoTests/Pods-ResourceKitDemoTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BAFB6F7D1E3C627400415630 /* ShellScript */ = {
+		BA716DED1F8FCC28001AAD63 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -779,7 +781,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ResourceKitDemo/ResourceKitDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -799,7 +802,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.ResourceKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ResourceKitDemo/ResourceKitDemo-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -812,7 +816,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.ResourceKitDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ResourceKitDemo.app/ResourceKitDemo";
 			};
 			name = Debug;
@@ -826,7 +831,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.ResourceKitDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ResourceKitDemo.app/ResourceKitDemo";
 			};
 			name = Release;
@@ -839,7 +845,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.ResourceKitDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = ResourceKitDemo;
 			};
 			name = Debug;
@@ -852,7 +859,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sample.ResourceKitDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = ResourceKitDemo;
 			};
 			name = Release;
