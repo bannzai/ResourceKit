@@ -4,4 +4,5 @@ Pods/**
 *.xcworkspace
 *.xcodeproj
 /.build
+.gitmodule
 
