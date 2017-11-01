@@ -47,13 +47,13 @@ extension ViewController {
 		let viewController = storyboard.instantiateViewController(withIdentifier: "BaseInstance") as! ViewController
 		return viewController
 	}
-    @objc class func initialViewController() -> ViewController {
+	@objc class func initialViewController() -> ViewController {
 		let storyboard = UIStoryboard(name: "ViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ViewController
 		return viewController
 	}
 
-	func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowSecondTable", closure: closure)
 	}
 
@@ -63,13 +63,13 @@ extension ViewController {
 }
 
 extension TableViewController {
-	class func instanceFromTabBarController() -> TableViewController {
+	@objc class func instanceFromTabBarController() -> TableViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "TableView") as! TableViewController
 		return viewController
 	}
 
-	func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowViewController", closure: closure)
 	}
 
@@ -79,12 +79,12 @@ extension TableViewController {
 }
 
 extension OverrideViewController {
-	class func instanceFromInstanceFromOverrideOtherIdentifier() -> OverrideViewController {
+	@objc class func instanceFromInstanceFromOverrideOtherIdentifier() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "OtherIdentifier") as! OverrideViewController
 		return viewController
 	}
-	class func instanceFromInstanceFromOverrideOverrideInstance() -> OverrideViewController {
+	@objc class func instanceFromInstanceFromOverrideOverrideInstance() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "OverrideInstance") as! OverrideViewController
 		return viewController
@@ -105,13 +105,13 @@ extension OverrideViewController {
 }
 
 extension SecondTableViewController {
-	class func initialViewController() -> SecondTableViewController {
+	@objc class func initialViewController() -> SecondTableViewController {
 		let storyboard = UIStoryboard(name: "SecondTableViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! SecondTableViewController
 		return viewController
 	}
 
-	func performSegueShowOverride(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc func performSegueShowOverride(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowOverride", closure: closure)
 	}
 
@@ -121,13 +121,13 @@ extension SecondTableViewController {
 }
 
 extension CollectionViewController {
-	class func instanceFromTabBarController() -> CollectionViewController {
+	@objc class func instanceFromTabBarController() -> CollectionViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
 		return viewController
 	}
 
-	func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowViewController", closure: closure)
 	}
 
@@ -137,7 +137,7 @@ extension CollectionViewController {
 }
 
 extension SecondCollectionViewController {
-	class func instanceFromTabBarController() -> SecondCollectionViewController {
+	@objc class func instanceFromTabBarController() -> SecondCollectionViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "SecondCollectionView") as! SecondCollectionViewController
 		return viewController
@@ -153,7 +153,7 @@ extension ObjCOveerrideViewController {
 }
 
 extension ObjCViewController {
-	class func initialViewController() -> ObjCViewController {
+	@objc class func initialViewController() -> ObjCViewController {
 		let storyboard = UIStoryboard(name: "ObjCViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ObjCViewController
 		return viewController
@@ -161,7 +161,7 @@ extension ObjCViewController {
 }
 
 extension UITabBarController {
-	class func initialViewController() -> UITabBarController {
+	@objc class func initialViewController() -> UITabBarController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! UITabBarController
 		return viewController
@@ -169,12 +169,12 @@ extension UITabBarController {
 }
 
 extension UINavigationController {
-	class func instanceFromTabBarControllerNav1() -> UINavigationController {
+	@objc class func instanceFromTabBarControllerNav1() -> UINavigationController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "Nav1") as! UINavigationController
 		return viewController
 	}
-	class func instanceFromTabBarControllerNav2() -> UINavigationController {
+	@objc class func instanceFromTabBarControllerNav2() -> UINavigationController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "Nav2") as! UINavigationController
 		return viewController
