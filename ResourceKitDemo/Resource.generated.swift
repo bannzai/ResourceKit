@@ -3,141 +3,141 @@
 // You can write custom imoprt XXXX logic
 import UIKit
 import SegueAddition
-protocol ReusableProtocol {
+public protocol ReusableProtocol {
    associatedtype View
    static var name: String { get }
 }
 
-protocol XibProtocol: ReusableProtocol {
+public protocol XibProtocol: ReusableProtocol {
 	static func nib() -> UINib
 	static func view() -> View
 }
 
-extension UITableView {
-	func register<X: XibProtocol>(xib: X.Type) -> Void where X.View: UITableViewCell {
+public extension UITableView {
+	public func register<X: XibProtocol>(xib: X.Type) -> Void where X.View: UITableViewCell {
 		register(xib.nib(), forCellReuseIdentifier: xib.name)
 	}
     
-	func register<X: XibProtocol>(xibs: [X.Type]) -> Void where X.View: UITableViewCell {
+	public func register<X: XibProtocol>(xibs: [X.Type]) -> Void where X.View: UITableViewCell {
 		xibs.forEach { register(xib: $0) }
 	}
     
-	func dequeueReusableCell<R: ReusableProtocol>(with reusable: R.Type, for indexPath: IndexPath) -> R.View where R.View: UITableViewCell {
+	public func dequeueReusableCell<R: ReusableProtocol>(with reusable: R.Type, for indexPath: IndexPath) -> R.View where R.View: UITableViewCell {
 		return dequeueReusableCell(withIdentifier: reusable.name, for: indexPath) as! R.View
 	}
 }
 
 extension UICollectionView {
-	func register<X: XibProtocol>(xib: X.Type) -> Void where X.View: UICollectionViewCell {
+	public func register<X: XibProtocol>(xib: X.Type) -> Void where X.View: UICollectionViewCell {
 		register(xib.nib(), forCellWithReuseIdentifier: xib.name)
 	}
     
-	func register<X: XibProtocol>(xibs: [X.Type]) -> Void where X.View: UICollectionViewCell {
+	public func register<X: XibProtocol>(xibs: [X.Type]) -> Void where X.View: UICollectionViewCell {
 		xibs.forEach { register(xib: $0) }
 	}
     
-	func dequeueReusableCell<R: ReusableProtocol>(with reusable: R.Type, for indexPath: IndexPath) -> R.View where R.View: UICollectionViewCell {
+	public func dequeueReusableCell<R: ReusableProtocol>(with reusable: R.Type, for indexPath: IndexPath) -> R.View where R.View: UICollectionViewCell {
 		return dequeueReusableCell(withReuseIdentifier: reusable.name, for: indexPath) as! R.View
 	}
 }
 
 extension ViewController {
-	@objc class func instanceFromInstanceFromOverride() -> ViewController {
+	@objc open class func instanceFromInstanceFromOverride() -> ViewController {
 		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "BaseInstance") as! ViewController
 		return viewController
 	}
-	@objc class func initialViewController() -> ViewController {
+	@objc open class func initialViewController() -> ViewController {
 		let storyboard = UIStoryboard(name: "ViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ViewController
 		return viewController
 	}
 
-	@objc func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc open func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowSecondTable", closure: closure)
 	}
 
-	struct Segue {
-		static let showSecondTable: String = "ShowSecondTable"
+	public struct Segue {
+		public static let showSecondTable: String = "ShowSecondTable"
 	}
 }
 
 extension TableViewController {
-	@objc class func instanceFromTabBarController() -> TableViewController {
+	@objc open class func instanceFromTabBarController() -> TableViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "TableView") as! TableViewController
 		return viewController
 	}
 
-	@objc func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc open func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowViewController", closure: closure)
 	}
 
-	struct Segue {
-		static let showViewController: String = "ShowViewController"
+	public struct Segue {
+		public static let showViewController: String = "ShowViewController"
 	}
 }
 
 extension OverrideViewController {
-	@objc class func instanceFromInstanceFromOverrideOtherIdentifier() -> OverrideViewController {
+	@objc open class func instanceFromInstanceFromOverrideOtherIdentifier() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "OtherIdentifier") as! OverrideViewController
 		return viewController
 	}
-	@objc class func instanceFromInstanceFromOverrideOverrideInstance() -> OverrideViewController {
+	@objc open class func instanceFromInstanceFromOverrideOverrideInstance() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "InstanceFromOverride", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "OverrideInstance") as! OverrideViewController
 		return viewController
 	}
-	override class func initialViewController() -> OverrideViewController {
+	override open class func initialViewController() -> OverrideViewController {
 		let storyboard = UIStoryboard(name: "OverrideViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! OverrideViewController
 		return viewController
 	}
 
-	override func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	override open func performSegueShowSecondTable(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowSecondTable", closure: closure)
 	}
 
-	struct Segue {
-		static let showSecondTable: String = "ShowSecondTable"
+	public struct Segue {
+		public static let showSecondTable: String = "ShowSecondTable"
 	}
 }
 
 extension SecondTableViewController {
-	@objc class func initialViewController() -> SecondTableViewController {
+	@objc open class func initialViewController() -> SecondTableViewController {
 		let storyboard = UIStoryboard(name: "SecondTableViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! SecondTableViewController
 		return viewController
 	}
 
-	@objc func performSegueShowOverride(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc open func performSegueShowOverride(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowOverride", closure: closure)
 	}
 
-	struct Segue {
-		static let showOverride: String = "ShowOverride"
+	public struct Segue {
+		public static let showOverride: String = "ShowOverride"
 	}
 }
 
 extension CollectionViewController {
-	@objc class func instanceFromTabBarController() -> CollectionViewController {
+	@objc open class func instanceFromTabBarController() -> CollectionViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
 		return viewController
 	}
 
-	@objc func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
+	@objc open func performSegueShowViewController(closure: ((UIStoryboardSegue) -> Void)? = nil) {
 		performSegue("ShowViewController", closure: closure)
 	}
 
-	struct Segue {
-		static let showViewController: String = "ShowViewController"
+	public struct Segue {
+		public static let showViewController: String = "ShowViewController"
 	}
 }
 
 extension SecondCollectionViewController {
-	@objc class func instanceFromTabBarController() -> SecondCollectionViewController {
+	@objc open class func instanceFromTabBarController() -> SecondCollectionViewController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "SecondCollectionView") as! SecondCollectionViewController
 		return viewController
@@ -145,7 +145,7 @@ extension SecondCollectionViewController {
 }
 
 extension ObjCOveerrideViewController {
-	override class func initialViewController() -> ObjCOveerrideViewController {
+	override open class func initialViewController() -> ObjCOveerrideViewController {
 		let storyboard = UIStoryboard(name: "ObjCOverrideViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ObjCOveerrideViewController
 		return viewController
@@ -153,7 +153,7 @@ extension ObjCOveerrideViewController {
 }
 
 extension ObjCViewController {
-	@objc class func initialViewController() -> ObjCViewController {
+	@objc open class func initialViewController() -> ObjCViewController {
 		let storyboard = UIStoryboard(name: "ObjCViewController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! ObjCViewController
 		return viewController
@@ -161,7 +161,7 @@ extension ObjCViewController {
 }
 
 extension UITabBarController {
-	@objc class func initialViewController() -> UITabBarController {
+	@objc open class func initialViewController() -> UITabBarController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateInitialViewController() as! UITabBarController
 		return viewController
@@ -169,12 +169,12 @@ extension UITabBarController {
 }
 
 extension UINavigationController {
-	@objc class func instanceFromTabBarControllerNav1() -> UINavigationController {
+	@objc open class func instanceFromTabBarControllerNav1() -> UINavigationController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "Nav1") as! UINavigationController
 		return viewController
 	}
-	@objc class func instanceFromTabBarControllerNav2() -> UINavigationController {
+	@objc open class func instanceFromTabBarControllerNav2() -> UINavigationController {
 		let storyboard = UIStoryboard(name: "TabBarController", bundle: nil) 
 		let viewController = storyboard.instantiateViewController(withIdentifier: "Nav2") as! UINavigationController
 		return viewController
@@ -183,61 +183,61 @@ extension UINavigationController {
 
 
 extension SecondTableViewCell {
-   struct Reusable: ReusableProtocol {
-       typealias View = SecondTableViewCell
-       static let name: String = "ReuseIdentifier"
+   public struct Reusable: ReusableProtocol {
+       public typealias View = SecondTableViewCell
+       public static let name: String = "ReuseIdentifier"
    }
 }
 
 
 extension SecondCollectionViewCell {
-   struct Reusable: ReusableProtocol {
-       typealias View = SecondCollectionViewCell
-       static let name: String = "ReuseIdentifier"
+   public struct Reusable: ReusableProtocol {
+       public typealias View = SecondCollectionViewCell
+       public static let name: String = "ReuseIdentifier"
    }
 }
 
 
 extension TableViewCell {
-	struct Xib: XibProtocol {
-		typealias View = TableViewCell
-		static let name: String = "TableViewCell"
+	public struct Xib: XibProtocol {
+		public typealias View = TableViewCell
+		public static let name: String = "TableViewCell"
        
-		static func nib() -> UINib {
+		public static func nib() -> UINib {
 			return UINib(nibName: "TableViewCell", bundle: Bundle(for: TableViewCell.classForCoder()))
 		}
 
-		static func view() -> TableViewCell {
+		public static func view() -> TableViewCell {
 			return nib().instantiate(withOwner: nil, options: nil)[0] as! TableViewCell
 		}
 
 	}
 }
 extension CollectionViewCell {
-	struct Xib: XibProtocol {
-		typealias View = CollectionViewCell
-		static let name: String = "CollectionViewCell"
+	public struct Xib: XibProtocol {
+		public typealias View = CollectionViewCell
+		public static let name: String = "CollectionViewCell"
        
-		static func nib() -> UINib {
+		public static func nib() -> UINib {
 			return UINib(nibName: "CollectionViewCell", bundle: Bundle(for: CollectionViewCell.classForCoder()))
 		}
 
-		static func view() -> CollectionViewCell {
+		public static func view() -> CollectionViewCell {
 			return nib().instantiate(withOwner: nil, options: nil)[0] as! CollectionViewCell
 		}
 
 	}
 }
 extension CustomView {
-	struct Xib: XibProtocol {
-		typealias View = CustomView
-		static let name: String = "CustomView"
+	public struct Xib: XibProtocol {
+		public typealias View = CustomView
+		public static let name: String = "CustomView"
        
-		static func nib() -> UINib {
+		public static func nib() -> UINib {
 			return UINib(nibName: "CustomView", bundle: Bundle(for: CustomView.classForCoder()))
 		}
 
-		static func view() -> CustomView {
+		public static func view() -> CustomView {
 			return nib().instantiate(withOwner: nil, options: nil)[0] as! CustomView
 		}
 
@@ -245,41 +245,41 @@ extension CustomView {
 }
 
 extension UIImage {
-	struct Asset {
-		static let curry: UIImage = UIImage(named: "curry")!
-		static let ebi: UIImage = UIImage(named: "ebi")!
-		static let inaka: UIImage = UIImage(named: "inaka")!
-		static let kake: UIImage = UIImage(named: "kake")!
-		static let kaki: UIImage = UIImage(named: "kaki")!
-		static let kikkoman: UIImage = UIImage(named: "kikkoman")!
-		static let koori: UIImage = UIImage(named: "koori")!
-		static let koumi: UIImage = UIImage(named: "koumi")!
-		static let marudaizu: UIImage = UIImage(named: "marudaizu")!
-		static let ninniku: UIImage = UIImage(named: "ninniku")!
-		static let siro: UIImage = UIImage(named: "siro")!
-		static let ususio: UIImage = UIImage(named: "ususio")!
+	public struct Asset {
+		public static let curry: UIImage = UIImage(named: "curry")!
+		public static let ebi: UIImage = UIImage(named: "ebi")!
+		public static let inaka: UIImage = UIImage(named: "inaka")!
+		public static let kake: UIImage = UIImage(named: "kake")!
+		public static let kaki: UIImage = UIImage(named: "kaki")!
+		public static let kikkoman: UIImage = UIImage(named: "kikkoman")!
+		public static let koori: UIImage = UIImage(named: "koori")!
+		public static let koumi: UIImage = UIImage(named: "koumi")!
+		public static let marudaizu: UIImage = UIImage(named: "marudaizu")!
+		public static let ninniku: UIImage = UIImage(named: "ninniku")!
+		public static let siro: UIImage = UIImage(named: "siro")!
+		public static let ususio: UIImage = UIImage(named: "ususio")!
 	}
 
-	struct Resource {
-		static let swift_logo: UIImage = UIImage(named: "swift_logo")!
+	public struct Resource {
+		public static let swift_logo: UIImage = UIImage(named: "swift_logo")!
 	}
 
 }
 
 extension String {
-	struct Localized {
-		static let helloworld = NSLocalizedString("helloworld", comment: "")
-		static let hello_world_3 = NSLocalizedString("hello world 3", comment: "")
-		static let hello_world_09 = NSLocalizedString("hello(world 09", comment: "")
-		static let hello_world_06 = NSLocalizedString("hello!world 06", comment: "")
-		static let hello_world_07 = NSLocalizedString("hello?world 07", comment: "")
-		static let hello_world_08 = NSLocalizedString("hello,world 08", comment: "")
-		static let hello_world_1 = NSLocalizedString("hello world 1", comment: "")
-		static let hello_world_11___ = NSLocalizedString("hello}world 11 %@", comment: "")
-		static let hello_world_12___ = NSLocalizedString("hello}world 12 %@", comment: "")
-		static let hello_world_10 = NSLocalizedString("hello}world 10", comment: "")
-		static let hello_world_4 = NSLocalizedString("hello world 4", comment: "")
-		static let hello_world_2 = NSLocalizedString("hello world 2", comment: "")
-		static let hello_world_05 = NSLocalizedString("hello.world 05", comment: "")
+	public struct Localized {
+		public static let helloworld = NSLocalizedString("helloworld", comment: "")
+		public static let hello_world_3 = NSLocalizedString("hello world 3", comment: "")
+		public static let hello_world_09 = NSLocalizedString("hello(world 09", comment: "")
+		public static let hello_world_06 = NSLocalizedString("hello!world 06", comment: "")
+		public static let hello_world_07 = NSLocalizedString("hello?world 07", comment: "")
+		public static let hello_world_08 = NSLocalizedString("hello,world 08", comment: "")
+		public static let hello_world_1 = NSLocalizedString("hello world 1", comment: "")
+		public static let hello_world_11___ = NSLocalizedString("hello}world 11 %@", comment: "")
+		public static let hello_world_12___ = NSLocalizedString("hello}world 12 %@", comment: "")
+		public static let hello_world_10 = NSLocalizedString("hello}world 10", comment: "")
+		public static let hello_world_4 = NSLocalizedString("hello world 4", comment: "")
+		public static let hello_world_2 = NSLocalizedString("hello world 2", comment: "")
+		public static let hello_world_05 = NSLocalizedString("hello.world 05", comment: "")
 	}
 }
