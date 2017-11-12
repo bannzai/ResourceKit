@@ -19,14 +19,14 @@ public struct ReusableResourceOutputImpl: ReusableResourceOutput {
     public var declaration: String {
         let names = reusableIdentifers
             .map {
-                return "       static let name: String = \"\($0)\""
+                return "       public static let name: String = \"\($0)\""
             }
             .joined(separator: Const.newLine)
         
         return [
             "extension \(className) {",
-            "   struct Reusable: ReusableProtocol {",
-            "       typealias View = \(className)",
+            "   public struct Reusable: ReusableProtocol {",
+            "       public typealias View = \(className)",
             "\(names)",
             "   }",
             "}",
