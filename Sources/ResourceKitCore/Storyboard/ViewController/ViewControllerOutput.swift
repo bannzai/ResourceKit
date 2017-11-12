@@ -85,10 +85,10 @@ fileprivate extension ViewControllerOutputImpl {
             return ""
         }
         
-        let begin = "\(Const.tab1)struct Segue {"
+        let begin = "\(Const.tab1)public struct Segue {"
         let body: String = seguesForGenerateStruct
             .flatMap {
-                "\(Const.tab2)static let \($0.lowerFirst): String = \"\($0)\""
+                "\(Const.tab2)public static let \($0.lowerFirst): String = \"\($0)\""
             }
             .joined()
         let end = "\(Const.tab1)}"
@@ -137,14 +137,14 @@ fileprivate extension ViewControllerOutputImpl {
         let head = "\(Const.tab1)\(overrideOrObjC)"
         if config.segue.addition {
             return [
-                "\(head)func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
+                "\(head)open func performSegue\(segueIdentifier)(closure: ((UIStoryboardSegue) -> Void)? = nil) {",
                 "\(Const.tab2)performSegue(\"\(segueIdentifier)\", closure: closure)",
                 "\(Const.tab1)}",
                 ]
                 .joined(separator: Const.newLine)
         }
         return [
-            "\(head)func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
+            "\(head)open func performSegue\(segueIdentifier)(sender: AnyObject? = nil) {",
             "\(Const.tab2)performSegue(withIdentifier: \"\(segueIdentifier)\", sender: sender)",
             "\(Const.tab1)}",
             ]
@@ -158,7 +158,7 @@ fileprivate extension ViewControllerOutputImpl {
         
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
         let overrideOrObjC = overrideOrNil == nil ? "@objc " : overrideOrNil! + " "
-        let head = "\(Const.tab1)\(overrideOrObjC)class func "
+        let head = "\(Const.tab1)\(overrideOrObjC)open class func "
         if storyboardInfos.filter({ $0.storyboardName == storyboard.storyboardName }).count > 1 {
             return [
                 head + "instanceFrom\(storyboard.storyboardName + storyboard.storyboardIdentifier)() -> \(name) {",
@@ -183,7 +183,7 @@ fileprivate extension ViewControllerOutputImpl {
     func fromStoryboardForInitial(from storyboard: ViewControllerInfoOfStoryboard) -> String {
         let overrideOrNil = makeOverrideIfNeededForFromStoryboardFunction(from: storyboard)
         let overrideOrObjC = overrideOrNil == nil ? "@objc " : overrideOrNil! + " "
-        let head = "\(Const.tab1)\(overrideOrObjC)class func "
+        let head = "\(Const.tab1)\(overrideOrObjC)open class func "
         
         if storyboardInfos.filter ({ $0.isInitial }).count > 1 {
             return [

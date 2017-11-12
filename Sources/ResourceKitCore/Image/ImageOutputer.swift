@@ -62,11 +62,11 @@ extension ImageOutputerImpl {
         let imageNames: [String]
         
         public var begin: String {
-            return "\(Const.tab1)struct Asset {" 
+            return "\(Const.tab1)public struct Asset {"
         }
         public var body: String {
             let body = imageNames
-                .flatMap { "\(Const.tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
+                .flatMap { "\(Const.tab2)public static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
                 .joined(separator: Const.newLine)
             return body 
         }
@@ -81,11 +81,11 @@ extension ImageOutputerImpl {
         let imageNames: [String]
         
         public var begin: String {
-            return "\(Const.tab1)struct Resource {"
+            return "\(Const.tab1)public struct Resource {"
         }
         public var body: String {
             let body = imageNames
-                .flatMap { "\(Const.tab2)static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
+                .flatMap { "\(Const.tab2)public static let \($0): UIImage = \(ImageOutputerImpl.imageFunction($0))" }
                 .joined(separator: Const.newLine)
             return body
         }

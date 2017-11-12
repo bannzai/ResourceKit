@@ -18,7 +18,7 @@ public struct LocalizedStringOutputerImpl: LocalizedStringOutputer {
     public var declaration: String {
         return [
             "extension String {",
-            "\(Const.tab1)struct Localized {",
+            "\(Const.tab1)public struct Localized {",
             "\(generateLocalizableConstants().joined(separator: Const.newLine))",
             "\(Const.tab1)}",
             "}",
@@ -35,7 +35,7 @@ fileprivate extension LocalizedStringOutputerImpl {
             
         }
         return localizedStrings.keys.flatMap {
-            return "\(Const.tab2)static let \(toConstantName($0)) = NSLocalizedString(\"\($0)\", comment: \"\")"
+            return "\(Const.tab2)public static let \(toConstantName($0)) = NSLocalizedString(\"\($0)\", comment: \"\")"
         }
     }
 }
