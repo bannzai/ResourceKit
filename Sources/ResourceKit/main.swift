@@ -11,7 +11,6 @@ import ResourceKitCore
 import Commander
 
 let projectFilePath = ResourceKitConfig.Debug.projectFilePath != nil ? ResourceKitConfig.Debug.projectFilePath! : Environment.PROJECT_FILE_PATH.rawValue
-let p = projectFilePath
 let main = command(
     Option<String>("project-file-path", default: projectFilePath)
 ) { projectFilePath in
