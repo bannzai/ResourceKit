@@ -5,6 +5,7 @@ let package = Package(
     name: "ResourceKit",
     dependencies: [
         .package(url: "https://github.com/bannzai/XcodeProject.git", from: Version(0, 1, 1)),
+        .package(url: "https://github.com/kylef/Commander.git", from: Version(0, 8, 0)),
     ],
     targets: [
         .target(
@@ -13,7 +14,7 @@ let package = Package(
         ),
         .target(
             name: "ResourceKitCore",
-            dependencies: ["XcodeProject"]
+            dependencies: ["XcodeProject", "Commander"]
         ),
         .testTarget(name: "ResourceKitCoreTests", dependencies: ["ResourceKitCore"]),
         ],
