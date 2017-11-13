@@ -11,9 +11,12 @@ import ResourceKitCore
 import Commander
 
 let projectFilePath = ResourceKitConfig.Debug.projectFilePath != nil ? ResourceKitConfig.Debug.projectFilePath! : Environment.PROJECT_FILE_PATH.rawValue
+let projectTarget = ResourceKitConfig.Debug.projectTarget ?? Environment.TARGET_NAME.element ?? ""
+
 let main = command(
-    Option<String>("project-file-path", default: projectFilePath)
-) { projectFilePath in
+    Option<String>("project-file-path", default: projectFilePath),
+    Option<String>("project-target", default: projectTarget)
+) { projectFilePath, projectTarget in
     if !ResourceKitConfig.Debug.isDebug {
         do {
             try Environment.verifyUseEnvironment()
@@ -37,7 +40,6 @@ let main = command(
         guard let pbxprojectPath = URL(string: projectFileURL.absoluteString + "project.pbxproj") else {
             throw ResourceKitErrorType.xcodeProjectError(xcodeURL: projectFileURL, target: "Unknown", errorInfo: "Can't find project.pbxproj")
         }
-        let projectTarget = ResourceKitConfig.Debug.projectTarget ?? Environment.TARGET_NAME.element
         let parser = try ProjectResourceParser(xcodeURL: pbxprojectPath, target: projectTarget, writeResource: ProjectResource.shared, config: config)
         let paths = ProjectResource.shared.paths
         

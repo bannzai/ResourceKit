@@ -10,11 +10,16 @@ import Foundation
 import XcodeProject
 
 extension Environment {
-    public var element: String {
+    public var element: String? {
         if ResourceKitConfig.Debug.isDebug {
             return ProcessInfo.processInfo.environment["DEBUG_" + self.rawValue]!
         }
-        guard let element = ProcessInfo.processInfo.environment[self.rawValue] else {
+        let element = ProcessInfo.processInfo.environment[self.rawValue]
+        return element
+    }
+    
+    public var path: URL {
+        guard let element = element else {
             let message: String = [
                 "Unexpected value for xcode environment when use Environment.element property.",
                 "file: \(#file)",
@@ -25,10 +30,6 @@ extension Environment {
                 { $0 + $1 + "\n" }
             fatalError("message: \(message) ")
         }
-        return element
-    }
-    
-    public var path: URL {
         return URL(fileURLWithPath: element)
     }
     
