@@ -11,7 +11,12 @@ import XcodeProject
 public struct ResourceKitConfig {
     public static let outputFileName = "Resource.generated.swift"
     public static var outputPath: String {
-        return Debug.outputPath ?? Environment.SRCROOT.element
+        let _path = Debug.outputPath ?? Environment.SRCROOT.element
+        
+        guard let path = _path else {
+            fatalError("Can't find outputPath. Run time env: \(Environment.elements)")
+        }
+        return path
     }
 
     public struct Debug {
