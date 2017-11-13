@@ -521,7 +521,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/ResourceKit\"";
+			shellScript = "$SRCROOT/ResourceKit --project-file-path $SRCROOT/ResourceKitDemo.xcodeproj ";
 		};
 		C54D35B7368100D449D5DBB9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
