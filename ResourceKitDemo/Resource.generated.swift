@@ -247,15 +247,15 @@ extension CustomView {
 extension UIImage {
 	public struct Asset {
 		public static let curry: UIImage = UIImage(named: "curry")!
-		public static let ebi: UIImage = UIImage(named: "ebi")!
-		public static let inaka: UIImage = UIImage(named: "inaka")!
-		public static let kake: UIImage = UIImage(named: "kake")!
 		public static let kaki: UIImage = UIImage(named: "kaki")!
-		public static let kikkoman: UIImage = UIImage(named: "kikkoman")!
-		public static let koori: UIImage = UIImage(named: "koori")!
-		public static let koumi: UIImage = UIImage(named: "koumi")!
+		public static let ebi: UIImage = UIImage(named: "ebi")!
 		public static let marudaizu: UIImage = UIImage(named: "marudaizu")!
+		public static let kikkoman: UIImage = UIImage(named: "kikkoman")!
+		public static let koumi: UIImage = UIImage(named: "koumi")!
 		public static let ninniku: UIImage = UIImage(named: "ninniku")!
+		public static let kake: UIImage = UIImage(named: "kake")!
+		public static let koori: UIImage = UIImage(named: "koori")!
+		public static let inaka: UIImage = UIImage(named: "inaka")!
 		public static let siro: UIImage = UIImage(named: "siro")!
 		public static let ususio: UIImage = UIImage(named: "ususio")!
 	}
