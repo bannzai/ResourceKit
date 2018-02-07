@@ -11,7 +11,7 @@ import Foundation
 public protocol Config {
     var segue: ConfigType.Segue { get }
     var image: ConfigType.Image { get }
-    var string: ConfigType.LoaclizedString { get }
+    var string: ConfigType.LocalizedString { get }
     var viewController: ConfigType.ViewController { get }
     var nib: ConfigType.Nib { get }
     var reusable: ConfigType.Reusable { get }
@@ -21,7 +21,7 @@ public protocol Config {
 public struct ConfigImpl: Config {
     public private(set) var segue: ConfigType.Segue = ConfigType.Segue()
     public private(set) var image: ConfigType.Image = ConfigType.Image()
-    public private(set) var string: ConfigType.LoaclizedString = ConfigType.LoaclizedString()
+    public private(set) var string: ConfigType.LocalizedString = ConfigType.LocalizedString()
     public private(set) var viewController: ConfigType.ViewController = ConfigType.ViewController()
     public private(set) var nib: ConfigType.Nib = ConfigType.Nib()
     public private(set) var reusable: ConfigType.Reusable = ConfigType.Reusable()
@@ -41,8 +41,8 @@ public struct ConfigImpl: Config {
                     segue = ConfigType.Segue(value as? [String: Bool] ?? [:])
                 case .Image:
                     image = ConfigType.Image(value as? [String: Bool] ?? [:])
-                case .LoaclizedString:
-                    string = ConfigType.LoaclizedString(value as? [String: Bool] ?? [:])
+                case .LocalizedString:
+                    string = ConfigType.LocalizedString(value as? [String: Bool] ?? [:])
                 case .ViewController:
                     viewController = ConfigType.ViewController(value as? [String: Bool] ?? [:])
                 case .Nib:
@@ -59,7 +59,7 @@ public struct ConfigType {
     public enum Item: Swift.String {
         case Segue
         case Image
-        case LoaclizedString
+        case LocalizedString
         case ViewController
         case Nib
         case Reusable
@@ -93,7 +93,7 @@ public struct ConfigType {
         }
     }
     
-    public struct LoaclizedString {
+    public struct LocalizedString {
         public let localized: Bool
         
         init() {

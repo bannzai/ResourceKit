@@ -10,7 +10,7 @@ import XcodeProject
 import ResourceKitCore
 import Commander
 
-let projectFilePath = ResourceKitConfig.Debug.projectFilePath != nil ? ResourceKitConfig.Debug.projectFilePath! : Environment.PROJECT_FILE_PATH.rawValue
+let projectFilePath = ResourceKitConfig.Debug.projectFilePath != nil ? ResourceKitConfig.Debug.projectFilePath! : Environment.PROJECT_FILE_PATH.element!
 let projectTarget = ResourceKitConfig.Debug.projectTarget ?? Environment.TARGET_NAME.element ?? ""
 
 let main = command(
