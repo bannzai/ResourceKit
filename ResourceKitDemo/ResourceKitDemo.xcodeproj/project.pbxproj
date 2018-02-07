@@ -48,6 +48,8 @@
 		9CC4207C1CE3703100A6F8D8 /* ObjCOveerrideViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 9CC420751CE3648400A6F8D8 /* ObjCOveerrideViewController.h */; };
 		9CC4207D1CE3704C00A6F8D8 /* ObjCViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 9CC420721CE3646B00A6F8D8 /* ObjCViewController.h */; };
 		9CE69DE91CCC64410098C12A /* InstanceFromOverride.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CE69DE81CCC64410098C12A /* InstanceFromOverride.storyboard */; };
+		BAE32688202B5E23003362BE /* ObjectiveCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE32686202B5E23003362BE /* ObjectiveCTableViewCell.m */; };
+		BAE32689202B5E23003362BE /* ObjectiveCTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAE32687202B5E23003362BE /* ObjectiveCTableViewCell.xib */; };
 		BAFB6F7C1E3C4BC200415630 /* Pods_ResourceKitDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFB6F7B1E3C4BC200415630 /* Pods_ResourceKitDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +127,9 @@
 		9CC4207A1CE364E400A6F8D8 /* ObjCOverrideViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ObjCOverrideViewController.storyboard; sourceTree = "<group>"; };
 		9CE69DE81CCC64410098C12A /* InstanceFromOverride.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InstanceFromOverride.storyboard; sourceTree = "<group>"; };
 		A7B1D6D67008C709E244DEEE /* Pods-ResourceKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResourceKitDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ResourceKitDemo/Pods-ResourceKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		BAE32685202B5E23003362BE /* ObjectiveCTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveCTableViewCell.h; sourceTree = "<group>"; };
+		BAE32686202B5E23003362BE /* ObjectiveCTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjectiveCTableViewCell.m; sourceTree = "<group>"; };
+		BAE32687202B5E23003362BE /* ObjectiveCTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectiveCTableViewCell.xib; sourceTree = "<group>"; };
 		BAFB6F7B1E3C4BC200415630 /* Pods_ResourceKitDemo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_ResourceKitDemo.framework; path = "Pods/../build/Debug-iphoneos/Pods_ResourceKitDemo.framework"; sourceTree = "<group>"; };
 		C65892F186E764472C445A12 /* Pods-ResourceKitDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ResourceKitDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ResourceKitDemoTests/Pods-ResourceKitDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		E73B6DBB5A5AC6ACBE6D64B0 /* Pods_ResourceKitDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ResourceKitDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -266,6 +271,9 @@
 				9CA1FEE61CBBAD880032C568 /* CollectionViewCell.xib */,
 				9CA1FEE91CBBEA1C0032C568 /* CustomView.swift */,
 				9CA1FEEB1CBBEA260032C568 /* CustomView.xib */,
+				BAE32685202B5E23003362BE /* ObjectiveCTableViewCell.h */,
+				BAE32686202B5E23003362BE /* ObjectiveCTableViewCell.m */,
+				BAE32687202B5E23003362BE /* ObjectiveCTableViewCell.xib */,
 			);
 			name = Xib;
 			sourceTree = "<group>";
@@ -417,6 +425,7 @@
 				9C8D69391CBA98DA006F7A40 /* LaunchScreen.storyboard in Resources */,
 				9CC420791CE364DA00A6F8D8 /* ObjCViewController.storyboard in Resources */,
 				9CE69DE91CCC64410098C12A /* InstanceFromOverride.storyboard in Resources */,
+				BAE32689202B5E23003362BE /* ObjectiveCTableViewCell.xib in Resources */,
 				9CA1FEE21CBBAD460032C568 /* TableViewCell.xib in Resources */,
 				9C5990E21CD9DFE9008884DA /* ResourceKit in Resources */,
 				9C8EB9261CD8636B00E63A84 /* swift_logo@2x.png in Resources */,
@@ -618,6 +627,7 @@
 				9CA1FEF81CBBF25C0032C568 /* SecondCollectionViewCell.swift in Sources */,
 				9CA1FF041CBD27630032C568 /* OverrideViewController.swift in Sources */,
 				9CA1FEF01CBBF21A0032C568 /* SecondTableViewController.swift in Sources */,
+				BAE32688202B5E23003362BE /* ObjectiveCTableViewCell.m in Sources */,
 				9CA1FEDA1CBB0AA60032C568 /* CollectionViewController.swift in Sources */,
 				9CC4207D1CE3704C00A6F8D8 /* ObjCViewController.h in Sources */,
 				9CC420771CE3648400A6F8D8 /* ObjCOveerrideViewController.m in Sources */,

@@ -198,6 +198,21 @@ extension SecondCollectionViewCell {
 }
 
 
+extension ObjectiveCTableViewCell {
+	public struct Xib: XibProtocol {
+		public typealias View = ObjectiveCTableViewCell
+		public static let name: String = "ObjectiveCTableViewCell"
+       
+		public static func nib() -> UINib {
+			return UINib(nibName: "ObjectiveCTableViewCell", bundle: Bundle(for: ObjectiveCTableViewCell.classForCoder()))
+		}
+
+		public static func view() -> ObjectiveCTableViewCell {
+			return nib().instantiate(withOwner: nil, options: nil)[0] as! ObjectiveCTableViewCell
+		}
+
+	}
+}
 extension TableViewCell {
 	public struct Xib: XibProtocol {
 		public typealias View = TableViewCell
