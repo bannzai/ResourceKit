@@ -128,7 +128,7 @@ fileprivate extension ViewControllerOutputImpl {
             .flatMap {
                 generatePerformSegue(from: storyboard, and: $0)
             }
-            .joined()
+            .joined(separator: Const.newLine)
     }
     
     func generatePerformSegue(from storyboard: ViewControllerInfoOfStoryboard, and segueIdentifier: String) -> String {
