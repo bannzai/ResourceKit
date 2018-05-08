@@ -90,7 +90,7 @@ fileprivate extension ViewControllerOutputImpl {
             .flatMap {
                 "\(Const.tab2)public static let \($0.lowerFirst): String = \"\($0)\""
             }
-            .joined()
+            .joined(separator: Const.newLine)
         let end = "\(Const.tab1)}"
         return [begin, body, end].joined(separator: Const.newLine)
     }
