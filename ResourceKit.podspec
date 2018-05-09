@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
 
   spec.source = { :http => "https://github.com/bannzai/ResourceKit/releases/download/#{spec.version}/ResourceKit.zip" }
 
-  spec.ios.deployment_target     = '8.0'
+  spec.ios.deployment_target     = '10.0'
 
   spec.preserve_paths = "ResourceKit"
 
