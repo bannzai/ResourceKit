@@ -7,8 +7,7 @@ build:
 
 release:
 	swift build --disable-sandbox -c release -Xswiftc -static-stdlib
-	zip ResourceKit.zip ./.build/x86_64-apple-macosx10.10/release/ResourceKit
-	open .
+	open ./.build/x86_64-apple-macosx10.10/release/
 
 clean:
 	swift package clean
