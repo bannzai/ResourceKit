@@ -7,6 +7,8 @@ build:
 
 release:
 	swift build -c release -Xswiftc -static-stdlib
+	zip ResourceKit.zip ./.build/x86_64-apple-macosx10.10/release/ResourceKit
+	open .
 
 clean:
 	swift package clean
